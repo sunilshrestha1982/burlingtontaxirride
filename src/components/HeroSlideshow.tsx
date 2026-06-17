@@ -5,6 +5,7 @@ const slides = [
   { src: "/places/burlington-vt.jpg", alt: "Burlington Vermont waterfront" },
   { src: "/places/stowe-vt.jpg", alt: "Vermont scenic mountain landscape" },
   { src: "/places/montreal-city.jpg", alt: "Montreal skyline transfer destination" },
+  { src: "/places/toyota-sienna-2026.jpg", alt: "2026 Toyota Sienna 7-passenger minivan for Vermont transfers" },
 ];
 
 export function HeroSlideshow() {
