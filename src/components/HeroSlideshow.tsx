@@ -29,12 +29,12 @@ export function HeroSlideshow() {
       <button
         onClick={() => go(i - 1)}
         aria-label="Previous slide"
-        className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gold/40 bg-background/40 px-3 py-2 text-gold backdrop-blur hover:bg-gold/20"
+        className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gold/40 bg-background/40 px-2 py-1 text-sm text-gold backdrop-blur hover:bg-gold/20 sm:left-3 sm:px-3 sm:py-2 sm:text-base"
       >←</button>
       <button
         onClick={() => go(i + 1)}
         aria-label="Next slide"
-        className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gold/40 bg-background/40 px-3 py-2 text-gold backdrop-blur hover:bg-gold/20"
+        className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gold/40 bg-background/40 px-2 py-1 text-sm text-gold backdrop-blur hover:bg-gold/20 sm:right-3 sm:px-3 sm:py-2 sm:text-base"
       >→</button>
       <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 gap-2">
         {slides.map((_, idx) => (
