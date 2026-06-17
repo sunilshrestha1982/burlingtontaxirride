@@ -9,24 +9,43 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SkiResortRouteImport } from './routes/ski-resort'
+import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LongDistanceRouteImport } from './routes/long-distance'
 import { Route as CorporateRouteImport } from './routes/corporate'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BookOnlineRouteImport } from './routes/book-online'
 import { Route as AirportsWeServeRouteImport } from './routes/airports-we-serve'
 import { Route as AirportTransfersRouteImport } from './routes/airport-transfers'
+import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SkiResortRoute = SkiResortRouteImport.update({
   id: '/ski-resort',
   path: '/ski-resort',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapRoute = SitemapRouteImport.update({
+  id: '/sitemap',
+  path: '/sitemap',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LongDistanceRoute = LongDistanceRouteImport.update({
@@ -59,6 +78,11 @@ const AirportTransfersRoute = AirportTransfersRouteImport.update({
   path: '/airport-transfers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SlugRoute = SlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -67,88 +91,123 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
   '/book-online': typeof BookOnlineRoute
   '/contact': typeof ContactRoute
   '/corporate': typeof CorporateRoute
   '/long-distance': typeof LongDistanceRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/sitemap': typeof SitemapRoute
   '/ski-resort': typeof SkiResortRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
   '/book-online': typeof BookOnlineRoute
   '/contact': typeof ContactRoute
   '/corporate': typeof CorporateRoute
   '/long-distance': typeof LongDistanceRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/sitemap': typeof SitemapRoute
   '/ski-resort': typeof SkiResortRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$slug': typeof SlugRoute
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
   '/book-online': typeof BookOnlineRoute
   '/contact': typeof ContactRoute
   '/corporate': typeof CorporateRoute
   '/long-distance': typeof LongDistanceRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
+  '/sitemap': typeof SitemapRoute
   '/ski-resort': typeof SkiResortRoute
+  '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$slug'
     | '/airport-transfers'
     | '/airports-we-serve'
     | '/book-online'
     | '/contact'
     | '/corporate'
     | '/long-distance'
+    | '/privacy'
     | '/services'
+    | '/sitemap'
     | '/ski-resort'
+    | '/terms'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$slug'
     | '/airport-transfers'
     | '/airports-we-serve'
     | '/book-online'
     | '/contact'
     | '/corporate'
     | '/long-distance'
+    | '/privacy'
     | '/services'
+    | '/sitemap'
     | '/ski-resort'
+    | '/terms'
   id:
     | '__root__'
     | '/'
+    | '/$slug'
     | '/airport-transfers'
     | '/airports-we-serve'
     | '/book-online'
     | '/contact'
     | '/corporate'
     | '/long-distance'
+    | '/privacy'
     | '/services'
+    | '/sitemap'
     | '/ski-resort'
+    | '/terms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SlugRoute: typeof SlugRoute
   AirportTransfersRoute: typeof AirportTransfersRoute
   AirportsWeServeRoute: typeof AirportsWeServeRoute
   BookOnlineRoute: typeof BookOnlineRoute
   ContactRoute: typeof ContactRoute
   CorporateRoute: typeof CorporateRoute
   LongDistanceRoute: typeof LongDistanceRoute
+  PrivacyRoute: typeof PrivacyRoute
   ServicesRoute: typeof ServicesRoute
+  SitemapRoute: typeof SitemapRoute
   SkiResortRoute: typeof SkiResortRoute
+  TermsRoute: typeof TermsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ski-resort': {
       id: '/ski-resort'
       path: '/ski-resort'
@@ -156,11 +215,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SkiResortRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap': {
+      id: '/sitemap'
+      path: '/sitemap'
+      fullPath: '/sitemap'
+      preLoaderRoute: typeof SitemapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/long-distance': {
@@ -205,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AirportTransfersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$slug': {
+      id: '/$slug'
+      path: '/$slug'
+      fullPath: '/$slug'
+      preLoaderRoute: typeof SlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -217,14 +297,18 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SlugRoute: SlugRoute,
   AirportTransfersRoute: AirportTransfersRoute,
   AirportsWeServeRoute: AirportsWeServeRoute,
   BookOnlineRoute: BookOnlineRoute,
   ContactRoute: ContactRoute,
   CorporateRoute: CorporateRoute,
   LongDistanceRoute: LongDistanceRoute,
+  PrivacyRoute: PrivacyRoute,
   ServicesRoute: ServicesRoute,
+  SitemapRoute: SitemapRoute,
   SkiResortRoute: SkiResortRoute,
+  TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
