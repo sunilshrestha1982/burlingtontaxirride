@@ -6,8 +6,8 @@ import { Phone, Mail, MessageCircle, Globe, MapPin, Clock } from "lucide-react";
 export function Footer() {
   return (
     <footer className="border-t border-border/60 bg-surface/40 mt-24">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-4 lg:px-8">
-        <div className="lg:col-span-1">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+        <div className="sm:col-span-2 lg:col-span-1">
           <Logo compact />
           <p className="mt-4 text-sm text-muted-foreground">
             Professional airport transfers, taxi & chauffeur service throughout Burlington, Vermont and beyond — available 24 hours a day, 7 days a week, every holiday.
