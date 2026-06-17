@@ -10,11 +10,18 @@ export function BookingForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const inputCls =
+    "w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none";
+
   return (
     <div className="rounded-2xl border border-gold/30 bg-surface/80 p-6 shadow-gold backdrop-blur sm:p-8">
       <p className="text-xs uppercase tracking-widest text-gold">— Quick Booking</p>
-      <h3 className="mt-2 font-display text-3xl text-foreground">Reserve Your Ride</h3>
-      <p className="mt-1 text-sm text-muted-foreground">Confirmed within minutes — fixed rate, no surprises.</p>
+      <h3 className="mt-2 font-display text-3xl text-foreground">
+        Reserve Your <em className="text-gradient-gold not-italic">Ride Today</em>
+      </h3>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Confirmed within minutes — no hidden fees, no surprises.
+      </p>
 
       <form
         className="mt-6 grid gap-4"
@@ -27,17 +34,20 @@ export function BookingForm() {
           const fd = new FormData(e.currentTarget);
           const booking = {
             service: String(fd.get("service") || ""),
+            name: String(fd.get("name") || ""),
+            phone: String(fd.get("phone") || ""),
+            email: String(fd.get("email") || ""),
             pickup: String(fd.get("pickup") || ""),
             dropoff: String(fd.get("dropoff") || ""),
             date: String(fd.get("date") || ""),
             time: String(fd.get("time") || ""),
             passengers: String(fd.get("passengers") || ""),
-            phone: String(fd.get("phone") || ""),
+            luggage: String(fd.get("luggage") || ""),
+            flight: String(fd.get("flight") || ""),
             reference: "BVT-" + Math.random().toString(36).slice(2, 8).toUpperCase(),
             submittedAt: new Date().toISOString(),
           };
 
-          // Notify admin (best-effort — never block confirmation if email fails).
           try {
             await fetch("/api/public/send-booking", {
               method: "POST",
@@ -54,28 +64,80 @@ export function BookingForm() {
         }}
       >
         <div>
-          <label className="mb-1 block text-xs font-medium text-muted-foreground">Service Type</label>
-          <select name="service" required className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none">
-            <option value="">Select a service…</option>
+          <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            Service Type
+          </label>
+          <select name="service" required defaultValue="" className={inputCls}>
+            <option value="" disabled>Select a service…</option>
             <option>Airport Transfer — To Airport</option>
             <option>Airport Transfer — From Airport</option>
             <option>Long Distance Transfer</option>
             <option>Round Trip</option>
           </select>
         </div>
+
         <div className="grid gap-4 sm:grid-cols-2">
-          <input name="pickup" required placeholder="Pickup Address" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
-          <input name="dropoff" required placeholder="Drop-off Location" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+          <div>
+            <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Full Name</label>
+            <input name="name" required placeholder="John Smith" className={inputCls} />
+          </div>
+          <div>
+            <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Phone</label>
+            <input name="phone" required type="tel" placeholder="(802) 555-0100" className={inputCls} />
+          </div>
         </div>
-        <div className="grid gap-4 sm:grid-cols-3">
-          <input name="date" required type="date" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
-          <input name="time" required type="time" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
-          <select name="passengers" required className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none">
-            <option value="">Passengers</option>
-            {[1,2,3,4,5,6].map((n)=> <option key={n}>{n} Passenger{n>1?"s":""}</option>)}
-          </select>
+
+        <div>
+          <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Email</label>
+          <input name="email" required type="email" placeholder="you@email.com" className={inputCls} />
         </div>
-        <input name="phone" required type="tel" placeholder="Your Phone" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+
+        <div>
+          <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Pickup Address</label>
+          <input name="pickup" required placeholder="Hotel, home, or address" className={inputCls} />
+        </div>
+
+        <div>
+          <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Drop-off Location</label>
+          <input name="dropoff" required placeholder="Burlington Airport or destination" className={inputCls} />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Date</label>
+            <input name="date" required type="date" className={inputCls} />
+          </div>
+          <div>
+            <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Time</label>
+            <input name="time" required type="time" className={inputCls} />
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Passengers</label>
+            <select name="passengers" required defaultValue="1 Passenger" className={inputCls}>
+              {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+                <option key={n}>{n} Passenger{n > 1 ? "s" : ""}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Luggage</label>
+            <select name="luggage" required defaultValue="No Luggage" className={inputCls}>
+              <option>No Luggage</option>
+              {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+                <option key={n}>{n} Bag{n > 1 ? "s" : ""}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground">Flight # (optional)</label>
+          <input name="flight" placeholder="e.g. AA 2341 — for tracking" className={inputCls} />
+        </div>
+
         <Captcha c={captcha} />
         {error && <p className="text-sm text-destructive">{error}</p>}
         <button
@@ -83,7 +145,7 @@ export function BookingForm() {
           disabled={!captcha.valid || submitting}
           className="gradient-gold rounded-md px-5 py-3 text-sm font-semibold text-primary-foreground shadow-gold hover:opacity-90 transition disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {submitting ? "Sending…" : "✦ Book My Ride Now"}
+          {submitting ? "Sending…" : "✦ Reserve My Ride Now"}
         </button>
         <p className="text-center text-xs text-muted-foreground">or call us directly</p>
         <a href={`tel:${PHONE_TEL}`} className="inline-flex items-center justify-center gap-2 text-lg font-bold text-gold">
