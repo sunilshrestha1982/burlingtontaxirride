@@ -42,8 +42,10 @@ import { VT_DESTINATIONS } from "./site-data";
 function fromDestination(slug: string): Location | undefined {
   const d = VT_DESTINATIONS.find((v) => v.slug === slug);
   if (!d) return undefined;
-  // Upgrade picsum image size for hero use
-  const heroImage = d.image.includes("picsum.photos")
+  // Upgrade image size for hero use
+  const heroImage = d.image.includes("loremflickr.com")
+    ? d.image.replace(/\/\d+\/\d+\//, "/1600/900/")
+    : d.image.includes("picsum.photos")
     ? d.image.replace(/\/\d+\/\d+$/, "/1600/900")
     : d.image;
   return {
