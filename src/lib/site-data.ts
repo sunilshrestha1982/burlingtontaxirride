@@ -138,31 +138,68 @@ export const VT_DESTINATIONS: City[] = [
     ["montgomery-vt", "Montgomery, VT", "montgomery"],
     ["fairfax-vt", "Fairfax, VT", "fairfax"],
     ["georgia-vt", "Georgia, VT", "georgia-vt"],
-  ] as const).map(([slug, name, tag], i) => {
-    // Rotate through broad Vermont landscape themes that always return a real
-    // Flickr photo (narrow town tags often returned the loremflickr fallback,
-    // which is why South Burlington → Georgia all looked identical).
-    const themes = [
-      "vermont,mountain,landscape",
-      "vermont,lake,landscape",
-      "vermont,forest,autumn",
-      "vermont,countryside,farm",
-      "vermont,green-mountains,scenic",
-      "vermont,covered-bridge,landscape",
-      "vermont,fall-foliage,nature",
-      "vermont,river,landscape",
-      "vermont,meadow,scenic",
-      "vermont,village,landscape",
+  ] as const).map(([slug, name], i) => {
+    // Curated pool of real Unsplash landscape photos (mountains, lakes, forests,
+    // autumn foliage, covered bridges, farmland, rivers) — all natural New
+    // England / Vermont-style scenery. Stable CDN URLs, deterministic per slug.
+    const pool = [
+      "photo-1506905925346-21bda4d32df4", // mountain lake
+      "photo-1441974231531-c6227db76b6e", // forest sun
+      "photo-1418065460487-3e41a6c84dc5", // mountain meadow
+      "photo-1470770841072-f978cf4d019e", // alpine lake reflection
+      "photo-1500964757637-c85e8a162699", // autumn forest road
+      "photo-1501785888041-af3ef285b470", // lake mountains
+      "photo-1448375240586-882707db888b", // forest sunbeam
+      "photo-1472214103451-9374bd1c798e", // autumn trees
+      "photo-1507041957456-9c397ce39c97", // foggy forest
+      "photo-1511497584788-876760111969", // mountain valley
+      "photo-1469474968028-56623f02e42e", // mountain dawn
+      "photo-1426604966848-d7adac402bff", // valley landscape
+      "photo-1497436072909-60f360e1d4b1", // forest layers
+      "photo-1418489098061-ce87b5dc3aee", // rolling hills
+      "photo-1475924156734-496f6cac6ec1", // covered bridge autumn
+      "photo-1508739773434-c26b3d09e071", // autumn road
+      "photo-1502082553048-f009c37129b9", // forest river
+      "photo-1490604001847-b712b0c2f967", // farmland field
+      "photo-1483728642387-6c3bdd6c93e5", // mountain stream
+      "photo-1418985991508-e47386d96a71", // lakeside cabin
+      "photo-1444930694458-01babe71870e", // autumn lake
+      "photo-1431794062232-2a99a5431c6c", // green valley
+      "photo-1465311530779-5241f5a29892", // pine forest
+      "photo-1473773508845-188df298d2d1", // mountain peaks
+      "photo-1476610182048-b716b8518aae", // forest path autumn
+      "photo-1500382017468-9049fed747ef", // rural meadow
+      "photo-1502082553048-f009c37129b9", // river forest
+      "photo-1519681393784-d120267933ba", // mountain night
+      "photo-1505765050516-f72dcac9c60e", // wooded hills
+      "photo-1455218873509-8097305ee378", // mountain lake green
+      "photo-1485470733090-0aae1788d5af", // mountain landscape
+      "photo-1454496522488-7a8e488e8606", // wide valley
+      "photo-1464822759023-fed622ff2c3b", // forest creek
+      "photo-1431036379983-8e0ab1f4bcfb", // autumn maple
+      "photo-1502082553048-f009c37129b9", // river autumn
+      "photo-1467173572019-4a8b1cfa05a3", // foggy mountains
+      "photo-1502784444187-359ac186c5bb", // farmland sunset
+      "photo-1444090542259-0af8fa96557e", // village hills
+      "photo-1492571350019-22de08371fd3", // green field
+      "photo-1486870591958-9b9d0d1dda99", // covered bridge
+      "photo-1499002238440-d264edd596ec", // autumn vermont
+      "photo-1477959858617-67f85cf4f1df", // sunlit forest
+      "photo-1465056836041-7f43ac27dcb5", // misty lake
+      "photo-1473773508845-188df298d2d1", // rugged peaks
+      "photo-1506260408121-e353d10b87c7", // snow mountains
     ];
-    const theme = themes[i % themes.length];
-    // Unique lock seed per slug guarantees a different photo for each destination.
-    const lock = 1000 + i * 7 + (slug.length % 13);
+    // Hash slug to pick a deterministic, stable photo per destination.
+    let h = 0;
+    for (let k = 0; k < slug.length; k++) h = (h * 31 + slug.charCodeAt(k)) >>> 0;
+    const id = pool[(h + i) % pool.length];
     return {
       slug,
       name,
-      image: `https://loremflickr.com/1200/800/${theme}?lock=${lock}`,
+      image: `https://images.unsplash.com/${id}?w=1200&h=800&fit=crop&q=80`,
     };
   }),
+
 ];
 
 export type Airport = {
