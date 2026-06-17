@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { PHONE, PHONE_TEL, VT_DESTINATIONS } from "@/lib/site-data";
 import { BookingForm } from "@/components/BookingForm";
 import { CityCard } from "@/components/PlaceCards";
@@ -20,6 +21,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [showAllDest, setShowAllDest] = useState(false);
+  const visibleDestinations = showAllDest ? VT_DESTINATIONS : VT_DESTINATIONS.slice(0, 8);
   return (
     <>
       {/* HERO */}
@@ -172,11 +175,22 @@ function Index() {
 
           {/* VT Destinations grid */}
           <div className="mt-20">
-            <h3 className="font-display text-3xl sm:text-4xl">Burlington VT to Vermont Destinations</h3>
-            <p className="mt-2 text-sm text-muted-foreground">Click any destination to book your ride</p>
-            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-              {VT_DESTINATIONS.map((d) => <CityCard key={d.slug} city={d} />)}
+            <h3 className="font-display text-3xl font-bold sm:text-4xl md:text-5xl">Burlington VT to Vermont Destinations</h3>
+            <p className="mt-3 text-sm text-muted-foreground">Click any destination to book your ride</p>
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+              {visibleDestinations.map((d) => <CityCard key={d.slug} city={d} />)}
             </div>
+            {VT_DESTINATIONS.length > 8 && (
+              <div className="mt-10 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAllDest((v) => !v)}
+                  className="gradient-gold rounded-md px-8 py-3 text-sm font-semibold tracking-wider uppercase text-primary-foreground shadow-gold hover:opacity-90 transition"
+                >
+                  {showAllDest ? "Show Less" : `Show More (${VT_DESTINATIONS.length - 8}+ Destinations)`}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
