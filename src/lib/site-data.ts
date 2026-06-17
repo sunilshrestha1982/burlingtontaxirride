@@ -141,7 +141,8 @@ export const VT_DESTINATIONS: City[] = [
   ] as const).map(([slug, name, tag], i) => ({
     slug,
     name,
-    image: `https://picsum.photos/seed/vt-${slug}/800/600`,
+    // Clear, natural Vermont landscape photo per destination (Flickr-sourced, deterministic per slug)
+    image: `https://loremflickr.com/1200/800/vermont,${tag},landscape,nature,scenic?lock=${100 + i}`,
   })),
 ];
 
