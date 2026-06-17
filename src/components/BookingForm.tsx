@@ -6,16 +6,13 @@ import { PHONE, PHONE_TEL } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Captcha, useCaptcha } from "./Captcha";
 
 type Errors = Partial<Record<
-  "name" | "phone" | "email" | "pickup" | "dropoff" | "date" | "time" | "service" | "flight",
+  "name" | "phone" | "pickup" | "dropoff" | "date" | "time" | "service",
   string
 >>;
 
 const NAME_RE = /^[A-Za-zÀ-ÿ '.-]{2,60}$/;
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const FLIGHT_RE = /^[A-Z0-9]{2}\s?\d{1,4}[A-Z]?$/i;
 
 function digits(s: string) {
   return s.replace(/\D/g, "");
@@ -28,54 +25,40 @@ function validateField(name: keyof Errors, value: string): string | undefined {
       return v ? undefined : "Please choose a service type.";
     case "name":
       if (!v) return "Full name is required.";
-      if (!NAME_RE.test(v)) return "Enter a valid name (letters, 2–60 chars).";
+      if (!NAME_RE.test(v)) return "Enter a valid name.";
       return;
     case "phone": {
       if (!v) return "Phone number is required.";
       const d = digits(v);
-      if (d.length < 10 || d.length > 15) return "Enter a valid phone number (10–15 digits).";
+      if (d.length < 10 || d.length > 15) return "Enter a valid phone number.";
       return;
     }
-    case "email":
-      if (!v) return "Email is required.";
-      if (!EMAIL_RE.test(v)) return "Enter a valid email address.";
-      return;
     case "pickup":
       if (!v) return "Pickup address is required.";
-      if (v.length < 4) return "Please enter a more specific pickup address.";
       return;
     case "dropoff":
       if (!v) return "Drop-off location is required.";
-      if (v.length < 3) return "Please enter a more specific drop-off location.";
       return;
     case "date":
       return v ? undefined : "Please select a date.";
     case "time":
       return v ? undefined : "Please select a time.";
-    case "flight":
-      if (!v) return; // optional
-      if (!FLIGHT_RE.test(v)) return "Flight # should look like 'AA 2341'.";
-      return;
   }
 }
 
 export function BookingForm() {
   const navigate = useNavigate();
-  const captcha = useCaptcha();
   const [submitting, setSubmitting] = useState(false);
 
   const [values, setValues] = useState({
     service: "",
     name: "",
     phone: "",
-    email: "",
     pickup: "",
     dropoff: "",
     date: "",
     time: "",
-    passengers: "1 Passenger",
-    luggage: "No Luggage",
-    flight: "",
+    passengers: "1",
   });
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<keyof Errors, boolean>>>({});
@@ -104,11 +87,11 @@ export function BookingForm() {
 
   const inputCls = (k: keyof Errors) =>
     cn(
-      "w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none",
+      "w-full rounded-md border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none",
       errors[k] ? "border-destructive focus:border-destructive" : "border-border focus:border-gold",
     );
 
-  const labelCls = "mb-1 block text-xs font-medium uppercase tracking-wider text-muted-foreground";
+  const labelCls = "mb-2 block text-xs font-bold uppercase tracking-widest text-gold";
 
   const formatTime = (t: string) => {
     if (!t) return "";
@@ -120,21 +103,18 @@ export function BookingForm() {
 
   return (
     <div className="rounded-2xl border border-gold/30 bg-surface/80 p-6 shadow-gold backdrop-blur sm:p-8">
-      <p className="text-xs uppercase tracking-widest text-gold">— Quick Booking</p>
-      <h3 className="mt-2 font-display text-3xl text-foreground">
-        Reserve Your <em className="text-gradient-gold not-italic">Ride Today</em>
-      </h3>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Confirmed within minutes — no hidden fees, no surprises.
+      <p className="text-xs font-semibold uppercase tracking-widest text-gold">— Book Your Ride</p>
+      <h3 className="mt-2 font-display text-4xl text-foreground">Reserve Your Ride Today</h3>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Confirmed within minutes — no hidden fees.
       </p>
 
       <form
         noValidate
-        className="mt-6 grid gap-4"
+        className="mt-6 grid gap-5"
         onSubmit={async (e) => {
           e.preventDefault();
-
-          const keys: (keyof Errors)[] = ["service", "name", "phone", "email", "pickup", "dropoff", "date", "time", "flight"];
+          const keys: (keyof Errors)[] = ["service", "name", "phone", "pickup", "dropoff", "date", "time"];
           const next: Errors = {};
           for (const k of keys) {
             const msg = validateField(k, (values as any)[k] || "");
@@ -142,7 +122,7 @@ export function BookingForm() {
           }
           setErrors(next);
           setTouched(Object.fromEntries(keys.map((k) => [k, true])));
-          if (Object.keys(next).length > 0 || !captcha.valid) return;
+          if (Object.keys(next).length > 0) return;
 
           setSubmitting(true);
           const booking = {
@@ -150,17 +130,13 @@ export function BookingForm() {
             reference: "BVT-" + Math.random().toString(36).slice(2, 8).toUpperCase(),
             submittedAt: new Date().toISOString(),
           };
-
           try {
             await fetch("/api/public/send-booking", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(booking),
             });
-          } catch {
-            // ignore
-          }
-
+          } catch {}
           sessionStorage.setItem("lastBooking", JSON.stringify(booking));
           setSubmitting(false);
           navigate({ to: "/booking-confirmed" });
@@ -183,48 +159,6 @@ export function BookingForm() {
           {errors.service && <p className="mt-1 text-xs text-destructive">{errors.service}</p>}
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label className={labelCls}>Full Name</label>
-            <input
-              value={values.name}
-              onChange={(e) => setField("name", e.target.value)}
-              onBlur={() => onBlur("name")}
-              placeholder="John Smith"
-              className={inputCls("name")}
-              autoComplete="name"
-            />
-            {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
-          </div>
-          <div>
-            <label className={labelCls}>Phone</label>
-            <input
-              type="tel"
-              value={values.phone}
-              onChange={(e) => setField("phone", e.target.value)}
-              onBlur={() => onBlur("phone")}
-              placeholder="(802) 555-0100"
-              className={inputCls("phone")}
-              autoComplete="tel"
-            />
-            {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
-          </div>
-        </div>
-
-        <div>
-          <label className={labelCls}>Email</label>
-          <input
-            type="email"
-            value={values.email}
-            onChange={(e) => setField("email", e.target.value)}
-            onBlur={() => onBlur("email")}
-            placeholder="you@email.com"
-            className={inputCls("email")}
-            autoComplete="email"
-          />
-          {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
-        </div>
-
         <div>
           <label className={labelCls}>Pickup Address</label>
           <input
@@ -238,7 +172,7 @@ export function BookingForm() {
         </div>
 
         <div>
-          <label className={labelCls}>Drop-off Location</label>
+          <label className={labelCls}>Drop-off</label>
           <input
             value={values.dropoff}
             onChange={(e) => setField("dropoff", e.target.value)}
@@ -249,7 +183,7 @@ export function BookingForm() {
           {errors.dropoff && <p className="mt-1 text-xs text-destructive">{errors.dropoff}</p>}
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className={labelCls}>Date</label>
             <Popover>
@@ -263,7 +197,7 @@ export function BookingForm() {
                     !values.date && "text-muted-foreground",
                   )}
                 >
-                  <span>{dateObj ? format(dateObj, "PPP") : "Pick a date"}</span>
+                  <span>{dateObj ? format(dateObj, "PP") : "mm/dd/yyyy"}</span>
                   <CalendarIcon className="h-4 w-4 text-gold" />
                 </button>
               </PopoverTrigger>
@@ -292,7 +226,7 @@ export function BookingForm() {
                 onBlur={() => onBlur("time")}
                 className={cn(inputCls("time"), "appearance-none pr-9")}
               >
-                <option value="" disabled>Select a time…</option>
+                <option value="" disabled>--:-- --</option>
                 {times.map((t) => (
                   <option key={t} value={t}>{formatTime(t)}</option>
                 ))}
@@ -303,7 +237,7 @@ export function BookingForm() {
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className={labelCls}>Passengers</label>
             <select
@@ -312,50 +246,39 @@ export function BookingForm() {
               className={inputCls("name").replace("border-destructive", "border-border")}
             >
               {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-                <option key={n}>{n} Passenger{n > 1 ? "s" : ""}</option>
+                <option key={n} value={String(n)}>{n}</option>
               ))}
             </select>
           </div>
           <div>
-            <label className={labelCls}>Luggage</label>
-            <select
-              value={values.luggage}
-              onChange={(e) => setField("luggage", e.target.value)}
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none"
-            >
-              <option>No Luggage</option>
-              {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-                <option key={n}>{n} Bag{n > 1 ? "s" : ""}</option>
-              ))}
-            </select>
+            <label className={labelCls}>Phone</label>
+            <input
+              type="tel"
+              value={values.phone}
+              onChange={(e) => setField("phone", e.target.value)}
+              onBlur={() => onBlur("phone")}
+              placeholder="(802) 555-0000"
+              className={inputCls("phone")}
+              autoComplete="tel"
+            />
+            {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
           </div>
         </div>
 
-        <div>
-          <label className={labelCls}>Flight # (optional)</label>
-          <input
-            value={values.flight}
-            onChange={(e) => setField("flight", e.target.value)}
-            onBlur={() => onBlur("flight")}
-            placeholder="e.g. AA 2341 — for tracking"
-            className={inputCls("flight")}
-          />
-          {errors.flight && <p className="mt-1 text-xs text-destructive">{errors.flight}</p>}
-        </div>
-
-        <Captcha c={captcha} />
         <button
           type="submit"
-          disabled={!captcha.valid || submitting}
-          className="gradient-gold rounded-md px-5 py-3 text-sm font-semibold text-primary-foreground shadow-gold hover:opacity-90 transition disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={submitting}
+          className="mt-2 rounded-md border border-gold/40 bg-background px-5 py-4 text-sm font-bold uppercase tracking-widest text-foreground hover:bg-gold hover:text-primary-foreground transition disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? "Sending…" : "✦ Reserve My Ride Now"}
         </button>
-        <p className="text-center text-xs text-muted-foreground">or call us directly</p>
-        <a href={`tel:${PHONE_TEL}`} className="inline-flex items-center justify-center gap-2 text-lg font-bold text-gold">
-          <Phone className="h-4 w-4" /> {PHONE}
+        <p className="text-center text-sm text-muted-foreground">or call us 24/7</p>
+        <a
+          href={`tel:${PHONE_TEL}`}
+          className="flex items-center justify-center gap-2 rounded-md border border-gold px-5 py-4 text-lg font-bold text-gold hover:bg-gold/10 transition"
+        >
+          <Phone className="h-5 w-5" /> {PHONE}
         </a>
-        <p className="text-center text-xs text-muted-foreground">Available 24/7 · Every Day · Holidays</p>
       </form>
     </div>
   );
