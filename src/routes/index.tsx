@@ -25,11 +25,11 @@ function Index() {
       {/* HERO */}
       <section className="relative isolate overflow-hidden">
         <HeroSlideshow />
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
-          <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-1.5 text-xs uppercase tracking-[0.25em] text-gold">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-40">
+          <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] text-gold sm:px-4 sm:text-xs sm:tracking-[0.25em]">
             <span className="h-2 w-2 rounded-full bg-gold animate-pulse" /> Available 24/7 — Burlington, Vermont
           </span>
-          <h1 className="mt-6 max-w-3xl font-display text-5xl leading-[1.05] text-foreground sm:text-6xl md:text-7xl">
+          <h1 className="mt-6 max-w-3xl font-display text-4xl leading-[1.05] text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
             Burlington VT <span className="text-gradient-gold">Taxi Ride</span>
           </h1>
           <p className="mt-5 max-w-2xl text-base text-muted-foreground sm:text-lg">
