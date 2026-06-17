@@ -4,7 +4,8 @@ import type { Airport, City } from "@/lib/site-data";
 export function CityCard({ city }: { city: City }) {
   return (
     <Link
-      to="/book-online"
+      to="/$slug"
+      params={{ slug: city.slug }}
       className="hover-zoom-card group block overflow-hidden rounded-xl border border-border bg-surface transition-all hover:border-gold/60 hover:shadow-gold"
     >
       <div className="aspect-[4/3] overflow-hidden">
