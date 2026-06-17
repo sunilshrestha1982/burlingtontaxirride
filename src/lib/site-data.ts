@@ -138,12 +138,31 @@ export const VT_DESTINATIONS: City[] = [
     ["montgomery-vt", "Montgomery, VT", "montgomery"],
     ["fairfax-vt", "Fairfax, VT", "fairfax"],
     ["georgia-vt", "Georgia, VT", "georgia-vt"],
-  ] as const).map(([slug, name, tag], i) => ({
-    slug,
-    name,
-    // Clear, natural Vermont landscape photo per destination (Flickr-sourced, deterministic per slug)
-    image: `https://loremflickr.com/1200/800/vermont,${tag},landscape,nature,scenic?lock=${100 + i}`,
-  })),
+  ] as const).map(([slug, name, tag], i) => {
+    // Rotate through broad Vermont landscape themes that always return a real
+    // Flickr photo (narrow town tags often returned the loremflickr fallback,
+    // which is why South Burlington → Georgia all looked identical).
+    const themes = [
+      "vermont,mountain,landscape",
+      "vermont,lake,landscape",
+      "vermont,forest,autumn",
+      "vermont,countryside,farm",
+      "vermont,green-mountains,scenic",
+      "vermont,covered-bridge,landscape",
+      "vermont,fall-foliage,nature",
+      "vermont,river,landscape",
+      "vermont,meadow,scenic",
+      "vermont,village,landscape",
+    ];
+    const theme = themes[i % themes.length];
+    // Unique lock seed per slug guarantees a different photo for each destination.
+    const lock = 1000 + i * 7 + (slug.length % 13);
+    return {
+      slug,
+      name,
+      image: `https://loremflickr.com/1200/800/${theme}?lock=${lock}`,
+    };
+  }),
 ];
 
 export type Airport = {
