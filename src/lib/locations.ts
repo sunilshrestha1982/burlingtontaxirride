@@ -57,4 +57,5 @@ function fromDestination(slug: string): Location | undefined {
   };
 }
 
-export const locationBySlug = (slug: string) => LOCATIONS.find((l) => l.slug === slug);
+export const locationBySlug = (slug: string): Location | undefined =>
+  LOCATIONS.find((l) => l.slug === slug) ?? fromDestination(slug);
