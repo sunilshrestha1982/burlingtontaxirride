@@ -17,6 +17,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LongDistanceRouteImport } from './routes/long-distance'
 import { Route as CorporateRouteImport } from './routes/corporate'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BookingConfirmedRouteImport } from './routes/booking-confirmed'
 import { Route as BookOnlineRouteImport } from './routes/book-online'
 import { Route as AirportsWeServeRouteImport } from './routes/airports-we-serve'
 import { Route as AirportTransfersRouteImport } from './routes/airport-transfers'
@@ -63,6 +64,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingConfirmedRoute = BookingConfirmedRouteImport.update({
+  id: '/booking-confirmed',
+  path: '/booking-confirmed',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BookOnlineRoute = BookOnlineRouteImport.update({
   id: '/book-online',
   path: '/book-online',
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
   '/book-online': typeof BookOnlineRoute
+  '/booking-confirmed': typeof BookingConfirmedRoute
   '/contact': typeof ContactRoute
   '/corporate': typeof CorporateRoute
   '/long-distance': typeof LongDistanceRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
   '/book-online': typeof BookOnlineRoute
+  '/booking-confirmed': typeof BookingConfirmedRoute
   '/contact': typeof ContactRoute
   '/corporate': typeof CorporateRoute
   '/long-distance': typeof LongDistanceRoute
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
   '/book-online': typeof BookOnlineRoute
+  '/booking-confirmed': typeof BookingConfirmedRoute
   '/contact': typeof ContactRoute
   '/corporate': typeof CorporateRoute
   '/long-distance': typeof LongDistanceRoute
@@ -143,6 +152,7 @@ export interface FileRouteTypes {
     | '/airport-transfers'
     | '/airports-we-serve'
     | '/book-online'
+    | '/booking-confirmed'
     | '/contact'
     | '/corporate'
     | '/long-distance'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/airport-transfers'
     | '/airports-we-serve'
     | '/book-online'
+    | '/booking-confirmed'
     | '/contact'
     | '/corporate'
     | '/long-distance'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/airport-transfers'
     | '/airports-we-serve'
     | '/book-online'
+    | '/booking-confirmed'
     | '/contact'
     | '/corporate'
     | '/long-distance'
@@ -189,6 +201,7 @@ export interface RootRouteChildren {
   AirportTransfersRoute: typeof AirportTransfersRoute
   AirportsWeServeRoute: typeof AirportsWeServeRoute
   BookOnlineRoute: typeof BookOnlineRoute
+  BookingConfirmedRoute: typeof BookingConfirmedRoute
   ContactRoute: typeof ContactRoute
   CorporateRoute: typeof CorporateRoute
   LongDistanceRoute: typeof LongDistanceRoute
@@ -257,6 +270,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/booking-confirmed': {
+      id: '/booking-confirmed'
+      path: '/booking-confirmed'
+      fullPath: '/booking-confirmed'
+      preLoaderRoute: typeof BookingConfirmedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/book-online': {
       id: '/book-online'
       path: '/book-online'
@@ -301,6 +321,7 @@ const rootRouteChildren: RootRouteChildren = {
   AirportTransfersRoute: AirportTransfersRoute,
   AirportsWeServeRoute: AirportsWeServeRoute,
   BookOnlineRoute: BookOnlineRoute,
+  BookingConfirmedRoute: BookingConfirmedRoute,
   ContactRoute: ContactRoute,
   CorporateRoute: CorporateRoute,
   LongDistanceRoute: LongDistanceRoute,
