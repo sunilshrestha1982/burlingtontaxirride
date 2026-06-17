@@ -9,8 +9,56 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SkiResortRouteImport } from './routes/ski-resort'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as LongDistanceRouteImport } from './routes/long-distance'
+import { Route as CorporateRouteImport } from './routes/corporate'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BookOnlineRouteImport } from './routes/book-online'
+import { Route as AirportsWeServeRouteImport } from './routes/airports-we-serve'
+import { Route as AirportTransfersRouteImport } from './routes/airport-transfers'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SkiResortRoute = SkiResortRouteImport.update({
+  id: '/ski-resort',
+  path: '/ski-resort',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LongDistanceRoute = LongDistanceRouteImport.update({
+  id: '/long-distance',
+  path: '/long-distance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CorporateRoute = CorporateRouteImport.update({
+  id: '/corporate',
+  path: '/corporate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookOnlineRoute = BookOnlineRouteImport.update({
+  id: '/book-online',
+  path: '/book-online',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AirportsWeServeRoute = AirportsWeServeRouteImport.update({
+  id: '/airports-we-serve',
+  path: '/airports-we-serve',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AirportTransfersRoute = AirportTransfersRouteImport.update({
+  id: '/airport-transfers',
+  path: '/airport-transfers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +67,144 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/airport-transfers': typeof AirportTransfersRoute
+  '/airports-we-serve': typeof AirportsWeServeRoute
+  '/book-online': typeof BookOnlineRoute
+  '/contact': typeof ContactRoute
+  '/corporate': typeof CorporateRoute
+  '/long-distance': typeof LongDistanceRoute
+  '/services': typeof ServicesRoute
+  '/ski-resort': typeof SkiResortRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/airport-transfers': typeof AirportTransfersRoute
+  '/airports-we-serve': typeof AirportsWeServeRoute
+  '/book-online': typeof BookOnlineRoute
+  '/contact': typeof ContactRoute
+  '/corporate': typeof CorporateRoute
+  '/long-distance': typeof LongDistanceRoute
+  '/services': typeof ServicesRoute
+  '/ski-resort': typeof SkiResortRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/airport-transfers': typeof AirportTransfersRoute
+  '/airports-we-serve': typeof AirportsWeServeRoute
+  '/book-online': typeof BookOnlineRoute
+  '/contact': typeof ContactRoute
+  '/corporate': typeof CorporateRoute
+  '/long-distance': typeof LongDistanceRoute
+  '/services': typeof ServicesRoute
+  '/ski-resort': typeof SkiResortRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/airport-transfers'
+    | '/airports-we-serve'
+    | '/book-online'
+    | '/contact'
+    | '/corporate'
+    | '/long-distance'
+    | '/services'
+    | '/ski-resort'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/airport-transfers'
+    | '/airports-we-serve'
+    | '/book-online'
+    | '/contact'
+    | '/corporate'
+    | '/long-distance'
+    | '/services'
+    | '/ski-resort'
+  id:
+    | '__root__'
+    | '/'
+    | '/airport-transfers'
+    | '/airports-we-serve'
+    | '/book-online'
+    | '/contact'
+    | '/corporate'
+    | '/long-distance'
+    | '/services'
+    | '/ski-resort'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AirportTransfersRoute: typeof AirportTransfersRoute
+  AirportsWeServeRoute: typeof AirportsWeServeRoute
+  BookOnlineRoute: typeof BookOnlineRoute
+  ContactRoute: typeof ContactRoute
+  CorporateRoute: typeof CorporateRoute
+  LongDistanceRoute: typeof LongDistanceRoute
+  ServicesRoute: typeof ServicesRoute
+  SkiResortRoute: typeof SkiResortRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/ski-resort': {
+      id: '/ski-resort'
+      path: '/ski-resort'
+      fullPath: '/ski-resort'
+      preLoaderRoute: typeof SkiResortRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/long-distance': {
+      id: '/long-distance'
+      path: '/long-distance'
+      fullPath: '/long-distance'
+      preLoaderRoute: typeof LongDistanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/corporate': {
+      id: '/corporate'
+      path: '/corporate'
+      fullPath: '/corporate'
+      preLoaderRoute: typeof CorporateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-online': {
+      id: '/book-online'
+      path: '/book-online'
+      fullPath: '/book-online'
+      preLoaderRoute: typeof BookOnlineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/airports-we-serve': {
+      id: '/airports-we-serve'
+      path: '/airports-we-serve'
+      fullPath: '/airports-we-serve'
+      preLoaderRoute: typeof AirportsWeServeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/airport-transfers': {
+      id: '/airport-transfers'
+      path: '/airport-transfers'
+      fullPath: '/airport-transfers'
+      preLoaderRoute: typeof AirportTransfersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +217,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AirportTransfersRoute: AirportTransfersRoute,
+  AirportsWeServeRoute: AirportsWeServeRoute,
+  BookOnlineRoute: BookOnlineRoute,
+  ContactRoute: ContactRoute,
+  CorporateRoute: CorporateRoute,
+  LongDistanceRoute: LongDistanceRoute,
+  ServicesRoute: ServicesRoute,
+  SkiResortRoute: SkiResortRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

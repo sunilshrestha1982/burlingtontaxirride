@@ -1,29 +1,194 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { PHONE, PHONE_TEL, VT_DESTINATIONS } from "@/lib/site-data";
+import { BookingForm } from "@/components/BookingForm";
+import { CityCard } from "@/components/PlaceCards";
+import { CTASection } from "@/components/CTASection";
+import { Phone, Plane, Car, Briefcase, Snowflake, ShieldCheck, Clock, BadgeCheck, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Burlington VT Taxi Ride — 24/7 Airport & Long Distance Car Service" },
+      { name: "description", content: "Professional Burlington Vermont taxi & airport transfer service. Fixed rates to BTV, Montreal YUL, Boston, Albany. 24/7 availability." },
+      { property: "og:title", content: "Burlington VT Taxi Ride" },
+      { property: "og:description", content: "Vermont's premier 24/7 airport, corporate, ski and long-distance transportation." },
+      { property: "og:image", content: "/places/burlington-vt.jpg" },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
+    <>
+      {/* HERO */}
+      <section className="relative isolate overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <img src="/places/burlington-vt.jpg" alt="" className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
+        </div>
+        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
+          <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-1.5 text-xs uppercase tracking-[0.25em] text-gold">
+            <span className="h-2 w-2 rounded-full bg-gold animate-pulse" /> Available 24/7 — Burlington, Vermont
+          </span>
+          <h1 className="mt-6 max-w-3xl font-display text-5xl leading-[1.05] text-foreground sm:text-6xl md:text-7xl">
+            Burlington VT <span className="text-gradient-gold">Taxi Ride</span>
+          </h1>
+          <p className="mt-5 max-w-2xl text-base text-muted-foreground sm:text-lg">
+            Fixed-rate airport transfers, corporate travel, ski shuttles and long-distance car service throughout Vermont, New England and Québec.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to="/book-online" className="gradient-gold inline-flex items-center gap-2 rounded-md px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-gold">Book a Ride</Link>
+            <a href={`tel:${PHONE_TEL}`} className="inline-flex items-center gap-2 rounded-md border border-gold/40 px-6 py-3.5 text-sm font-semibold text-gold hover:bg-gold/10">
+              <Phone className="h-4 w-4" /> {PHONE}
+            </a>
+          </div>
+          <div className="mt-12 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4">
+            {[
+              { icon: BadgeCheck, label: "Licensed & Insured" },
+              { icon: Plane, label: "Real-Time Flight Tracking" },
+              { icon: ShieldCheck, label: "Fixed Rates — No Surge" },
+              { icon: Clock, label: "24/7 Every Day" },
+            ].map((b) => (
+              <div key={b.label} className="flex flex-col items-start gap-2 rounded-xl border border-border/60 bg-surface/60 p-3 backdrop-blur">
+                <b.icon className="h-5 w-5 text-gold" />
+                <span className="text-xs text-muted-foreground">{b.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WELCOME */}
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-gold">Hello, Welcome To</p>
+            <h2 className="mt-3 font-display text-4xl sm:text-5xl">Burlington VT Taxi Ride</h2>
+            <p className="mt-5 text-muted-foreground">
+              At Burlington VT Taxi Ride, we provide first-class transportation throughout New England, combining professional service, comfort, and reliability on every journey. Based at Burlington International Airport (BTV), Vermont, we offer airport transfers, corporate travel, ski resort shuttles, and long-distance rides, including service to and from Montréal Airport (YUL).
+            </p>
+            <p className="mt-4 text-muted-foreground">
+              From airport transfers and corporate travel to ski resort shuttles and long-distance rides — every journey is elevated by our commitment to exceptional service.
+            </p>
+            <div className="mt-8 grid grid-cols-2 gap-6">
+              <div>
+                <div className="font-display text-4xl text-gold">24/7</div>
+                <div className="text-xs uppercase tracking-widest text-muted-foreground">Availability</div>
+              </div>
+              <div>
+                <div className="font-display text-4xl text-gold">500+</div>
+                <div className="text-xs uppercase tracking-widest text-muted-foreground">Happy Riders</div>
+              </div>
+            </div>
+            <Link to="/book-online" className="mt-8 inline-flex items-center gap-2 rounded-md gradient-gold px-6 py-3 text-sm font-semibold text-primary-foreground shadow-gold">Book a Ride Now</Link>
+          </div>
+          <BookingForm />
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section className="border-y border-border/60 bg-surface/30 py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="text-xs uppercase tracking-[0.3em] text-gold text-center">What We Offer</p>
+          <h2 className="mt-3 text-center font-display text-4xl sm:text-5xl">Our Top Services</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-muted-foreground">Custom services to meet your every need — discover our most popular rides.</p>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: Plane, title: "Airport Transfers", to: "/airport-transfers", img: "/places/btv-airport.jpg",
+                desc: "Door-to-door service to & from Burlington International Airport (BTV). Flight tracking, meet & greet, fixed rates — 24/7." },
+              { icon: Car, title: "Long Distance & Out-of-State", to: "/long-distance", img: "/places/montreal-city.jpg",
+                desc: "Burlington to Montréal (YUL), Albany (ALB), Boston, Stowe and across Vermont. Fixed quote, professional driver." },
+              { icon: Briefcase, title: "Corporate & Executive", to: "/corporate", img: "/places/burlington-vt.jpg",
+                desc: "Discreet, punctual business travel for Vermont companies and visiting executives. Account billing available." },
+              { icon: Snowflake, title: "Ski Resort Transfers", to: "/ski-resort", img: "/places/stowe-vt.jpg",
+                desc: "Stowe, Sugarbush, Smugglers' Notch, Bolton Valley, Jay Peak and more. Equipment welcome." },
+            ].map((s) => (
+              <article key={s.title} className="hover-zoom-card group overflow-hidden rounded-2xl border border-border bg-background hover:border-gold/60 hover:shadow-gold transition">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img src={s.img} alt={s.title} className="hover-zoom-img h-full w-full object-cover" />
+                </div>
+                <div className="p-6">
+                  <s.icon className="h-7 w-7 text-gold" />
+                  <h3 className="mt-3 font-display text-xl">{s.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
+                  <Link to={s.to} className="mt-4 inline-flex text-xs font-bold uppercase tracking-widest text-gold hover:underline">Learn more →</Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHY CHOOSE */}
+      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <p className="text-xs uppercase tracking-[0.3em] text-gold text-center">Driven by Excellence</p>
+        <h2 className="mt-3 text-center font-display text-4xl sm:text-5xl">Why Choose Burlington VT Taxi Ride</h2>
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[
+            ["Professional Chauffeur", "Every driver is licensed, background-checked, and trained to the highest standard."],
+            ["Safe & Discreet", "Trust us completely. Our drivers operate with full professionalism and discretion."],
+            ["Clean & Comfortable", "A modern, luxurious experience in a spotless vehicle — detailed before every trip."],
+            ["Real-Time Flight Tracking", "We monitor your BTV flight automatically. Delays handled at no extra charge."],
+            ["Fixed Rates — No Surge", "Your fare is confirmed before you book and locked in. No hidden fees."],
+            ["24/7 Support", "Real humans answer — call, text, or WhatsApp us any hour of any day."],
+          ].map(([title, desc]) => (
+            <div key={title} className="rounded-2xl border border-border bg-surface/50 p-6">
+              <h4 className="font-display text-lg text-gold">{title}</h4>
+              <p className="mt-2 text-sm text-muted-foreground">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CITIES WE SERVE */}
+      <section className="border-y border-border/60 bg-surface/30 py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="text-xs uppercase tracking-[0.3em] text-gold">We Go Anywhere</p>
+          <h2 className="mt-3 font-display text-4xl sm:text-5xl">Cities We Serve</h2>
+          <p className="mt-4 max-w-3xl text-muted-foreground">
+            Door-to-door taxi and shuttle service to Montréal-Trudeau International Airport (YUL) from Burlington Airport (BTV), Plattsburgh NY, and Stowe VT — every day, both directions. Fixed-rate, on-time, professional drivers.
+          </p>
+
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {[
+              { title: "Plattsburgh NY → Montreal Airport (YUL)", img: "/places/plattsburgh-ny.jpg",
+                body: "Direct cross-border transfer from Plattsburgh, NY (including PBG airport) to Montréal-Trudeau International Airport. Passport required. Approx. 1 hr 15 min drive depending on border wait." },
+              { title: "Burlington Airport (BTV) → Montreal Airport (YUL)", img: "/places/btv-airport.jpg",
+                body: "Direct cross-border transfer from Burlington International Airport (BTV) to Montréal-Trudeau International Airport (YUL). Approx. 2 hr drive including border. Flight tracking, fixed pricing, meet-and-greet at BTV arrivals." },
+              { title: "Stowe VT → Montreal Airport (YUL)", img: "/places/stowe-vt.jpg",
+                body: "Door-to-door cross-border transfer from Stowe, Vermont resorts, lodges, and homes to Montréal-Trudeau Airport (YUL). Approx. 2 hr 30 min drive including border. Pre-booked, fixed rate, ski-gear friendly." },
+            ].map((c) => (
+              <article key={c.title} className="hover-zoom-card group overflow-hidden rounded-2xl border border-border bg-background hover:border-gold/60 hover:shadow-gold transition">
+                <div className="aspect-[16/10] overflow-hidden">
+                  <img src={c.img} alt={c.title} loading="lazy" className="hover-zoom-img h-full w-full object-cover" />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-display text-xl">{c.title}</h3>
+                  <p className="mt-3 text-sm text-muted-foreground">{c.body}</p>
+                  <a href={`tel:${PHONE_TEL}`} className="mt-4 inline-flex text-xs font-bold uppercase tracking-widest text-gold hover:underline">Call {PHONE} for a quote →</a>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {/* VT Destinations grid */}
+          <div className="mt-20">
+            <h3 className="font-display text-3xl sm:text-4xl">Burlington VT to Vermont Destinations</h3>
+            <p className="mt-2 text-sm text-muted-foreground">Click any destination to book your ride</p>
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {VT_DESTINATIONS.map((d) => <CityCard key={d.slug} city={d} />)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <CTASection
+        eyebrow="— Book Your Ride"
+        title="Book Your Vermont Ride Today"
+        subtitle="Use our instant booking tool and get started right away — or call us 24 hours a day."
       />
-    </div>
+    </>
   );
 }
