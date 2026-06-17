@@ -25,19 +25,19 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <Logo compact />
-        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
+        <nav className="hidden lg:flex flex-wrap items-center justify-center gap-1 xl:gap-2">
           {links.map((l) => (
             <Link key={l.to} to={l.to}
-              className="px-2 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-gold xl:px-3 xl:text-sm [&.active]:text-gold [&.active]:border-b-2 [&.active]:border-gold"
+              className="shrink-0 whitespace-nowrap px-2 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-gold xl:px-3 xl:text-sm [&.active]:text-gold [&.active]:border-b-2 [&.active]:border-gold"
               activeOptions={{ exact: l.to === "/" }}>
               {l.label}
             </Link>
           ))}
 
           {/* Location dropdown (replaces Services) */}
-          <div className="relative" onMouseEnter={() => setLocOpen(true)} onMouseLeave={() => setLocOpen(false)}>
-            <button className="inline-flex items-center gap-1 px-2 py-2 text-[13px] font-medium text-muted-foreground hover:text-gold xl:px-3 xl:text-sm">
-              Location <ChevronDown className="h-3.5 w-3.5" />
+          <div className="relative shrink-0" onMouseEnter={() => setLocOpen(true)} onMouseLeave={() => setLocOpen(false)}>
+            <button className="inline-flex items-center gap-1 whitespace-nowrap px-2 py-2 text-[13px] font-medium text-muted-foreground hover:text-gold xl:px-3 xl:text-sm">
+              Location <ChevronDown className="h-3.5 w-3.5 shrink-0" />
             </button>
             {locOpen && (
               <div className="absolute left-0 top-full z-50 w-72 rounded-md border border-border bg-background py-2 shadow-gold">
@@ -53,12 +53,12 @@ export function Navbar() {
 
           {tail.map((l) => (
             <Link key={l.to} to={l.to}
-              className="px-2 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-gold xl:px-3 xl:text-sm [&.active]:text-gold [&.active]:border-b-2 [&.active]:border-gold">
+              className="shrink-0 whitespace-nowrap px-2 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-gold xl:px-3 xl:text-sm [&.active]:text-gold [&.active]:border-b-2 [&.active]:border-gold">
               {l.label}
             </Link>
           ))}
-          <a href={`tel:${PHONE_TEL}`} className="ml-1 inline-flex items-center gap-2 rounded-md px-2 py-2 text-[13px] font-semibold text-gold hover:bg-surface xl:px-3 xl:text-sm">
-            <Phone className="h-4 w-4" /> <span className="hidden xl:inline">{PHONE}</span>
+          <a href={`tel:${PHONE_TEL}`} className="ml-1 inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-2 py-2 text-[13px] font-semibold text-gold hover:bg-surface xl:px-3 xl:text-sm">
+            <Phone className="h-4 w-4 shrink-0" /> <span className="hidden xl:inline">{PHONE}</span>
           </a>
         </nav>
         <button className="lg:hidden text-foreground" onClick={() => setOpen(!open)} aria-label="Menu">
