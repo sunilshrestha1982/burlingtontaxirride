@@ -3,6 +3,7 @@ import { PHONE, PHONE_TEL, VT_DESTINATIONS } from "@/lib/site-data";
 import { BookingForm } from "@/components/BookingForm";
 import { CityCard } from "@/components/PlaceCards";
 import { CTASection } from "@/components/CTASection";
+import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { Phone, Plane, Car, Briefcase, Snowflake, ShieldCheck, Clock, BadgeCheck, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -23,10 +24,7 @@ function Index() {
     <>
       {/* HERO */}
       <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <img src="/places/burlington-vt.jpg" alt="" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
-        </div>
+        <HeroSlideshow />
         <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-1.5 text-xs uppercase tracking-[0.25em] text-gold">
             <span className="h-2 w-2 rounded-full bg-gold animate-pulse" /> Available 24/7 — Burlington, Vermont

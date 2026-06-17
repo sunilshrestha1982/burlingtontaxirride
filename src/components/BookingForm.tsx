@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { PHONE, PHONE_TEL } from "@/lib/site-data";
 import { Phone } from "lucide-react";
+import { Captcha, useCaptcha } from "./Captcha";
 
 export function BookingForm() {
   const [sent, setSent] = useState(false);
+  const captcha = useCaptcha();
   return (
     <div className="rounded-2xl border border-gold/30 bg-surface/80 p-6 shadow-gold backdrop-blur sm:p-8">
       <p className="text-xs uppercase tracking-widest text-gold">— Quick Booking</p>
@@ -20,6 +22,7 @@ export function BookingForm() {
           className="mt-6 grid gap-4"
           onSubmit={(e) => {
             e.preventDefault();
+            if (!captcha.valid) return;
             setSent(true);
           }}
         >
@@ -46,7 +49,12 @@ export function BookingForm() {
             </select>
           </div>
           <input required type="tel" placeholder="Your Phone" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
-          <button type="submit" className="gradient-gold rounded-md px-5 py-3 text-sm font-semibold text-primary-foreground shadow-gold hover:opacity-90 transition">
+          <Captcha c={captcha} />
+          <button
+            type="submit"
+            disabled={!captcha.valid}
+            className="gradient-gold rounded-md px-5 py-3 text-sm font-semibold text-primary-foreground shadow-gold hover:opacity-90 transition disabled:cursor-not-allowed disabled:opacity-50"
+          >
             ✦ Book My Ride Now
           </button>
           <p className="text-center text-xs text-muted-foreground">or call us directly</p>
