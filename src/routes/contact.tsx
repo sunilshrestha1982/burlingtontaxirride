@@ -19,6 +19,8 @@ function Page() {
   const [a, setA] = useState("");
   const [sent, setSent] = useState(false);
   const correct = 12;
+  const fid = useId();
+  const id = (k: string) => `${fid}-${k}`;
 
   return (
     <>
