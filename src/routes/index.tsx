@@ -10,7 +10,7 @@ import { Phone, Plane, Car, Briefcase, Snowflake, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => pageHead({
-    title: "Burlington VT Taxi Ride - 24/7 Airport &amp; Car Service",
+    title: "Burlington VT Taxi Ride - 24/7 Airport & Car Service",
     description: "Professional Burlington Vermont taxi & airport transfer service. Fixed rates to BTV, Montreal YUL, Boston, Albany. 24/7 availability.",
     image: "/places/burlington-vt.jpg",
     path: "/",
