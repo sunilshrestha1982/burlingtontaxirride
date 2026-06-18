@@ -16,6 +16,7 @@ const staticPaths = [
   "/",
   "/airport-transfers",
   "/airports-we-serve",
+  "/blog",
   "/book-online",
   "/booking-confirmed",
   "/contact",
