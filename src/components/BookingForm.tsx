@@ -5,6 +5,7 @@ import { CalendarIcon, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Captcha, useCaptcha } from "@/components/Captcha";
 
 type Errors = Partial<Record<
   "name" | "phone" | "email" | "pickup" | "dropoff" | "date" | "time" | "service",
@@ -69,6 +70,8 @@ export function BookingForm() {
   });
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<keyof Errors, boolean>>>({});
+  const [captchaError, setCaptchaError] = useState<string | undefined>();
+  const captcha = useCaptcha();
 
   const dateObj = useMemo(() => (values.date ? new Date(values.date + "T00:00:00") : undefined), [values.date]);
   const times = useMemo(() => {
@@ -130,6 +133,11 @@ export function BookingForm() {
           setErrors(next);
           setTouched(Object.fromEntries(keys.map((k) => [k, true])));
           if (Object.keys(next).length > 0) return;
+          if (!captcha.valid) {
+            setCaptchaError("Please solve the math problem to continue.");
+            return;
+          }
+          setCaptchaError(undefined);
 
           setSubmitting(true);
           const booking = {
@@ -322,6 +330,11 @@ export function BookingForm() {
             placeholder="e.g. AA 2341 — for tracking"
             className={inputCls()}
           />
+        </div>
+
+        <div>
+          <Captcha c={captcha} />
+          {captchaError && !captcha.valid && <p className="mt-1 text-xs text-destructive">{captchaError}</p>}
         </div>
 
         <button
