@@ -20,6 +20,7 @@ import { Route as CorporateRouteImport } from './routes/corporate'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BookingConfirmedRouteImport } from './routes/booking-confirmed'
 import { Route as BookOnlineRouteImport } from './routes/book-online'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AirportsWeServeRouteImport } from './routes/airports-we-serve'
 import { Route as AirportTransfersRouteImport } from './routes/airport-transfers'
 import { Route as SlugRouteImport } from './routes/$slug'
@@ -81,6 +82,11 @@ const BookOnlineRoute = BookOnlineRouteImport.update({
   path: '/book-online',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AirportsWeServeRoute = AirportsWeServeRouteImport.update({
   id: '/airports-we-serve',
   path: '/airports-we-serve',
@@ -112,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/$slug': typeof SlugRoute
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
+  '/blog': typeof BlogRoute
   '/book-online': typeof BookOnlineRoute
   '/booking-confirmed': typeof BookingConfirmedRoute
   '/contact': typeof ContactRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/$slug': typeof SlugRoute
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
+  '/blog': typeof BlogRoute
   '/book-online': typeof BookOnlineRoute
   '/booking-confirmed': typeof BookingConfirmedRoute
   '/contact': typeof ContactRoute
@@ -149,6 +157,7 @@ export interface FileRoutesById {
   '/$slug': typeof SlugRoute
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
+  '/blog': typeof BlogRoute
   '/book-online': typeof BookOnlineRoute
   '/booking-confirmed': typeof BookingConfirmedRoute
   '/contact': typeof ContactRoute
@@ -169,6 +178,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/airport-transfers'
     | '/airports-we-serve'
+    | '/blog'
     | '/book-online'
     | '/booking-confirmed'
     | '/contact'
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/airport-transfers'
     | '/airports-we-serve'
+    | '/blog'
     | '/book-online'
     | '/booking-confirmed'
     | '/contact'
@@ -205,6 +216,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/airport-transfers'
     | '/airports-we-serve'
+    | '/blog'
     | '/book-online'
     | '/booking-confirmed'
     | '/contact'
@@ -224,6 +236,7 @@ export interface RootRouteChildren {
   SlugRoute: typeof SlugRoute
   AirportTransfersRoute: typeof AirportTransfersRoute
   AirportsWeServeRoute: typeof AirportsWeServeRoute
+  BlogRoute: typeof BlogRoute
   BookOnlineRoute: typeof BookOnlineRoute
   BookingConfirmedRoute: typeof BookingConfirmedRoute
   ContactRoute: typeof ContactRoute
@@ -317,6 +330,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookOnlineRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/airports-we-serve': {
       id: '/airports-we-serve'
       path: '/airports-we-serve'
@@ -360,6 +380,7 @@ const rootRouteChildren: RootRouteChildren = {
   SlugRoute: SlugRoute,
   AirportTransfersRoute: AirportTransfersRoute,
   AirportsWeServeRoute: AirportsWeServeRoute,
+  BlogRoute: BlogRoute,
   BookOnlineRoute: BookOnlineRoute,
   BookingConfirmedRoute: BookingConfirmedRoute,
   ContactRoute: ContactRoute,

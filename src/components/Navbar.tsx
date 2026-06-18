@@ -15,6 +15,7 @@ const links = [
 const tail = [
   { to: "/corporate", label: "Corporate" },
   { to: "/ski-resort", label: "Ski Resort" },
+  { to: "/blog", label: "Blog" },
   { to: "/contact", label: "Contact Us" },
 ] as const;
 
