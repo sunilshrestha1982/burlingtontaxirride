@@ -8,7 +8,7 @@ import { CTASection } from "@/components/CTASection";
 export const Route = createFileRoute("/airports-we-serve")({
   head: () => pageHead({
     title: "Airports We Serve — Burlington VT Taxi Ride",
-    description: "Fixed-rate transfers from Burlington Vermont to 13 major airports across New England, New York, and Québec.",
+    description: "Fixed-rate transfers from Burlington Vermont to 14 major airports across New England, New York, Vermont, and Québec — including Stowe (MVL) and Montréal (YUL).",
     image: "/places/airport-bos.jpg",
     path: "/airports-we-serve",
   }),
