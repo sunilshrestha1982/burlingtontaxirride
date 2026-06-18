@@ -410,4 +410,10 @@ export const AIRPORTS: Airport[] = [
   { code: "BGR", name: "Bangor International Airport", location: "Bangor, Maine", drive: "~4 hrs drive",
     description: "Bangor International offers affordable fares and is convenient for northern Vermont travelers.",
     image: "/places/airport-bgr.jpg" },
+  { code: "MVL", name: "Morrisville–Stowe State Airport", location: "Stowe, Vermont", drive: "~45 min drive",
+    description: "Morrisville–Stowe State Airport (MVL) serves the Stowe resort region with private and charter aviation. Door-to-door transfers from Burlington and across northern Vermont.",
+    image: "/places/stowe.jpg" },
+  { code: "YUL", name: "Montréal-Trudeau International", location: "Montréal, Québec", drive: "~2 hrs drive",
+    description: "Montréal-Trudeau (YUL) is the closest major international gateway to Burlington. Direct cross-border transfers with meet & greet, flight tracking, and fixed rates.",
+    image: "/places/yul-airport.jpg" },
 ];
