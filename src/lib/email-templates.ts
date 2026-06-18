@@ -7,7 +7,7 @@ import { PHONE, PHONE_TEL, EMAIL, WHATSAPP } from "@/lib/site-data";
 const BRAND = {
   name: "Burlington VT Taxi Ride",
   url: "https://www.burlingtonvttaxirride.com",
-  logo: "https://www.burlingtonvttaxirride.com/favicon.png",
+  logo: "https://www.burlingtonvttaxirride.com/__l5e/assets-v1/0d43759a-156f-49f4-bd87-ce7fe3cdac15/br-logo.jpeg",
   navy: "#0f172a",
   surface: "#111a2e",
   gold: "#c9a25c",
@@ -311,7 +311,7 @@ export function contactCustomerEmail(c: ContactPayload) {
     ${button(`tel:${PHONE_TEL}`, `Call ${PHONE}`)} &nbsp; ${button(WHATSAPP, "WhatsApp Us")}
   </td></tr>`;
   return {
-    subject: `We received your message — ${BRAND.name}`,
+    subject: `We received your message - ${BRAND.name}`,
     html: shell({
       preview: "Thanks for reaching out — we typically reply within the hour.",
       title: "Message received",
@@ -344,7 +344,7 @@ export function contactAdminEmail(c: ContactPayload) {
     ${c.phone ? `&nbsp;${button(`tel:${c.phone}`, "Call Back")}` : ""}
   </td></tr>`;
   return {
-    subject: `New contact · ${c.subject || c.name || "Website"}`,
+    subject: `New contact - ${c.subject || c.name || "Website"}`,
     html: shell({
       preview: `${c.name || "Visitor"} sent a message via the website.`,
       title: "New contact message",
