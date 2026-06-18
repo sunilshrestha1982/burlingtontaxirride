@@ -8,6 +8,10 @@ import {
 import { EMAIL } from "@/lib/site-data";
 
 const ADMIN_EMAIL = "burlingtonvttaxiride@gmail.com";
+const FROM_NAME = "Burlington VT Taxi Ride";
+
+const GATEWAY_URL =
+  "https://connector-gateway.lovable.dev/google_mail/gmail/v1";
 
 const schema = z.object({
   reference: z.string().max(40).optional(),
@@ -25,26 +29,62 @@ const schema = z.object({
   submittedAt: z.string().max(40).optional(),
 });
 
-async function sendViaRelay(payload: {
+function base64UrlEncode(input: string): string {
+  // UTF-8 safe base64url
+  const bytes = new TextEncoder().encode(input);
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin)
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
+function buildRawEmail(opts: {
+  to: string;
+  subject: string;
+  html: string;
+  replyTo?: string;
+  fromName?: string;
+}): string {
+  const fromHeader = opts.fromName ? `${opts.fromName} <me>` : "me";
+  const headers = [
+    `From: ${fromHeader}`,
+    `To: ${opts.to}`,
+    `Subject: ${opts.subject}`,
+    "MIME-Version: 1.0",
+    'Content-Type: text/html; charset="UTF-8"',
+    "Content-Transfer-Encoding: 7bit",
+  ];
+  if (opts.replyTo) headers.push(`Reply-To: ${opts.replyTo}`);
+  const msg = headers.join("\r\n") + "\r\n\r\n" + opts.html;
+  return base64UrlEncode(msg);
+}
+
+async function sendViaGmail(payload: {
   to: string;
   subject: string;
   html: string;
   replyTo?: string;
 }) {
-  const url = process.env.SMTP_RELAY_URL;
-  const secret = process.env.SMTP_RELAY_SECRET;
-  if (!url || !secret) throw new Error("SMTP relay not configured");
-  const res = await fetch(`${url.replace(/\/$/, "")}/send`, {
+  const lovableKey = process.env.LOVABLE_API_KEY;
+  const gmailKey = process.env.GOOGLE_MAIL_API_KEY;
+  if (!lovableKey || !gmailKey) {
+    throw new Error("Gmail connector not configured");
+  }
+  const raw = buildRawEmail({ ...payload, fromName: FROM_NAME });
+  const res = await fetch(`${GATEWAY_URL}/users/me/messages/send`, {
     method: "POST",
     headers: {
+      Authorization: `Bearer ${lovableKey}`,
+      "X-Connection-Api-Key": gmailKey,
       "Content-Type": "application/json",
-      "x-relay-secret": secret,
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ raw }),
   });
   if (!res.ok) {
     const text = await res.text().catch(() => "");
-    throw new Error(`relay ${res.status}: ${text.slice(0, 200)}`);
+    throw new Error(`gmail ${res.status}: ${text.slice(0, 300)}`);
   }
   return res.json().catch(() => ({}));
 }
@@ -75,7 +115,7 @@ export const Route = createFileRoute("/api/public/send-booking")({
         const results: Record<string, unknown> = {};
 
         try {
-          results.admin = await sendViaRelay({
+          results.admin = await sendViaGmail({
             to: ADMIN_EMAIL,
             subject: admin.subject,
             html: admin.html,
@@ -87,7 +127,7 @@ export const Route = createFileRoute("/api/public/send-booking")({
 
         if (booking.email) {
           try {
-            results.passenger = await sendViaRelay({
+            results.passenger = await sendViaGmail({
               to: booking.email,
               subject: customer.subject,
               html: customer.html,
