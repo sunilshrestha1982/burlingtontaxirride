@@ -67,7 +67,8 @@ function shell(opts: { preview: string; title: string; body: string }) {
     .py-pad { padding-top: 22px !important; padding-bottom: 22px !important; }
     .brand-name { font-size: 17px !important; letter-spacing: 0.3px !important; }
     .brand-tag { display: none !important; }
-    .brand-logo { width: 36px !important; height: 36px !important; margin-right: 10px !important; }
+    .brand-tagline { font-size: 10px !important; letter-spacing: 1.5px !important; }
+    .brand-logo { width: 40px !important; height: 40px !important; }
     .h1 { font-size: 22px !important; line-height: 1.25 !important; }
     .h1-sm { font-size: 20px !important; }
     .label-cell { width: 38% !important; font-size: 10px !important; }
@@ -75,6 +76,7 @@ function shell(opts: { preview: string; title: string; body: string }) {
     .btn { display: block !important; width: 100% !important; margin: 8px 0 !important; box-sizing: border-box; }
     .btn-spacer { display: none !important; }
     .summary-grid td { display: block !important; width: 100% !important; padding: 6px 0 !important; }
+    .header-left { width: 100% !important; }
   }
 </style>
 </head>
