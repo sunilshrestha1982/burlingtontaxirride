@@ -1,18 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { BookingForm } from "@/components/BookingForm";
 import { CTASection } from "@/components/CTASection";
 import { Plane, BadgeCheck, ShieldCheck, Clock, Users } from "lucide-react";
 
 export const Route = createFileRoute("/airport-transfers")({
-  head: () => ({
-    meta: [
-      { title: "Burlington Airport Transfer Service (BTV) — Burlington VT Taxi Ride" },
-      { name: "description", content: "Fixed-rate airport rides to and from Burlington International Airport (BTV). Flight tracking, meet & greet, 24/7." },
-      { property: "og:title", content: "Burlington Airport Transfer Service" },
-      { property: "og:description", content: "Reliable BTV airport transfers with flight tracking and fixed rates." },
-      { property: "og:image", content: "/places/btv-airport.jpg" },
-    ],
+  head: () => pageHead({
+    title: "Burlington Airport Transfer Service (BTV) — Burlington VT Taxi Ride",
+    description: "Fixed-rate airport rides to and from Burlington International Airport (BTV). Flight tracking, meet & greet, 24/7.",
+    image: "/places/btv-airport.jpg",
+    path: "/airport-transfers",
   }),
   component: Page,
 });
