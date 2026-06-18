@@ -26,6 +26,12 @@ import danvilleAsset from "@/assets/places/danville-vt.avif.asset.json";
 import cabotAsset from "@/assets/places/cabot-vt.jpg.asset.json";
 import marshfieldAsset from "@/assets/places/marshfield-vt.jpg.asset.json";
 import plainfieldAsset from "@/assets/places/plainfield-vt.webp.asset.json";
+import bradfordAsset from "@/assets/places/bradford-vt.jpg.asset.json";
+import newburyAsset from "@/assets/places/newbury-vt.jpg.asset.json";
+import thetfordAsset from "@/assets/places/thetford-vt.jpeg.asset.json";
+import fairleeAsset from "@/assets/places/fairlee-vt.jpg.asset.json";
+import peachamAsset from "@/assets/places/peacham-vt.avif.asset.json";
+import barnetAsset from "@/assets/places/barnet-vt.jpg.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
