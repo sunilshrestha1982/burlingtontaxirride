@@ -5,6 +5,7 @@ import { CalendarIcon, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Captcha, useCaptcha } from "@/components/Captcha";
 
 type Errors = Partial<Record<
   "name" | "phone" | "email" | "pickup" | "dropoff" | "date" | "time" | "service",
