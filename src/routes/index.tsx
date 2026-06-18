@@ -5,7 +5,7 @@ import { BookingForm } from "@/components/BookingForm";
 import { CityCard } from "@/components/PlaceCards";
 import { CTASection } from "@/components/CTASection";
 import { HeroSlideshow } from "@/components/HeroSlideshow";
-import { Phone, Plane, Car, Briefcase, Snowflake, ShieldCheck, Clock, BadgeCheck, MapPin } from "lucide-react";
+import { Phone, Plane, Car, Briefcase, Snowflake, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -43,19 +43,6 @@ function Index() {
             <a href={`tel:${PHONE_TEL}`} className="inline-flex items-center gap-2 rounded-md border border-gold/40 px-6 py-3.5 text-sm font-semibold text-gold hover:bg-gold/10">
               <Phone className="h-4 w-4" /> {PHONE}
             </a>
-          </div>
-          <div className="mt-12 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4">
-            {[
-              { icon: BadgeCheck, label: "Licensed & Insured" },
-              { icon: Plane, label: "Real-Time Flight Tracking" },
-              { icon: ShieldCheck, label: "Fixed Rates — No Surge" },
-              { icon: Clock, label: "24/7 Every Day" },
-            ].map((b) => (
-              <div key={b.label} className="flex flex-col items-start gap-2 rounded-xl border border-border/60 bg-surface/60 p-3 backdrop-blur">
-                <b.icon className="h-5 w-5 text-gold" />
-                <span className="text-xs text-muted-foreground">{b.label}</span>
-              </div>
-            ))}
           </div>
         </div>
       </section>
