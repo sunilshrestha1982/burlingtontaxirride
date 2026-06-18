@@ -173,6 +173,8 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "morrisville-vt": morrisvilleAsset.url,
   "elmore-vt": elmoreAsset.url,
   "wolcott-vt": wolcottAsset.url,
+  "winooski-vt": winooskiAsset.url,
+  "south-burlington-vt": southBurlingtonAsset.url,
   "williston-vt": willistonAsset.url,
   "colchester-vt": colchesterAsset.url,
   "essex-junction-vt": essexJunctionAsset.url,
