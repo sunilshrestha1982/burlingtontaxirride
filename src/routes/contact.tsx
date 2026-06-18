@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { PHONE, PHONE_TEL, EMAIL, WHATSAPP, ADDRESS } from "@/lib/site-data";
 import { pageHead } from "@/lib/seo";
@@ -19,6 +19,8 @@ function Page() {
   const [a, setA] = useState("");
   const [sent, setSent] = useState(false);
   const correct = 12;
+  const fid = useId();
+  const id = (k: string) => `${fid}-${k}`;
 
   return (
     <>
@@ -83,7 +85,7 @@ function Page() {
             <h3 className="mt-2 font-display text-3xl">Get in Touch</h3>
 
             {sent ? (
-              <div className="mt-6 rounded-xl border border-gold/40 bg-gold/10 p-6">
+              <div className="mt-6 rounded-xl border border-gold/40 bg-gold/10 p-6" role="status" aria-live="polite">
                 <h4 className="font-display text-2xl text-gold">Message Sent!</h4>
                 <p className="mt-2 text-sm text-muted-foreground">Thank you for reaching out. We'll be in touch within the hour. For immediate assistance call <a className="text-gold underline" href={`tel:${PHONE_TEL}`}>{PHONE}</a>.</p>
                 <div className="mt-4 flex gap-3">
@@ -103,34 +105,61 @@ function Page() {
                   setSent(true);
                 }}
               >
-                <input required placeholder="Your Name *" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
-                <input required type="tel" placeholder="Phone Number *" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
-                <input type="email" placeholder="Email Address" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
-                <select className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none">
-                  <option>Select a service…</option>
-                  <option>Airport Transfer — To Airport</option>
-                  <option>Airport Transfer — From Airport</option>
-                  <option>Long Distance Transfer</option>
-                  <option>Round Trip</option>
-                  <option>General Inquiry</option>
-                </select>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <input placeholder="Pickup Location" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
-                  <input placeholder="Drop-off Location" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                <div>
+                  <label htmlFor={id("name")} className="sr-only">Your Name</label>
+                  <input id={id("name")} required placeholder="Your Name *" autoComplete="name" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <input type="date" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
-                  <select className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none">
-                    <option>Passengers</option>
-                    {[1,2,3,4,5,6].map((n)=> <option key={n}>{n} Passenger{n>1?"s":""}</option>)}
+                <div>
+                  <label htmlFor={id("phone")} className="sr-only">Phone Number</label>
+                  <input id={id("phone")} required type="tel" placeholder="Phone Number *" autoComplete="tel" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                </div>
+                <div>
+                  <label htmlFor={id("email")} className="sr-only">Email Address</label>
+                  <input id={id("email")} type="email" placeholder="Email Address" autoComplete="email" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                </div>
+                <div>
+                  <label htmlFor={id("service")} className="sr-only">Service type</label>
+                  <select id={id("service")} defaultValue="" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none">
+                    <option value="" disabled>Select a service…</option>
+                    <option>Airport Transfer — To Airport</option>
+                    <option>Airport Transfer — From Airport</option>
+                    <option>Long Distance Transfer</option>
+                    <option>Round Trip</option>
+                    <option>General Inquiry</option>
                   </select>
                 </div>
-                <textarea rows={4} placeholder="Message or Special Requests" className="rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor={id("pickup")} className="sr-only">Pickup Location</label>
+                    <input id={id("pickup")} placeholder="Pickup Location" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                  </div>
+                  <div>
+                    <label htmlFor={id("dropoff")} className="sr-only">Drop-off Location</label>
+                    <input id={id("dropoff")} placeholder="Drop-off Location" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                  </div>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor={id("date")} className="sr-only">Pickup date</label>
+                    <input id={id("date")} type="date" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                  </div>
+                  <div>
+                    <label htmlFor={id("pax")} className="sr-only">Passengers</label>
+                    <select id={id("pax")} defaultValue="" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none">
+                      <option value="" disabled>Passengers</option>
+                      {[1,2,3,4,5,6].map((n)=> <option key={n}>{n} Passenger{n>1?"s":""}</option>)}
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor={id("msg")} className="sr-only">Message or special requests</label>
+                  <textarea id={id("msg")} rows={4} placeholder="Message or Special Requests" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                </div>
                 <div className="rounded-md border border-border bg-background/60 p-3">
-                  <label className="block text-xs uppercase tracking-widest text-muted-foreground">Security Check *</label>
+                  <label htmlFor={id("captcha")} className="block text-xs uppercase tracking-widest text-muted-foreground">Security Check *</label>
                   <div className="mt-2 flex items-center gap-3">
-                    <span className="font-display text-lg text-gold">What is 3 + 9 =</span>
-                    <input required value={a} onChange={(e)=>setA(e.target.value)} className="w-20 rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                    <span className="font-display text-lg text-gold" aria-hidden="true">What is 3 + 9 =</span>
+                    <input id={id("captcha")} aria-label="What is 3 plus 9" required value={a} onChange={(e)=>setA(e.target.value)} className="w-20 rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
                   </div>
                 </div>
                 <button type="submit" className="gradient-gold rounded-md px-5 py-3 text-sm font-semibold text-primary-foreground shadow-gold">Send Message</button>
@@ -143,3 +172,4 @@ function Page() {
     </>
   );
 }
+
