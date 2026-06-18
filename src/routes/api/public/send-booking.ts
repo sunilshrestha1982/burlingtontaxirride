@@ -69,17 +69,16 @@ export const Route = createFileRoute("/api/public/send-booking")({
 
         const booking = parsed.data as BookingPayload;
 
-        const adminHtml = bookingAdminEmail(booking);
-        const customerHtml = bookingCustomerEmail(booking);
-        const refTag = booking.reference ? ` [${booking.reference}]` : "";
+        const admin = bookingAdminEmail(booking);
+        const customer = bookingCustomerEmail(booking);
 
         const results: Record<string, unknown> = {};
 
         try {
           results.admin = await sendViaRelay({
             to: ADMIN_EMAIL,
-            subject: `New Booking${refTag} — ${booking.name ?? "Guest"}`,
-            html: adminHtml,
+            subject: admin.subject,
+            html: admin.html,
             replyTo: booking.email,
           });
         } catch (e) {
@@ -90,8 +89,8 @@ export const Route = createFileRoute("/api/public/send-booking")({
           try {
             results.passenger = await sendViaRelay({
               to: booking.email,
-              subject: `Your Burlington VT Taxi Ride booking${refTag}`,
-              html: customerHtml,
+              subject: customer.subject,
+              html: customer.html,
               replyTo: EMAIL,
             });
           } catch (e) {
