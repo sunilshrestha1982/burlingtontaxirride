@@ -1,18 +1,18 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { format } from "date-fns";
-import { CalendarIcon, Clock, Phone } from "lucide-react";
-import { PHONE, PHONE_TEL } from "@/lib/site-data";
+import { CalendarIcon, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 type Errors = Partial<Record<
-  "name" | "phone" | "pickup" | "dropoff" | "date" | "time" | "service",
+  "name" | "phone" | "email" | "pickup" | "dropoff" | "date" | "time" | "service",
   string
 >>;
 
 const NAME_RE = /^[A-Za-zÀ-ÿ '.-]{2,60}$/;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function digits(s: string) {
   return s.replace(/\D/g, "");
@@ -33,6 +33,10 @@ function validateField(name: keyof Errors, value: string): string | undefined {
       if (d.length < 10 || d.length > 15) return "Enter a valid phone number.";
       return;
     }
+    case "email":
+      if (!v) return "Email is required.";
+      if (!EMAIL_RE.test(v)) return "Enter a valid email address.";
+      return;
     case "pickup":
       if (!v) return "Pickup address is required.";
       return;
@@ -54,11 +58,14 @@ export function BookingForm() {
     service: "",
     name: "",
     phone: "",
+    email: "",
     pickup: "",
     dropoff: "",
     date: "",
     time: "",
     passengers: "1",
+    luggage: "0",
+    flight: "",
   });
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<keyof Errors, boolean>>>({});
@@ -85,10 +92,10 @@ export function BookingForm() {
     setErrors((e) => ({ ...e, [k]: validateField(k, (values as any)[k] || "") }));
   };
 
-  const inputCls = (k: keyof Errors) =>
+  const inputCls = (k?: keyof Errors) =>
     cn(
       "w-full rounded-md border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none",
-      errors[k] ? "border-destructive focus:border-destructive" : "border-border focus:border-gold",
+      k && errors[k] ? "border-destructive focus:border-destructive" : "border-border focus:border-gold",
     );
 
   const labelCls = "mb-2 block text-xs font-bold uppercase tracking-widest text-gold";
@@ -106,7 +113,7 @@ export function BookingForm() {
       <p className="text-xs font-semibold uppercase tracking-widest text-gold">— Book Your Ride</p>
       <h3 className="mt-2 font-display text-4xl text-foreground">Reserve Your Ride Today</h3>
       <p className="mt-2 text-sm text-muted-foreground">
-        Confirmed within minutes — no hidden fees.
+        Confirmed within minutes — no hidden fees, no surprises.
       </p>
 
       <form
@@ -114,7 +121,7 @@ export function BookingForm() {
         className="mt-6 grid gap-5"
         onSubmit={async (e) => {
           e.preventDefault();
-          const keys: (keyof Errors)[] = ["service", "name", "phone", "pickup", "dropoff", "date", "time"];
+          const keys: (keyof Errors)[] = ["service", "name", "phone", "email", "pickup", "dropoff", "date", "time"];
           const next: Errors = {};
           for (const k of keys) {
             const msg = validateField(k, (values as any)[k] || "");
@@ -159,6 +166,48 @@ export function BookingForm() {
           {errors.service && <p className="mt-1 text-xs text-destructive">{errors.service}</p>}
         </div>
 
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label className={labelCls}>Full Name</label>
+            <input
+              value={values.name}
+              onChange={(e) => setField("name", e.target.value)}
+              onBlur={() => onBlur("name")}
+              placeholder="John Smith"
+              className={inputCls("name")}
+              autoComplete="name"
+            />
+            {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
+          </div>
+          <div>
+            <label className={labelCls}>Phone</label>
+            <input
+              type="tel"
+              value={values.phone}
+              onChange={(e) => setField("phone", e.target.value)}
+              onBlur={() => onBlur("phone")}
+              placeholder="(802) 555-0100"
+              className={inputCls("phone")}
+              autoComplete="tel"
+            />
+            {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
+          </div>
+        </div>
+
+        <div>
+          <label className={labelCls}>Email</label>
+          <input
+            type="email"
+            value={values.email}
+            onChange={(e) => setField("email", e.target.value)}
+            onBlur={() => onBlur("email")}
+            placeholder="you@email.com"
+            className={inputCls("email")}
+            autoComplete="email"
+          />
+          {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
+        </div>
+
         <div>
           <label className={labelCls}>Pickup Address</label>
           <input
@@ -172,7 +221,7 @@ export function BookingForm() {
         </div>
 
         <div>
-          <label className={labelCls}>Drop-off</label>
+          <label className={labelCls}>Drop-off Location</label>
           <input
             value={values.dropoff}
             onChange={(e) => setField("dropoff", e.target.value)}
@@ -243,42 +292,45 @@ export function BookingForm() {
             <select
               value={values.passengers}
               onChange={(e) => setField("passengers", e.target.value)}
-              className={inputCls("name").replace("border-destructive", "border-border")}
+              className={inputCls()}
             >
               {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-                <option key={n} value={String(n)}>{n}</option>
+                <option key={n} value={String(n)}>{n} Passenger{n > 1 ? "s" : ""}</option>
               ))}
             </select>
           </div>
           <div>
-            <label className={labelCls}>Phone</label>
-            <input
-              type="tel"
-              value={values.phone}
-              onChange={(e) => setField("phone", e.target.value)}
-              onBlur={() => onBlur("phone")}
-              placeholder="(802) 555-0000"
-              className={inputCls("phone")}
-              autoComplete="tel"
-            />
-            {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
+            <label className={labelCls}>Luggage</label>
+            <select
+              value={values.luggage}
+              onChange={(e) => setField("luggage", e.target.value)}
+              className={inputCls()}
+            >
+              <option value="0">No Luggage</option>
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                <option key={n} value={String(n)}>{n} Bag{n > 1 ? "s" : ""}</option>
+              ))}
+            </select>
           </div>
+        </div>
+
+        <div>
+          <label className={labelCls}>Flight # (Optional)</label>
+          <input
+            value={values.flight}
+            onChange={(e) => setField("flight", e.target.value)}
+            placeholder="e.g. AA 2341 — for tracking"
+            className={inputCls()}
+          />
         </div>
 
         <button
           type="submit"
           disabled={submitting}
-          className="mt-2 rounded-md border border-gold/40 bg-background px-5 py-4 text-sm font-bold uppercase tracking-widest text-foreground hover:bg-gold hover:text-primary-foreground transition disabled:cursor-not-allowed disabled:opacity-50"
+          className="gradient-gold mt-2 inline-flex items-center justify-center gap-2 rounded-md px-6 py-4 text-sm font-bold uppercase tracking-widest text-primary-foreground shadow-gold disabled:opacity-60"
         >
-          {submitting ? "Sending…" : "✦ Reserve My Ride Now"}
+          ✦ {submitting ? "Reserving…" : "Reserve My Ride Now"}
         </button>
-        <p className="text-center text-sm text-muted-foreground">or call us 24/7</p>
-        <a
-          href={`tel:${PHONE_TEL}`}
-          className="flex items-center justify-center gap-2 rounded-md border border-gold px-5 py-4 text-lg font-bold text-gold hover:bg-gold/10 transition"
-        >
-          <Phone className="h-5 w-5" /> {PHONE}
-        </a>
       </form>
     </div>
   );
