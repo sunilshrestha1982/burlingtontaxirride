@@ -181,7 +181,7 @@ export const VT_DESTINATIONS: City[] = [
     return {
       slug,
       name,
-      image: destinationLandscapeImage(slug, name, tag),
+      image: UPLOADED_DESTINATION_IMAGES[slug] ?? destinationLandscapeImage(slug, name, tag),
     };
   }),
 
