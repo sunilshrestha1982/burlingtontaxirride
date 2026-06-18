@@ -18,6 +18,14 @@ import bartonAsset from "@/assets/places/barton-vt.jpg.asset.json";
 import lakeWilloughbyAsset from "@/assets/places/lake-willoughby-vt.jpg.asset.json";
 import islandPondAsset from "@/assets/places/island-pond-vt.avif.asset.json";
 import westmoreAsset from "@/assets/places/westmore-vt.jpg.asset.json";
+import eastBurkeAsset from "@/assets/places/east-burke-vt.jpg.asset.json";
+import burkeAsset from "@/assets/places/burke-vt.webp.asset.json";
+import lyndonvilleAsset from "@/assets/places/lyndonville-vt.jpg.asset.json";
+import stJohnsburyAsset from "@/assets/places/st-johnsbury-vt.jpg.asset.json";
+import danvilleAsset from "@/assets/places/danville-vt.avif.asset.json";
+import cabotAsset from "@/assets/places/cabot-vt.jpg.asset.json";
+import marshfieldAsset from "@/assets/places/marshfield-vt.jpg.asset.json";
+import plainfieldAsset from "@/assets/places/plainfield-vt.webp.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
@@ -40,7 +48,16 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "lake-willoughby-vt": lakeWilloughbyAsset.url,
   "island-pond-vt": islandPondAsset.url,
   "westmore-vt": westmoreAsset.url,
+  "east-burke-vt": eastBurkeAsset.url,
+  "burke-vt": burkeAsset.url,
+  "lyndonville-vt": lyndonvilleAsset.url,
+  "st-johnsbury-vt": stJohnsburyAsset.url,
+  "danville-vt": danvilleAsset.url,
+  "cabot-vt": cabotAsset.url,
+  "marshfield-vt": marshfieldAsset.url,
+  "plainfield-vt": plainfieldAsset.url,
 };
+
 
 export const PHONE = "802-448-0707";
 export const PHONE_TEL = "+18024480707";
