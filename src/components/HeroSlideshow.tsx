@@ -18,13 +18,13 @@ export function HeroSlideshow() {
     <div className="absolute inset-0 -z-10">
       {slides.map((s, idx) => (
         <img
-          key={s.src}
+          key={`${s.src}-${idx === i ? i : "off"}`}
           src={s.src}
           alt={s.alt}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${idx === i ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${idx === i ? "opacity-100 hero-kenburns" : "opacity-0"}`}
         />
       ))}
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/25 to-transparent" />
       <button
         onClick={() => go(i - 1)}
         aria-label="Previous slide"
