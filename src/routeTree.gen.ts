@@ -23,6 +23,7 @@ import { Route as AirportsWeServeRouteImport } from './routes/airports-we-serve'
 import { Route as AirportTransfersRouteImport } from './routes/airport-transfers'
 import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicSendBookingRouteImport } from './routes/api/public/send-booking'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -94,6 +95,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicSendBookingRoute = ApiPublicSendBookingRouteImport.update({
+  id: '/api/public/send-booking',
+  path: '/api/public/send-booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/sitemap': typeof SitemapRoute
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
+  '/api/public/send-booking': typeof ApiPublicSendBookingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/sitemap': typeof SitemapRoute
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
+  '/api/public/send-booking': typeof ApiPublicSendBookingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/sitemap': typeof SitemapRoute
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
+  '/api/public/send-booking': typeof ApiPublicSendBookingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/sitemap'
     | '/ski-resort'
     | '/terms'
+    | '/api/public/send-booking'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/sitemap'
     | '/ski-resort'
     | '/terms'
+    | '/api/public/send-booking'
   id:
     | '__root__'
     | '/'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/sitemap'
     | '/ski-resort'
     | '/terms'
+    | '/api/public/send-booking'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -210,6 +222,7 @@ export interface RootRouteChildren {
   SitemapRoute: typeof SitemapRoute
   SkiResortRoute: typeof SkiResortRoute
   TermsRoute: typeof TermsRoute
+  ApiPublicSendBookingRoute: typeof ApiPublicSendBookingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -312,6 +325,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/send-booking': {
+      id: '/api/public/send-booking'
+      path: '/api/public/send-booking'
+      fullPath: '/api/public/send-booking'
+      preLoaderRoute: typeof ApiPublicSendBookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -330,6 +350,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapRoute: SitemapRoute,
   SkiResortRoute: SkiResortRoute,
   TermsRoute: TermsRoute,
+  ApiPublicSendBookingRoute: ApiPublicSendBookingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
