@@ -37,7 +37,19 @@ export const LOCATIONS: Location[] = [
     description: "Family-friendly transfers from Burlington International Airport (BTV) to the Tyler Place Family Resort in Highgate Springs, VT. Child seats available on request." },
 ];
 
-import { VT_DESTINATIONS } from "./site-data";
+import { destinationLandscapeImage, VT_DESTINATIONS } from "./site-data";
+
+const routeLandscapeOverrides: Record<string, string> = {
+  "burlington-warren-waitsfield-taxi": destinationLandscapeImage("burlington-warren-waitsfield-taxi", "Warren and Waitsfield, Vermont", "mad-river-valley"),
+  "burlington-swanton-taxi": destinationLandscapeImage("burlington-swanton-taxi", "Swanton, Vermont", "swanton"),
+  "burlington-newport-taxi": destinationLandscapeImage("burlington-newport-taxi", "Newport, Vermont", "lake-memphremagog"),
+  "tyler-place-family-resort": destinationLandscapeImage("tyler-place-family-resort", "Tyler Place Family Resort, Highgate Springs, Vermont", "lake-champlain-highgate-springs"),
+};
+
+LOCATIONS.forEach((location) => {
+  const override = routeLandscapeOverrides[location.slug];
+  if (override) location.image = override;
+});
 
 function fromDestination(slug: string): Location | undefined {
   const d = VT_DESTINATIONS.find((v) => v.slug === slug);
