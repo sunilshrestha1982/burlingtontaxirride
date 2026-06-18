@@ -55,6 +55,16 @@ import plymouthAsset from "@/assets/places/plymouth-vt.jpeg.asset.json";
 import okemoMountainAsset from "@/assets/places/okemo-mountain-vt.jpg.asset.json";
 import ludlowAsset from "@/assets/places/ludlow-vt.jpg.asset.json";
 import mountSnowAsset from "@/assets/places/mount-snow-vt.avif.asset.json";
+import poultneyAsset from "@/assets/places/poultney-vt.jpg.asset.json";
+import fairHavenAsset from "@/assets/places/fair-haven-vt.jpg.asset.json";
+import castletonAsset from "@/assets/places/castleton-vt.avif.asset.json";
+import rutlandAsset from "@/assets/places/rutland-vt.jpeg.asset.json";
+import proctorAsset from "@/assets/places/proctor-vt.jpg.asset.json";
+import pittsfordAsset from "@/assets/places/pittsford-vt.jpg.asset.json";
+import brandonAsset from "@/assets/places/brandon-vt.png.asset.json";
+import salisbury2Asset from "@/assets/places/salisbury-vt-2.jpg.asset.json";
+import putney2Asset from "@/assets/places/putney-vt-2.jpg.asset.json";
+import bellowsFalls2Asset from "@/assets/places/bellows-falls-vt-2.jpg.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
