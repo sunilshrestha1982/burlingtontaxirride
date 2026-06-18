@@ -332,6 +332,11 @@ export function BookingForm() {
           />
         </div>
 
+        <div>
+          <Captcha c={captcha} />
+          {captchaError && !captcha.valid && <p className="mt-1 text-xs text-destructive">{captchaError}</p>}
+        </div>
+
         <button
           type="submit"
           disabled={submitting}
