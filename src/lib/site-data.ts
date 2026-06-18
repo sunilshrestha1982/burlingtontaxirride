@@ -92,6 +92,10 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "windsor-vt": windsorAsset.url,
   "hartford-vt": hartfordAsset.url,
   "norwich-vt": norwichAsset.url,
+  "bennington-vt": benningtonAsset.url,
+  "pownal-vt": pownalAsset.url,
+  "wilmington-vt": wilmingtonAsset.url,
+  "west-dover-vt": westDoverAsset.url,
 };
 
 
