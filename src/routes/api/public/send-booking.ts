@@ -40,6 +40,22 @@ function base64UrlEncode(input: string): string {
     .replace(/=+$/, "");
 }
 
+function base64Encode(input: string): string {
+  // Standard base64 for MIME body parts
+  const bytes = new TextEncoder().encode(input);
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin);
+}
+
+function encodeSubject(subject: string): string {
+  // RFC 2047 UTF-8 encoded-word for non-ASCII or long subjects
+  const bytes = new TextEncoder().encode(subject);
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return `=?UTF-8?B?${btoa(bin)}?=`;
+}
+
 function buildRawEmail(opts: {
   to: string;
   subject: string;
@@ -51,13 +67,13 @@ function buildRawEmail(opts: {
   const headers = [
     `From: ${fromHeader}`,
     `To: ${opts.to}`,
-    `Subject: ${opts.subject}`,
+    `Subject: ${encodeSubject(opts.subject)}`,
     "MIME-Version: 1.0",
     'Content-Type: text/html; charset="UTF-8"',
-    "Content-Transfer-Encoding: 7bit",
+    "Content-Transfer-Encoding: base64",
   ];
   if (opts.replyTo) headers.push(`Reply-To: ${opts.replyTo}`);
-  const msg = headers.join("\r\n") + "\r\n\r\n" + opts.html;
+  const msg = headers.join("\r\n") + "\r\n\r\n" + base64Encode(opts.html);
   return base64UrlEncode(msg);
 }
 
