@@ -60,7 +60,8 @@ const NATURAL_LOCATION_IMAGES: Record<string, string> = {
   "tyler-place-family-resort": naturalLandscapeImage("tyler-place-family-resort", "Tyler Place Family Resort, VT"),
 };
 
-export const locationBySlug = (slug: string): Location | undefined =>
-  LOCATIONS.find((l) => l.slug === slug)
-    ? { ...LOCATIONS.find((l) => l.slug === slug)!, image: NATURAL_LOCATION_IMAGES[slug] ?? LOCATIONS.find((l) => l.slug === slug)!.image }
-    : fromDestination(slug);
+export const locationBySlug = (slug: string): Location | undefined => {
+  const loc = LOCATIONS.find((l) => l.slug === slug);
+  if (loc) return { ...loc, image: NATURAL_LOCATION_IMAGES[slug] ?? loc.image };
+  return fromDestination(slug);
+};
