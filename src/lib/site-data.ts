@@ -78,6 +78,16 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairlee-vt": fairleeAsset.url,
   "peacham-vt": peachamAsset.url,
   "barnet-vt": barnetAsset.url,
+  "bromley-mountain-vt": bromleyMountainAsset.url,
+  "stratton-mountain-vt": strattonMountainAsset.url,
+  "rochester-vt": rochesterAsset.url,
+  "randolph-vt": randolphAsset.url,
+  "bethel-vt": bethelAsset.url,
+  "south-royalton-vt": southRoyaltonAsset.url,
+  "mount-ascutney-vt": mountAscutneyAsset.url,
+  "windsor-vt": windsorAsset.url,
+  "hartford-vt": hartfordAsset.url,
+  "norwich-vt": norwichAsset.url,
 };
 
 
