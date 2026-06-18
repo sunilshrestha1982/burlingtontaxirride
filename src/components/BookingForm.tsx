@@ -160,8 +160,9 @@ export function BookingForm() {
         }}
       >
         <div>
-          <label className={labelCls}>Service Type</label>
+          <label htmlFor={fid("service")} className={labelCls}>Service Type</label>
           <select
+            id={fid("service")}
             value={values.service}
             onChange={(e) => setField("service", e.target.value)}
             onBlur={() => onBlur("service")}
@@ -178,8 +179,9 @@ export function BookingForm() {
 
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
-            <label className={labelCls}>Full Name</label>
+            <label htmlFor={fid("name")} className={labelCls}>Full Name</label>
             <input
+              id={fid("name")}
               value={values.name}
               onChange={(e) => setField("name", e.target.value)}
               onBlur={() => onBlur("name")}
@@ -190,8 +192,9 @@ export function BookingForm() {
             {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
           </div>
           <div>
-            <label className={labelCls}>Phone</label>
+            <label htmlFor={fid("phone")} className={labelCls}>Phone</label>
             <input
+              id={fid("phone")}
               type="tel"
               value={values.phone}
               onChange={(e) => setField("phone", e.target.value)}
@@ -205,8 +208,9 @@ export function BookingForm() {
         </div>
 
         <div>
-          <label className={labelCls}>Email</label>
+          <label htmlFor={fid("email")} className={labelCls}>Email</label>
           <input
+            id={fid("email")}
             type="email"
             value={values.email}
             onChange={(e) => setField("email", e.target.value)}
@@ -219,8 +223,9 @@ export function BookingForm() {
         </div>
 
         <div>
-          <label className={labelCls}>Pickup Address</label>
+          <label htmlFor={fid("pickup")} className={labelCls}>Pickup Address</label>
           <input
+            id={fid("pickup")}
             value={values.pickup}
             onChange={(e) => setField("pickup", e.target.value)}
             onBlur={() => onBlur("pickup")}
@@ -231,8 +236,9 @@ export function BookingForm() {
         </div>
 
         <div>
-          <label className={labelCls}>Drop-off Location</label>
+          <label htmlFor={fid("dropoff")} className={labelCls}>Drop-off Location</label>
           <input
+            id={fid("dropoff")}
             value={values.dropoff}
             onChange={(e) => setField("dropoff", e.target.value)}
             onBlur={() => onBlur("dropoff")}
@@ -244,11 +250,13 @@ export function BookingForm() {
 
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
-            <label className={labelCls}>Date</label>
+            <label htmlFor={fid("date")} className={labelCls}>Date</label>
             <Popover>
               <PopoverTrigger asChild>
                 <button
+                  id={fid("date")}
                   type="button"
+                  aria-label="Choose pickup date"
                   onBlur={() => onBlur("date")}
                   className={cn(
                     inputCls("date"),
@@ -257,7 +265,7 @@ export function BookingForm() {
                   )}
                 >
                   <span>{dateObj ? format(dateObj, "PP") : "mm/dd/yyyy"}</span>
-                  <CalendarIcon className="h-4 w-4 text-gold" />
+                  <CalendarIcon aria-hidden="true" className="h-4 w-4 text-gold" />
                 </button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -277,9 +285,10 @@ export function BookingForm() {
             {errors.date && <p className="mt-1 text-xs text-destructive">{errors.date}</p>}
           </div>
           <div>
-            <label className={labelCls}>Time</label>
+            <label htmlFor={fid("time")} className={labelCls}>Time</label>
             <div className="relative">
               <select
+                id={fid("time")}
                 value={values.time}
                 onChange={(e) => setField("time", e.target.value)}
                 onBlur={() => onBlur("time")}
@@ -290,7 +299,7 @@ export function BookingForm() {
                   <option key={t} value={t}>{formatTime(t)}</option>
                 ))}
               </select>
-              <Clock className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gold" />
+              <Clock aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gold" />
             </div>
             {errors.time && <p className="mt-1 text-xs text-destructive">{errors.time}</p>}
           </div>
@@ -298,8 +307,9 @@ export function BookingForm() {
 
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
-            <label className={labelCls}>Passengers</label>
+            <label htmlFor={fid("passengers")} className={labelCls}>Passengers</label>
             <select
+              id={fid("passengers")}
               value={values.passengers}
               onChange={(e) => setField("passengers", e.target.value)}
               className={inputCls()}
@@ -310,8 +320,9 @@ export function BookingForm() {
             </select>
           </div>
           <div>
-            <label className={labelCls}>Luggage</label>
+            <label htmlFor={fid("luggage")} className={labelCls}>Luggage</label>
             <select
+              id={fid("luggage")}
               value={values.luggage}
               onChange={(e) => setField("luggage", e.target.value)}
               className={inputCls()}
@@ -325,14 +336,16 @@ export function BookingForm() {
         </div>
 
         <div>
-          <label className={labelCls}>Flight # (Optional)</label>
+          <label htmlFor={fid("flight")} className={labelCls}>Flight # (Optional)</label>
           <input
+            id={fid("flight")}
             value={values.flight}
             onChange={(e) => setField("flight", e.target.value)}
             placeholder="e.g. AA 2341 — for tracking"
             className={inputCls()}
           />
         </div>
+
 
         <div>
           <Captcha c={captcha} />
