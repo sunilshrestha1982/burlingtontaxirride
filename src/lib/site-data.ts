@@ -1,3 +1,27 @@
+import fairfaxAsset from "@/assets/places/fairfax-vt.jpg.asset.json";
+import montgomeryAsset from "@/assets/places/montgomery-vt.webp.asset.json";
+import richfordAsset from "@/assets/places/richford-vt.webp.asset.json";
+import enosburgAsset from "@/assets/places/enosburg-vt.jpg.asset.json";
+import swantonAsset from "@/assets/places/swanton-vt.jpg.asset.json";
+import highgateAsset from "@/assets/places/highgate-vt.jpeg.asset.json";
+import isleLaMotteAsset from "@/assets/places/isle-la-motte-vt.jpeg.asset.json";
+import grandIsleAsset from "@/assets/places/grand-isle-vt.jpg.asset.json";
+import northHeroAsset from "@/assets/places/north-hero-vt.avif.asset.json";
+import southHeroAsset from "@/assets/places/south-hero-vt.webp.asset.json";
+
+const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
+  "fairfax-vt": fairfaxAsset.url,
+  "montgomery-vt": montgomeryAsset.url,
+  "richford-vt": richfordAsset.url,
+  "enosburg-vt": enosburgAsset.url,
+  "swanton-vt": swantonAsset.url,
+  "highgate-vt": highgateAsset.url,
+  "isle-la-motte-vt": isleLaMotteAsset.url,
+  "grand-isle-vt": grandIsleAsset.url,
+  "north-hero-vt": northHeroAsset.url,
+  "south-hero-vt": southHeroAsset.url,
+};
+
 export const PHONE = "802-448-0707";
 export const PHONE_TEL = "+18024480707";
 export const EMAIL = "burlingtonvttaxiride@gmail.com";
