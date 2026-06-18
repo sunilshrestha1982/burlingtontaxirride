@@ -133,6 +133,11 @@ export function BookingForm() {
           setErrors(next);
           setTouched(Object.fromEntries(keys.map((k) => [k, true])));
           if (Object.keys(next).length > 0) return;
+          if (!captcha.valid) {
+            setCaptchaError("Please solve the math problem to continue.");
+            return;
+          }
+          setCaptchaError(undefined);
 
           setSubmitting(true);
           const booking = {
