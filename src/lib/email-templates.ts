@@ -7,7 +7,7 @@ import { PHONE, PHONE_TEL, EMAIL, WHATSAPP } from "@/lib/site-data";
 const BRAND = {
   name: "Burlington VT Taxi Ride",
   url: "https://burlingtontaxiride.taxi-webdesign.com",
-  logo: "https://burlingtontaxiride.taxi-webdesign.com/favicon.png",
+  logo: "https://burlingtontaxiride.taxi-webdesign.com/__l5e/assets-v1/0d43759a-156f-49f4-bd87-ce7fe3cdac15/br-logo.jpeg",
   navy: "#0f172a",
   surface: "#111a2e",
   gold: "#c9a25c",
@@ -67,13 +67,14 @@ function shell(opts: { preview: string; title: string; body: string }) {
   <tr><td align="center" style="padding:24px 12px;">
     <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(15,23,42,0.08);">
       <tr>
-        <td style="background:${BRAND.navy};padding:24px 28px;" align="left">
+        <td style="background:${BRAND.navy};padding:22px 28px;" align="left">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
-              <td align="left" style="color:${BRAND.gold};font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:700;letter-spacing:0.5px;">
-                ${BRAND.name}
+              <td align="left" valign="middle" style="color:${BRAND.gold};font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:700;letter-spacing:0.5px;">
+                <img src="${BRAND.logo}" width="44" height="44" alt="${BRAND.name}" style="display:inline-block;vertical-align:middle;border-radius:50%;border:2px solid ${BRAND.gold};margin-right:12px;background:#ffffff;" />
+                <span style="vertical-align:middle;">${BRAND.name}</span>
               </td>
-              <td align="right" style="color:${BRAND.goldSoft};font-size:12px;letter-spacing:2px;text-transform:uppercase;">
+              <td align="right" valign="middle" style="color:${BRAND.goldSoft};font-size:12px;letter-spacing:2px;text-transform:uppercase;">
                 Premium &middot; 24/7
               </td>
             </tr>
