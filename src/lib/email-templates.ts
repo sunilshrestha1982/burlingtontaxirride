@@ -164,17 +164,22 @@ function summaryCard(items: Array<{ label: string; value?: string }>) {
 
 export function bookingCustomerEmail(b: BookingPayload) {
   const body = `
-  <tr><td style="padding:32px 28px 8px 28px;">
+  <tr><td class="px-pad" style="padding:32px 28px 8px 28px;">
     <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">— Booking Received</div>
-    <h1 style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:28px;line-height:1.2;color:${BRAND.text};">
-      Thank you${b.name ? `, ${esc(b.name.split(" ")[0])}` : ""} — we've got your ride.
+    <h1 class="h1" style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:28px;line-height:1.2;color:${BRAND.text};">
+      Thank you${b.name ? `, ${esc(b.name.split(" ")[0])}` : ""} — your ride is reserved.
     </h1>
     <p style="margin:10px 0 0 0;color:${BRAND.muted};font-size:14px;line-height:22px;">
-      Your reservation has been received and our dispatcher will confirm shortly. Keep this email for your records.
+      Your reservation has been received and our dispatcher will confirm shortly. Please keep this email for your records.
     </p>
     ${b.reference ? `<div style="margin-top:16px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:8px 14px;border-radius:6px;font-size:13px;">REF · ${esc(b.reference)}</div>` : ""}
+    ${summaryCard([
+      { label: "Date", value: b.date },
+      { label: "Time", value: b.time },
+      { label: "Service", value: b.service },
+    ])}
   </td></tr>
-  <tr><td style="padding:8px 28px 4px 28px;">
+  <tr><td class="px-pad" style="padding:8px 28px 4px 28px;">
     ${detailsTable(
       row("Service", b.service) +
       row("Date", b.date) +
@@ -188,7 +193,7 @@ export function bookingCustomerEmail(b: BookingPayload) {
       row("Email", b.email),
     )}
   </td></tr>
-  <tr><td style="padding:22px 28px;">
+  <tr><td class="px-pad" style="padding:22px 28px;">
     <div style="background:#fbf6e7;border:1px solid ${BRAND.border};border-radius:10px;padding:16px 18px;">
       <div style="color:${BRAND.text};font-weight:700;font-size:14px;margin-bottom:4px;">What happens next</div>
       <ul style="margin:6px 0 0 18px;padding:0;color:${BRAND.muted};font-size:13px;line-height:20px;">
@@ -199,14 +204,15 @@ export function bookingCustomerEmail(b: BookingPayload) {
     </div>
     <div style="margin-top:22px;text-align:center;">
       ${button(`tel:${PHONE_TEL}`, `Call ${PHONE}`)}
-      &nbsp;
+      ${btnSpacer()}
       ${button(WHATSAPP, "WhatsApp Us")}
     </div>
   </td></tr>`;
+  const when = [b.date, b.time].filter(Boolean).join(" · ");
   return {
-    subject: `Your ride is reserved${b.reference ? ` · ${b.reference}` : ""} — ${BRAND.name}`,
+    subject: `Reservation Confirmed${when ? ` — ${when}` : ""}${b.reference ? ` (Ref ${b.reference})` : ""} | ${BRAND.name}`,
     html: shell({
-      preview: `We received your booking${b.reference ? ` (${b.reference})` : ""} — confirmation in minutes.`,
+      preview: `Your booking${b.reference ? ` (${b.reference})` : ""}${when ? ` for ${when}` : ""} is received — driver confirmation in minutes.`,
       title: "Booking received",
       body,
     }),
@@ -215,21 +221,27 @@ export function bookingCustomerEmail(b: BookingPayload) {
 
 export function bookingAdminEmail(b: BookingPayload) {
   const body = `
-  <tr><td style="padding:32px 28px 4px 28px;">
-    <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">★ New Booking</div>
-    <h1 style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:26px;line-height:1.2;color:${BRAND.text};">
-      ${esc(b.service || "Ride request")}
+  <tr><td class="px-pad" style="padding:32px 28px 4px 28px;">
+    <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">★ New Reservation Request</div>
+    <h1 class="h1-sm" style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:24px;line-height:1.2;color:${BRAND.text};">
+      ${esc(b.service || "Ride Request")}${b.name ? ` — ${esc(b.name)}` : ""}
     </h1>
     <p style="margin:8px 0 0 0;color:${BRAND.muted};font-size:13px;">
       Submitted ${esc(b.submittedAt ? new Date(b.submittedAt).toLocaleString() : new Date().toLocaleString())}
     </p>
     ${b.reference ? `<div style="margin-top:14px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:7px 12px;border-radius:6px;font-size:13px;">REF · ${esc(b.reference)}</div>` : ""}
+    ${summaryCard([
+      { label: "Pickup Date", value: b.date },
+      { label: "Pickup Time", value: b.time },
+      { label: "Passengers", value: b.passengers },
+    ])}
   </td></tr>
-  <tr><td style="padding:6px 28px;">
+  <tr><td class="px-pad" style="padding:6px 28px;">
     ${detailsTable(
       row("Customer", b.name) +
       row("Phone", b.phone) +
       row("Email", b.email) +
+      row("Service", b.service) +
       row("Date", b.date) +
       row("Time", b.time) +
       row("Pickup", b.pickup) +
@@ -239,15 +251,18 @@ export function bookingAdminEmail(b: BookingPayload) {
       row("Flight #", b.flight),
     )}
   </td></tr>
-  <tr><td style="padding:22px 28px;" align="center">
+  <tr><td class="px-pad" style="padding:22px 28px;" align="center">
     ${b.phone ? button(`tel:${b.phone}`, "Call Customer") : ""}
-    ${b.email ? `&nbsp;${button(`mailto:${b.email}`, "Reply by Email")}` : ""}
+    ${b.phone && b.email ? btnSpacer() : ""}
+    ${b.email ? button(`mailto:${b.email}`, "Reply by Email") : ""}
   </td></tr>`;
+  const when = [b.date, b.time].filter(Boolean).join(" ");
+  const who = b.name ? ` — ${b.name}` : "";
   return {
-    subject: `New booking · ${b.service || "Ride"}${b.reference ? ` · ${b.reference}` : ""}`,
+    subject: `[New Reservation] ${b.service || "Ride"}${when ? ` · ${when}` : ""}${who}${b.reference ? ` · Ref ${b.reference}` : ""}`,
     html: shell({
       preview: `${b.name || "Customer"} requested ${b.service || "a ride"}${b.date ? ` on ${b.date}` : ""}${b.time ? ` at ${b.time}` : ""}.`,
-      title: "New booking",
+      title: "New reservation request",
       body,
     }),
   };
