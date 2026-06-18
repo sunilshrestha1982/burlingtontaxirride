@@ -93,6 +93,8 @@ import charlotteAsset from "@/assets/places/charlotte-vt.jpg.asset.json";
 import shelburne2Asset from "@/assets/places/shelburne-vt-2.jpeg.asset.json";
 import elmoreAsset from "@/assets/places/elmore-vt.jpg.asset.json";
 import wolcottAsset from "@/assets/places/wolcott-vt.avif.asset.json";
+import winooskiAsset from "@/assets/places/winooski-vt.webp.asset.json";
+import southBurlingtonAsset from "@/assets/places/south-burlington-vt.webp.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
@@ -171,6 +173,8 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "morrisville-vt": morrisvilleAsset.url,
   "elmore-vt": elmoreAsset.url,
   "wolcott-vt": wolcottAsset.url,
+  "winooski-vt": winooskiAsset.url,
+  "south-burlington-vt": southBurlingtonAsset.url,
   "williston-vt": willistonAsset.url,
   "colchester-vt": colchesterAsset.url,
   "essex-junction-vt": essexJunctionAsset.url,
