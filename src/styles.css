@@ -135,10 +135,15 @@ nav a {
   }
   .shadow-gold { box-shadow: 0 10px 40px -10px oklch(0.78 0.13 80 / 0.4); }
   .hover-zoom-img {
-    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
   }
   .hover-zoom-card:hover .hover-zoom-img {
-    transform: scale(1.12);
+    filter: saturate(1.08) contrast(1.04);
+    transform: scale(1.14) translate3d(0, -1.5%, 0);
+  }
+  .destination-card-img {
+    background-color: var(--surface-2);
   }
 }
 
