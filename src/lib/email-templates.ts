@@ -7,7 +7,7 @@ import { PHONE, PHONE_TEL, EMAIL, WHATSAPP } from "@/lib/site-data";
 const BRAND = {
   name: "Burlington VT Taxi Ride",
   url: "https://burlingtontaxiride.taxi-webdesign.com",
-  logo: "https://burlingtontaxiride.taxi-webdesign.com/favicon.png",
+  logo: "https://burlingtontaxiride.taxi-webdesign.com/__l5e/assets-v1/0d43759a-156f-49f4-bd87-ce7fe3cdac15/br-logo.jpeg",
   navy: "#0f172a",
   surface: "#111a2e",
   gold: "#c9a25c",
