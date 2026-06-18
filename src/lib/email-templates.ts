@@ -273,10 +273,10 @@ export function bookingAdminEmail(b: BookingPayload) {
     ${b.phone && b.email ? btnSpacer() : ""}
     ${b.email ? button(`mailto:${b.email}`, "Reply by Email") : ""}
   </td></tr>`;
-  const when = [b.date, b.time].filter(Boolean).join(" ");
-  const who = b.name ? ` — ${b.name}` : "";
+  const when = [b.date, b.time].filter(Boolean).join(" | ");
+  const who = b.name ? ` - ${b.name}` : "";
   return {
-    subject: `[New Reservation] ${b.service || "Ride"}${when ? ` · ${when}` : ""}${who}${b.reference ? ` · Ref ${b.reference}` : ""}`,
+    subject: `[New Reservation] ${b.service || "Ride"}${when ? ` - ${when}` : ""}${who}${b.reference ? ` - Ref ${b.reference}` : ""}`,
     html: shell({
       preview: `${b.name || "Customer"} requested ${b.service || "a ride"}${b.date ? ` on ${b.date}` : ""}${b.time ? ` at ${b.time}` : ""}.`,
       title: "New reservation request",
