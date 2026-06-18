@@ -4,7 +4,7 @@ const slides = [
   { src: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=85&auto=format&fit=crop", alt: "Airplane wing above the clouds — Burlington airport transfers" },
   { src: "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=1600&q=85&auto=format&fit=crop&crop=center", alt: "Open road through Vermont — long distance car service" },
   { src: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1600&q=85&auto=format&fit=crop", alt: "Vermont mountain landscape — ski resort shuttles" },
-  { src: "/places/toyota-sienna-2026.jpg", alt: "2026 Toyota Sienna 7-passenger minivan for Vermont transfers" },
+  { src: "/places/toyota-sienna-2026-black.jpg", alt: "Black 2026 Toyota Sienna 7-passenger minivan for Vermont transfers" },
 ];
 
 export function HeroSlideshow() {
