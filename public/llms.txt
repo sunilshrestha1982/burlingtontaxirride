@@ -15,6 +15,7 @@ Burlington VT Taxi Ride serves Burlington International Airport (BTV), Montreal-
 - [Ski Resort](/ski-resort): Transfers to Stowe, Killington, Jay Peak, Sugarbush, Smugglers' Notch, and more.
 - [Services](/services): Full list of services offered.
 - [Contact](/contact): Phone, email, and contact form.
+- [Blog · Rates & Pricing Guide](/blog): 2026 Burlington VT taxi rates, BTV airport flat fares, hourly and long-distance pricing.
 
 ## Optional
 
