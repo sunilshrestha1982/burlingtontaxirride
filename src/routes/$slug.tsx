@@ -56,9 +56,9 @@ function LocationPage() {
     <>
       {/* HERO */}
       <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <img src={loc.image} alt={loc.destination} className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <img src={loc.image} alt={loc.destination} className="hero-kenburns h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/75 via-background/30 to-transparent" />
         </div>
         <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-28 lg:px-8 lg:py-36 text-center">
           <div className="text-xs text-muted-foreground">
