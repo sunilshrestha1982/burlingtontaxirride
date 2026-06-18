@@ -62,6 +62,12 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "cabot-vt": cabotAsset.url,
   "marshfield-vt": marshfieldAsset.url,
   "plainfield-vt": plainfieldAsset.url,
+  "bradford-vt": bradfordAsset.url,
+  "newbury-vt": newburyAsset.url,
+  "thetford-vt": thetfordAsset.url,
+  "fairlee-vt": fairleeAsset.url,
+  "peacham-vt": peachamAsset.url,
+  "barnet-vt": barnetAsset.url,
 };
 
 
