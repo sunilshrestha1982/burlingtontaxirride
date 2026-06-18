@@ -8,6 +8,16 @@ import isleLaMotteAsset from "@/assets/places/isle-la-motte-vt.jpeg.asset.json";
 import grandIsleAsset from "@/assets/places/grand-isle-vt.jpg.asset.json";
 import northHeroAsset from "@/assets/places/north-hero-vt.avif.asset.json";
 import southHeroAsset from "@/assets/places/south-hero-vt.webp.asset.json";
+import greensboroAsset from "@/assets/places/greensboro-vt.jpg.asset.json";
+import craftsburyAsset from "@/assets/places/craftsbury-vt.jpg.asset.json";
+import hardwickAsset from "@/assets/places/hardwick-vt.avif.asset.json";
+import derbyAsset from "@/assets/places/derby-vt.jpg.asset.json";
+import newportAsset from "@/assets/places/newport-vt.webp.asset.json";
+import gloverAsset from "@/assets/places/glover-vt.jpg.asset.json";
+import bartonAsset from "@/assets/places/barton-vt.jpg.asset.json";
+import lakeWilloughbyAsset from "@/assets/places/lake-willoughby-vt.jpg.asset.json";
+import islandPondAsset from "@/assets/places/island-pond-vt.avif.asset.json";
+import westmoreAsset from "@/assets/places/westmore-vt.jpg.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
@@ -20,6 +30,16 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "grand-isle-vt": grandIsleAsset.url,
   "north-hero-vt": northHeroAsset.url,
   "south-hero-vt": southHeroAsset.url,
+  "greensboro-vt": greensboroAsset.url,
+  "craftsbury-vt": craftsburyAsset.url,
+  "hardwick-vt": hardwickAsset.url,
+  "derby-vt": derbyAsset.url,
+  "newport-vt": newportAsset.url,
+  "glover-vt": gloverAsset.url,
+  "barton-vt": bartonAsset.url,
+  "lake-willoughby-vt": lakeWilloughbyAsset.url,
+  "island-pond-vt": islandPondAsset.url,
+  "westmore-vt": westmoreAsset.url,
 };
 
 export const PHONE = "802-448-0707";
