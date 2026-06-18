@@ -53,6 +53,8 @@ function validateField(name: keyof Errors, value: string): string | undefined {
 
 export function BookingForm() {
   const navigate = useNavigate();
+  const formId = useId();
+  const fid = (k: string) => `${formId}-${k}`;
   const [submitting, setSubmitting] = useState(false);
 
   const [values, setValues] = useState({
