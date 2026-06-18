@@ -3,7 +3,7 @@ import { LOCATIONS } from "@/lib/locations";
 import { VT_DESTINATIONS } from "@/lib/site-data";
 import type {} from "@tanstack/react-start";
 
-const BASE_URL = "https://www.burlingtonvttaxirride.com";
+const BASE_URL = "https://www.burlingtonvttaxiride.com";
 
 interface SitemapEntry {
   path: string;

@@ -1,4 +1,4 @@
-export const SITE_URL = "https://www.burlingtonvttaxirride.com";
+export const SITE_URL = "https://www.burlingtonvttaxiride.com";
 
 export function absoluteImage(path: string): string {
   if (path.startsWith("http://") || path.startsWith("https://")) return path;
