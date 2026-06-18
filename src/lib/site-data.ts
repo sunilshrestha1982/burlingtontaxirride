@@ -81,6 +81,16 @@ import faystonAsset from "@/assets/places/fayston-vt.webp.asset.json";
 import warrenAsset from "@/assets/places/warren-vt.jpg.asset.json";
 import waitsfieldAsset from "@/assets/places/waitsfield-vt.jpg.asset.json";
 import berlinAsset from "@/assets/places/berlin-vt.webp.asset.json";
+import morrisvilleAsset from "@/assets/places/morrisville-vt.avif.asset.json";
+import hydeParkAsset from "@/assets/places/hyde-park-vt.jpeg.asset.json";
+import johnsonAsset from "@/assets/places/johnson-vt.avif.asset.json";
+import cambridgeAsset from "@/assets/places/cambridge-vt.jpg.asset.json";
+import underhillAsset from "@/assets/places/underhill-vt.webp.asset.json";
+import jerichoAsset from "@/assets/places/jericho-vt.jpg.asset.json";
+import richmondAsset from "@/assets/places/richmond-vt.jpg.asset.json";
+import hinesburgAsset from "@/assets/places/hinesburg-vt.jpg.asset.json";
+import charlotteAsset from "@/assets/places/charlotte-vt.jpg.asset.json";
+import shelburne2Asset from "@/assets/places/shelburne-vt-2.jpeg.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
@@ -147,7 +157,16 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "proctor-vt": proctorAsset.url,
   "pittsford-vt": pittsfordAsset.url,
   "brandon-vt": brandonAsset.url,
-  "shelburne-vt": shelburneAsset.url,
+  "shelburne-vt": shelburne2Asset.url,
+  "charlotte-vt": charlotteAsset.url,
+  "hinesburg-vt": hinesburgAsset.url,
+  "richmond-vt": richmondAsset.url,
+  "jericho-vt": jerichoAsset.url,
+  "underhill-vt": underhillAsset.url,
+  "cambridge-vt": cambridgeAsset.url,
+  "johnson-vt": johnsonAsset.url,
+  "hyde-park-vt": hydeParkAsset.url,
+  "morrisville-vt": morrisvilleAsset.url,
   "williston-vt": willistonAsset.url,
   "colchester-vt": colchesterAsset.url,
   "essex-junction-vt": essexJunctionAsset.url,
