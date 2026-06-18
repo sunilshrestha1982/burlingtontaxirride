@@ -53,15 +53,8 @@ function fromDestination(slug: string): Location | undefined {
   };
 }
 
-const NATURAL_LOCATION_IMAGES: Record<string, string> = {
-  "burlington-warren-waitsfield-taxi": naturalLandscapeImage("burlington-warren-waitsfield-taxi", "Warren and Waitsfield, VT"),
-  "burlington-swanton-taxi": naturalLandscapeImage("burlington-swanton-taxi", "Swanton, VT"),
-  "burlington-newport-taxi": naturalLandscapeImage("burlington-newport-taxi", "Newport, VT"),
-  "tyler-place-family-resort": naturalLandscapeImage("tyler-place-family-resort", "Tyler Place Family Resort, VT"),
-};
-
 export const locationBySlug = (slug: string): Location | undefined => {
   const loc = LOCATIONS.find((l) => l.slug === slug);
-  if (loc) return { ...loc, image: NATURAL_LOCATION_IMAGES[slug] ?? loc.image };
+  if (loc) return loc;
   return fromDestination(slug);
 };
