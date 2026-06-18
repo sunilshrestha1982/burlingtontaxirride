@@ -42,6 +42,10 @@ import mountAscutneyAsset from "@/assets/places/mount-ascutney-vt.jpg.asset.json
 import windsorAsset from "@/assets/places/windsor-vt.jpg.asset.json";
 import hartfordAsset from "@/assets/places/hartford-vt.jpg.asset.json";
 import norwichAsset from "@/assets/places/norwich-vt.jpg.asset.json";
+import benningtonAsset from "@/assets/places/bennington-vt.jpg.asset.json";
+import pownalAsset from "@/assets/places/pownal-vt.jpg.asset.json";
+import wilmingtonAsset from "@/assets/places/wilmington-vt.jpg.asset.json";
+import westDoverAsset from "@/assets/places/west-dover-vt.jpg.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
@@ -88,6 +92,10 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "windsor-vt": windsorAsset.url,
   "hartford-vt": hartfordAsset.url,
   "norwich-vt": norwichAsset.url,
+  "bennington-vt": benningtonAsset.url,
+  "pownal-vt": pownalAsset.url,
+  "wilmington-vt": wilmingtonAsset.url,
+  "west-dover-vt": westDoverAsset.url,
 };
 
 
