@@ -37,27 +37,30 @@ export const LOCATIONS: Location[] = [
     description: "Family-friendly transfers from Burlington International Airport (BTV) to the Tyler Place Family Resort in Highgate Springs, VT. Child seats available on request." },
 ];
 
-import { VT_DESTINATIONS } from "./site-data";
+import { naturalLandscapeImage, VT_DESTINATIONS } from "./site-data";
 
 function fromDestination(slug: string): Location | undefined {
   const d = VT_DESTINATIONS.find((v) => v.slug === slug);
   if (!d) return undefined;
-  // Upgrade image size for hero use
-  const heroImage = d.image.includes("loremflickr.com")
-    ? d.image.replace(/\/\d+\/\d+\//, "/1600/900/")
-    : d.image.includes("picsum.photos")
-    ? d.image.replace(/\/\d+\/\d+$/, "/1600/900")
-    : d.image;
   return {
     slug: d.slug,
     label: `Burlington to ${d.name}`,
     title: `Burlington to ${d.name}`,
     destination: d.name,
     drive: "Fixed-rate quote",
-    image: heroImage,
+    image: d.image,
     description: `Door-to-door taxi and chauffeur service between Burlington / BTV and ${d.name}. Fixed flat rate, professional drivers, 24/7 — book online or call for a quote.`,
   };
 }
 
+const NATURAL_LOCATION_IMAGES: Record<string, string> = {
+  "burlington-warren-waitsfield-taxi": naturalLandscapeImage("burlington-warren-waitsfield-taxi", "Warren and Waitsfield, VT"),
+  "burlington-swanton-taxi": naturalLandscapeImage("burlington-swanton-taxi", "Swanton, VT"),
+  "burlington-newport-taxi": naturalLandscapeImage("burlington-newport-taxi", "Newport, VT"),
+  "tyler-place-family-resort": naturalLandscapeImage("tyler-place-family-resort", "Tyler Place Family Resort, VT"),
+};
+
 export const locationBySlug = (slug: string): Location | undefined =>
-  LOCATIONS.find((l) => l.slug === slug) ?? fromDestination(slug);
+  LOCATIONS.find((l) => l.slug === slug)
+    ? { ...LOCATIONS.find((l) => l.slug === slug)!, image: NATURAL_LOCATION_IMAGES[slug] ?? LOCATIONS.find((l) => l.slug === slug)!.image }
+    : fromDestination(slug);
