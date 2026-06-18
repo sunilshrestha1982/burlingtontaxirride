@@ -65,6 +65,13 @@ import brandonAsset from "@/assets/places/brandon-vt.png.asset.json";
 import salisbury2Asset from "@/assets/places/salisbury-vt-2.jpg.asset.json";
 import putney2Asset from "@/assets/places/putney-vt-2.jpg.asset.json";
 import bellowsFalls2Asset from "@/assets/places/bellows-falls-vt-2.jpg.asset.json";
+import boltonValleyAsset from "@/assets/places/bolton-valley-vt.jpg.asset.json";
+import duxburyAsset from "@/assets/places/duxbury-vt.jpg.asset.json";
+import moretownAsset from "@/assets/places/moretown-vt.avif.asset.json";
+import faystonAsset from "@/assets/places/fayston-vt.webp.asset.json";
+import warrenAsset from "@/assets/places/warren-vt.jpg.asset.json";
+import waitsfieldAsset from "@/assets/places/waitsfield-vt.jpg.asset.json";
+import berlinAsset from "@/assets/places/berlin-vt.webp.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
@@ -131,6 +138,13 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "proctor-vt": proctorAsset.url,
   "pittsford-vt": pittsfordAsset.url,
   "brandon-vt": brandonAsset.url,
+  "bolton-valley-vt": boltonValleyAsset.url,
+  "duxbury-vt": duxburyAsset.url,
+  "moretown-vt": moretownAsset.url,
+  "fayston-vt": faystonAsset.url,
+  "warren-vt": warrenAsset.url,
+  "waitsfield-vt": waitsfieldAsset.url,
+  "berlin-vt": berlinAsset.url,
 };
 
 
