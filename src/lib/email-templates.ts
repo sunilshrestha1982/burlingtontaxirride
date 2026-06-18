@@ -121,22 +121,42 @@ function shell(opts: { preview: string; title: string; body: string }) {
 function row(label: string, value?: string) {
   if (!value) return "";
   return `<tr>
-    <td style="padding:10px 0;border-bottom:1px solid #f0e9d6;width:42%;vertical-align:top;">
+    <td class="label-cell" style="padding:10px 0;border-bottom:1px solid #f0e9d6;width:42%;vertical-align:top;">
       <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:${BRAND.muted};">${esc(label)}</div>
     </td>
-    <td style="padding:10px 0;border-bottom:1px solid #f0e9d6;color:${BRAND.text};font-size:14px;font-weight:600;">
+    <td class="value-cell" style="padding:10px 0;border-bottom:1px solid #f0e9d6;color:${BRAND.text};font-size:14px;font-weight:600;word-break:break-word;">
       ${esc(value)}
     </td>
   </tr>`;
 }
 
 function button(href: string, label: string) {
-  return `<a href="${esc(href)}" style="display:inline-block;background:linear-gradient(135deg,${BRAND.gold},${BRAND.goldSoft});color:${BRAND.navy};text-decoration:none;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:12px 22px;border-radius:8px;">${esc(label)}</a>`;
+  return `<a href="${esc(href)}" class="btn" style="display:inline-block;background:linear-gradient(135deg,${BRAND.gold},${BRAND.goldSoft});color:${BRAND.navy};text-decoration:none;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:13px 22px;border-radius:8px;text-align:center;">${esc(label)}</a>`;
+}
+
+function btnSpacer() {
+  return `<span class="btn-spacer">&nbsp;&nbsp;</span>`;
 }
 
 function detailsTable(rows: string) {
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:14px;border-top:2px solid ${BRAND.gold};">
     ${rows}
+  </table>`;
+}
+
+function summaryCard(items: Array<{ label: string; value?: string }>) {
+  const cells = items
+    .filter((i) => i.value)
+    .map(
+      (i) => `<td valign="top" style="padding:10px 14px;">
+        <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:${BRAND.goldSoft};margin-bottom:4px;">${esc(i.label)}</div>
+        <div style="color:#ffffff;font-size:15px;font-weight:700;line-height:1.3;">${esc(i.value!)}</div>
+      </td>`,
+    )
+    .join("");
+  if (!cells) return "";
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="summary-grid" style="margin-top:18px;background:${BRAND.navy};border-radius:10px;">
+    <tr>${cells}</tr>
   </table>`;
 }
 
