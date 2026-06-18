@@ -68,7 +68,8 @@ import bellowsFalls2Asset from "@/assets/places/bellows-falls-vt-2.jpg.asset.jso
 import shelburneAsset from "@/assets/places/shelburne-vt.jpeg.asset.json";
 import willistonAsset from "@/assets/places/williston-vt.jpg.asset.json";
 import colchesterAsset from "@/assets/places/colchester-vt.jpg.asset.json";
-import essexJunctionAsset from "@/assets/places/essex-junction-vt.jpg.asset.json";
+import essexJunctionAsset from "@/assets/places/essex-junction-vt-2.jpeg.asset.json";
+import vergennesAsset from "@/assets/places/vergennes-vt-2.jpeg.asset.json";
 import essexAsset from "@/assets/places/essex-vt.jpg.asset.json";
 import newHavenAsset from "@/assets/places/new-haven-vt.jpg.asset.json";
 import bristolAsset from "@/assets/places/bristol-vt.jpg.asset.json";
