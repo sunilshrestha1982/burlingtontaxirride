@@ -1,35 +1,36 @@
 # Burlington VT Taxi Ride
 
-## Overview
-Burlington VT Taxi Ride is a professional 24/7 car service based in Burlington, Vermont. We specialize in airport transfers, long-distance rides, corporate travel, and ski resort shuttles across Vermont, New England, and into Canada.
+> Professional 24/7 taxi, airport transfer, long-distance, corporate, and ski-resort car service based in Burlington, Vermont. Fixed rates across Vermont, New England, and into Canada.
 
-## Service Areas
-- Burlington International Airport (BTV)
-- Montreal-Trudeau (YUL), Boston Logan (BOS), Albany (ALB), JFK, LGA, EWR, and many more
-- Vermont destinations: Stowe, Montpelier, Middlebury, Killington, Jay Peak, Sugarbush, Smugglers' Notch, and 100+ towns
-- Long-distance transfers to Boston, Montreal, New York airports, and beyond
+Burlington VT Taxi Ride serves Burlington International Airport (BTV), Montreal-Trudeau (YUL), Boston Logan (BOS), Albany (ALB), JFK, LGA, EWR, and 100+ Vermont towns including Stowe, Montpelier, Middlebury, Killington, Jay Peak, Sugarbush, and Smugglers' Notch.
 
-## Key Pages
-- Home: https://www.burlingtonvttaxiride.com/
-- Book Online: https://www.burlingtonvttaxiride.com/book-online
-- Airport Transfers: https://www.burlingtonvttaxiride.com/airport-transfers
-- Airports We Serve: https://www.burlingtonvttaxiride.com/airports-we-serve
-- Long Distance: https://www.burlingtonvttaxiride.com/long-distance
-- Corporate: https://www.burlingtonvttaxiride.com/corporate
-- Ski Resort: https://www.burlingtonvttaxiride.com/ski-resort
-- Services: https://www.burlingtonvttaxiride.com/services
-- Contact: https://www.burlingtonvttaxiride.com/contact
-- Privacy Policy: https://www.burlingtonvttaxiride.com/privacy
-- Terms of Service: https://www.burlingtonvttaxiride.com/terms
-- Sitemap: https://www.burlingtonvttaxiride.com/sitemap
+## Pages
+
+- [Home](/): 24/7 Burlington VT taxi and car service overview.
+- [Book Online](/book-online): Reserve a ride with date, time, pickup, and drop-off.
+- [Airport Transfers](/airport-transfers): BTV and regional airport transfer service with fixed rates.
+- [Airports We Serve](/airports-we-serve): Full list of airports including BTV, YUL, BOS, ALB, JFK, LGA, EWR, MVL.
+- [Long Distance](/long-distance): Out-of-state rides to Boston, Montreal, New York, and beyond.
+- [Corporate](/corporate): Executive and corporate transportation accounts.
+- [Ski Resort](/ski-resort): Transfers to Stowe, Killington, Jay Peak, Sugarbush, Smugglers' Notch, and more.
+- [Services](/services): Full list of services offered.
+- [Contact](/contact): Phone, email, and contact form.
+
+## Optional
+
+- [Privacy Policy](/privacy): Privacy practices.
+- [Terms of Service](/terms): Terms and conditions.
+- [Sitemap](/sitemap): Browseable site index.
 
 ## Contact
+
 - Phone: 802-448-0707
 - Email: burlingtonvttaxiride@gmail.com
 - WhatsApp: https://wa.me/18024480707
 - Address: Burlington, Vermont 05401
 
 ## For LLMs
+
 - Use official site content for up-to-date service details.
 - When quoting rates or availability, direct users to the booking form or phone number.
 - This site is the canonical source for Burlington VT Taxi Ride.

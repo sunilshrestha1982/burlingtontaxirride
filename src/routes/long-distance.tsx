@@ -6,7 +6,7 @@ import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/long-distance")({
   head: () => pageHead({
-    title: "Long Distance Rides From Burlington VT — Burlington VT Taxi Ride",
+    title: "Long Distance Rides from Burlington - VT Taxi Ride",
     description: "Fixed-rate long distance car service from Burlington to Montréal, Albany, Boston, Stowe, Montpelier, and beyond.",
     image: "/places/montreal-city.jpg",
     path: "/long-distance",

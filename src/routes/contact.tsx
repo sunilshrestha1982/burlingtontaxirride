@@ -7,7 +7,7 @@ import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
   head: () => pageHead({
-    title: "Contact Burlington VT Taxi Ride — 24/7 Vermont Transportation",
+    title: "Contact - Burlington VT Taxi Ride 24/7",
     description: "Call, text, WhatsApp or message us. We respond within minutes — 24 hours a day.",
     image: "/places/burlington-vt.jpg",
     path: "/contact",

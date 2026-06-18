@@ -6,7 +6,7 @@ import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/corporate")({
   head: () => pageHead({
-    title: "Corporate & Executive Transportation — Burlington VT Taxi Ride",
+    title: "Corporate & Executive Car Service - Burlington VT",
     description: "Discreet, punctual corporate car service for Vermont businesses and visiting executives. Account billing and priority dispatch.",
     image: "/places/burlington-vt.jpg",
     path: "/corporate",

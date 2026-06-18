@@ -7,7 +7,7 @@ import { Plane, BadgeCheck, ShieldCheck, Clock, Users } from "lucide-react";
 
 export const Route = createFileRoute("/airport-transfers")({
   head: () => pageHead({
-    title: "Burlington Airport Transfer Service (BTV) — Burlington VT Taxi Ride",
+    title: "Burlington Airport (BTV) Transfers - VT Taxi Ride",
     description: "Fixed-rate airport rides to and from Burlington International Airport (BTV). Flight tracking, meet & greet, 24/7.",
     image: "/places/btv-airport.jpg",
     path: "/airport-transfers",
