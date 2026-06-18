@@ -10,7 +10,7 @@ export type City = {
   image: string;
 };
 
-function naturalLandscapeImage(slug: string, name: string): string {
+export function naturalLandscapeImage(slug: string, name: string): string {
   let h = 0;
   for (let i = 0; i < slug.length; i++) h = ((h * 31) + slug.charCodeAt(i)) >>> 0;
   const hue = 88 + (h % 38);
