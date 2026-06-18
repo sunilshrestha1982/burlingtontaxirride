@@ -91,6 +91,8 @@ import richmondAsset from "@/assets/places/richmond-vt.jpg.asset.json";
 import hinesburgAsset from "@/assets/places/hinesburg-vt.jpg.asset.json";
 import charlotteAsset from "@/assets/places/charlotte-vt.jpg.asset.json";
 import shelburne2Asset from "@/assets/places/shelburne-vt-2.jpeg.asset.json";
+import elmoreAsset from "@/assets/places/elmore-vt.jpg.asset.json";
+import wolcottAsset from "@/assets/places/wolcott-vt.avif.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
