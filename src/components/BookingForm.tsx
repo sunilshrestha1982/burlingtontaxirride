@@ -70,6 +70,8 @@ export function BookingForm() {
   });
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<keyof Errors, boolean>>>({});
+  const [captchaError, setCaptchaError] = useState<string | undefined>();
+  const captcha = useCaptcha();
 
   const dateObj = useMemo(() => (values.date ? new Date(values.date + "T00:00:00") : undefined), [values.date]);
   const times = useMemo(() => {
