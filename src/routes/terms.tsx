@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { EMAIL, PHONE } from "@/lib/site-data";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/terms")({
-  head: () => ({
-    meta: [
-      { title: "Terms of Service — Burlington VT Taxi Ride" },
-      { name: "description", content: "Terms and conditions for booking and using Burlington VT Taxi Ride transportation services." },
-    ],
+  head: () => pageHead({
+    title: "Terms of Service — Burlington VT Taxi Ride",
+    description: "Terms and conditions for booking and using Burlington VT Taxi Ride transportation services.",
+    image: "/og-image.jpg",
+    path: "/terms",
   }),
   component: Page,
 });

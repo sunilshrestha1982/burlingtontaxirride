@@ -2,17 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { PHONE, PHONE_TEL, EMAIL, WHATSAPP, ADDRESS } from "@/lib/site-data";
+import { pageHead } from "@/lib/seo";
 import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact Burlington VT Taxi Ride — 24/7 Vermont Transportation" },
-      { name: "description", content: "Call, text, WhatsApp or message us. We respond within minutes — 24 hours a day." },
-      { property: "og:title", content: "Contact Burlington VT Taxi Ride" },
-      { property: "og:description", content: "Reach us 24/7 by phone, text, WhatsApp, or contact form." },
-      { property: "og:image", content: "/places/burlington-vt.jpg" },
-    ],
+  head: () => pageHead({
+    title: "Contact Burlington VT Taxi Ride — 24/7 Vermont Transportation",
+    description: "Call, text, WhatsApp or message us. We respond within minutes — 24 hours a day.",
+    image: "/places/burlington-vt.jpg",
+    path: "/contact",
   }),
   component: Page,
 });
