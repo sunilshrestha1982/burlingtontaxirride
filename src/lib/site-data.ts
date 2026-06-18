@@ -81,6 +81,16 @@ import faystonAsset from "@/assets/places/fayston-vt.webp.asset.json";
 import warrenAsset from "@/assets/places/warren-vt.jpg.asset.json";
 import waitsfieldAsset from "@/assets/places/waitsfield-vt.jpg.asset.json";
 import berlinAsset from "@/assets/places/berlin-vt.webp.asset.json";
+import morrisvilleAsset from "@/assets/places/morrisville-vt.avif.asset.json";
+import hydeParkAsset from "@/assets/places/hyde-park-vt.jpeg.asset.json";
+import johnsonAsset from "@/assets/places/johnson-vt.avif.asset.json";
+import cambridgeAsset from "@/assets/places/cambridge-vt.jpg.asset.json";
+import underhillAsset from "@/assets/places/underhill-vt.webp.asset.json";
+import jerichoAsset from "@/assets/places/jericho-vt.jpg.asset.json";
+import richmondAsset from "@/assets/places/richmond-vt.jpg.asset.json";
+import hinesburgAsset from "@/assets/places/hinesburg-vt.jpg.asset.json";
+import charlotteAsset from "@/assets/places/charlotte-vt.jpg.asset.json";
+import shelburne2Asset from "@/assets/places/shelburne-vt-2.jpeg.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
