@@ -60,21 +60,38 @@ function shell(opts: { preview: string; title: string; body: string }) {
 <meta name="color-scheme" content="light only" />
 <meta name="supported-color-schemes" content="light" />
 <title>${esc(opts.title)}</title>
+<style>
+  @media only screen and (max-width: 620px) {
+    .email-container { width: 100% !important; border-radius: 0 !important; }
+    .px-pad { padding-left: 20px !important; padding-right: 20px !important; }
+    .py-pad { padding-top: 22px !important; padding-bottom: 22px !important; }
+    .brand-name { font-size: 17px !important; letter-spacing: 0.3px !important; }
+    .brand-tag { display: none !important; }
+    .brand-logo { width: 36px !important; height: 36px !important; margin-right: 10px !important; }
+    .h1 { font-size: 22px !important; line-height: 1.25 !important; }
+    .h1-sm { font-size: 20px !important; }
+    .label-cell { width: 38% !important; font-size: 10px !important; }
+    .value-cell { font-size: 13px !important; }
+    .btn { display: block !important; width: 100% !important; margin: 8px 0 !important; box-sizing: border-box; }
+    .btn-spacer { display: none !important; }
+    .summary-grid td { display: block !important; width: 100% !important; padding: 6px 0 !important; }
+  }
+</style>
 </head>
 <body style="margin:0;padding:0;background:#f4efe3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:${BRAND.text};">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${esc(opts.preview)}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4efe3;">
   <tr><td align="center" style="padding:24px 12px;">
-    <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(15,23,42,0.08);">
+    <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" class="email-container" style="max-width:600px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(15,23,42,0.08);">
       <tr>
-        <td style="background:${BRAND.navy};padding:22px 28px;" align="left">
+        <td class="px-pad" style="background:${BRAND.navy};padding:22px 28px;" align="left">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
-              <td align="left" valign="middle" style="color:${BRAND.gold};font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:700;letter-spacing:0.5px;">
-                <img src="${BRAND.logo}" width="44" height="44" alt="${BRAND.name}" style="display:inline-block;vertical-align:middle;border-radius:50%;border:2px solid ${BRAND.gold};margin-right:12px;background:#ffffff;" />
+              <td align="left" valign="middle" class="brand-name" style="color:${BRAND.gold};font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:700;letter-spacing:0.5px;">
+                <img src="${BRAND.logo}" width="44" height="44" alt="${BRAND.name}" class="brand-logo" style="display:inline-block;vertical-align:middle;border-radius:50%;border:2px solid ${BRAND.gold};margin-right:12px;background:#ffffff;" />
                 <span style="vertical-align:middle;">${BRAND.name}</span>
               </td>
-              <td align="right" valign="middle" style="color:${BRAND.goldSoft};font-size:12px;letter-spacing:2px;text-transform:uppercase;">
+              <td align="right" valign="middle" class="brand-tag" style="color:${BRAND.goldSoft};font-size:11px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;">
                 Premium &middot; 24/7
               </td>
             </tr>
@@ -83,7 +100,7 @@ function shell(opts: { preview: string; title: string; body: string }) {
       </tr>
       ${opts.body}
       <tr>
-        <td style="padding:22px 28px;background:${BRAND.navy};color:#cbd5e1;font-size:12px;line-height:18px;" align="center">
+        <td class="px-pad" style="padding:22px 28px;background:${BRAND.navy};color:#cbd5e1;font-size:12px;line-height:18px;" align="center">
           <div style="color:${BRAND.gold};font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:11px;margin-bottom:6px;">${BRAND.name}</div>
           <a href="tel:${PHONE_TEL}" style="color:${BRAND.goldSoft};text-decoration:none;">${PHONE}</a>
           &nbsp;&middot;&nbsp;
@@ -104,17 +121,21 @@ function shell(opts: { preview: string; title: string; body: string }) {
 function row(label: string, value?: string) {
   if (!value) return "";
   return `<tr>
-    <td style="padding:10px 0;border-bottom:1px solid #f0e9d6;width:42%;vertical-align:top;">
+    <td class="label-cell" style="padding:10px 0;border-bottom:1px solid #f0e9d6;width:42%;vertical-align:top;">
       <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:${BRAND.muted};">${esc(label)}</div>
     </td>
-    <td style="padding:10px 0;border-bottom:1px solid #f0e9d6;color:${BRAND.text};font-size:14px;font-weight:600;">
+    <td class="value-cell" style="padding:10px 0;border-bottom:1px solid #f0e9d6;color:${BRAND.text};font-size:14px;font-weight:600;word-break:break-word;">
       ${esc(value)}
     </td>
   </tr>`;
 }
 
 function button(href: string, label: string) {
-  return `<a href="${esc(href)}" style="display:inline-block;background:linear-gradient(135deg,${BRAND.gold},${BRAND.goldSoft});color:${BRAND.navy};text-decoration:none;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:12px 22px;border-radius:8px;">${esc(label)}</a>`;
+  return `<a href="${esc(href)}" class="btn" style="display:inline-block;background:linear-gradient(135deg,${BRAND.gold},${BRAND.goldSoft});color:${BRAND.navy};text-decoration:none;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:13px 22px;border-radius:8px;text-align:center;">${esc(label)}</a>`;
+}
+
+function btnSpacer() {
+  return `<span class="btn-spacer">&nbsp;&nbsp;</span>`;
 }
 
 function detailsTable(rows: string) {
@@ -123,21 +144,42 @@ function detailsTable(rows: string) {
   </table>`;
 }
 
+function summaryCard(items: Array<{ label: string; value?: string }>) {
+  const cells = items
+    .filter((i) => i.value)
+    .map(
+      (i) => `<td valign="top" style="padding:10px 14px;">
+        <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:${BRAND.goldSoft};margin-bottom:4px;">${esc(i.label)}</div>
+        <div style="color:#ffffff;font-size:15px;font-weight:700;line-height:1.3;">${esc(i.value!)}</div>
+      </td>`,
+    )
+    .join("");
+  if (!cells) return "";
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="summary-grid" style="margin-top:18px;background:${BRAND.navy};border-radius:10px;">
+    <tr>${cells}</tr>
+  </table>`;
+}
+
 /* ============================ BOOKING ============================ */
 
 export function bookingCustomerEmail(b: BookingPayload) {
   const body = `
-  <tr><td style="padding:32px 28px 8px 28px;">
+  <tr><td class="px-pad" style="padding:32px 28px 8px 28px;">
     <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">— Booking Received</div>
-    <h1 style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:28px;line-height:1.2;color:${BRAND.text};">
-      Thank you${b.name ? `, ${esc(b.name.split(" ")[0])}` : ""} — we've got your ride.
+    <h1 class="h1" style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:28px;line-height:1.2;color:${BRAND.text};">
+      Thank you${b.name ? `, ${esc(b.name.split(" ")[0])}` : ""} — your ride is reserved.
     </h1>
     <p style="margin:10px 0 0 0;color:${BRAND.muted};font-size:14px;line-height:22px;">
-      Your reservation has been received and our dispatcher will confirm shortly. Keep this email for your records.
+      Your reservation has been received and our dispatcher will confirm shortly. Please keep this email for your records.
     </p>
     ${b.reference ? `<div style="margin-top:16px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:8px 14px;border-radius:6px;font-size:13px;">REF · ${esc(b.reference)}</div>` : ""}
+    ${summaryCard([
+      { label: "Date", value: b.date },
+      { label: "Time", value: b.time },
+      { label: "Service", value: b.service },
+    ])}
   </td></tr>
-  <tr><td style="padding:8px 28px 4px 28px;">
+  <tr><td class="px-pad" style="padding:8px 28px 4px 28px;">
     ${detailsTable(
       row("Service", b.service) +
       row("Date", b.date) +
@@ -151,7 +193,7 @@ export function bookingCustomerEmail(b: BookingPayload) {
       row("Email", b.email),
     )}
   </td></tr>
-  <tr><td style="padding:22px 28px;">
+  <tr><td class="px-pad" style="padding:22px 28px;">
     <div style="background:#fbf6e7;border:1px solid ${BRAND.border};border-radius:10px;padding:16px 18px;">
       <div style="color:${BRAND.text};font-weight:700;font-size:14px;margin-bottom:4px;">What happens next</div>
       <ul style="margin:6px 0 0 18px;padding:0;color:${BRAND.muted};font-size:13px;line-height:20px;">
@@ -162,14 +204,15 @@ export function bookingCustomerEmail(b: BookingPayload) {
     </div>
     <div style="margin-top:22px;text-align:center;">
       ${button(`tel:${PHONE_TEL}`, `Call ${PHONE}`)}
-      &nbsp;
+      ${btnSpacer()}
       ${button(WHATSAPP, "WhatsApp Us")}
     </div>
   </td></tr>`;
+  const when = [b.date, b.time].filter(Boolean).join(" · ");
   return {
-    subject: `Your ride is reserved${b.reference ? ` · ${b.reference}` : ""} — ${BRAND.name}`,
+    subject: `Reservation Confirmed${when ? ` — ${when}` : ""}${b.reference ? ` (Ref ${b.reference})` : ""} | ${BRAND.name}`,
     html: shell({
-      preview: `We received your booking${b.reference ? ` (${b.reference})` : ""} — confirmation in minutes.`,
+      preview: `Your booking${b.reference ? ` (${b.reference})` : ""}${when ? ` for ${when}` : ""} is received — driver confirmation in minutes.`,
       title: "Booking received",
       body,
     }),
@@ -178,21 +221,27 @@ export function bookingCustomerEmail(b: BookingPayload) {
 
 export function bookingAdminEmail(b: BookingPayload) {
   const body = `
-  <tr><td style="padding:32px 28px 4px 28px;">
-    <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">★ New Booking</div>
-    <h1 style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:26px;line-height:1.2;color:${BRAND.text};">
-      ${esc(b.service || "Ride request")}
+  <tr><td class="px-pad" style="padding:32px 28px 4px 28px;">
+    <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">★ New Reservation Request</div>
+    <h1 class="h1-sm" style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:24px;line-height:1.2;color:${BRAND.text};">
+      ${esc(b.service || "Ride Request")}${b.name ? ` — ${esc(b.name)}` : ""}
     </h1>
     <p style="margin:8px 0 0 0;color:${BRAND.muted};font-size:13px;">
       Submitted ${esc(b.submittedAt ? new Date(b.submittedAt).toLocaleString() : new Date().toLocaleString())}
     </p>
     ${b.reference ? `<div style="margin-top:14px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:7px 12px;border-radius:6px;font-size:13px;">REF · ${esc(b.reference)}</div>` : ""}
+    ${summaryCard([
+      { label: "Pickup Date", value: b.date },
+      { label: "Pickup Time", value: b.time },
+      { label: "Passengers", value: b.passengers },
+    ])}
   </td></tr>
-  <tr><td style="padding:6px 28px;">
+  <tr><td class="px-pad" style="padding:6px 28px;">
     ${detailsTable(
       row("Customer", b.name) +
       row("Phone", b.phone) +
       row("Email", b.email) +
+      row("Service", b.service) +
       row("Date", b.date) +
       row("Time", b.time) +
       row("Pickup", b.pickup) +
@@ -202,15 +251,18 @@ export function bookingAdminEmail(b: BookingPayload) {
       row("Flight #", b.flight),
     )}
   </td></tr>
-  <tr><td style="padding:22px 28px;" align="center">
+  <tr><td class="px-pad" style="padding:22px 28px;" align="center">
     ${b.phone ? button(`tel:${b.phone}`, "Call Customer") : ""}
-    ${b.email ? `&nbsp;${button(`mailto:${b.email}`, "Reply by Email")}` : ""}
+    ${b.phone && b.email ? btnSpacer() : ""}
+    ${b.email ? button(`mailto:${b.email}`, "Reply by Email") : ""}
   </td></tr>`;
+  const when = [b.date, b.time].filter(Boolean).join(" ");
+  const who = b.name ? ` — ${b.name}` : "";
   return {
-    subject: `New booking · ${b.service || "Ride"}${b.reference ? ` · ${b.reference}` : ""}`,
+    subject: `[New Reservation] ${b.service || "Ride"}${when ? ` · ${when}` : ""}${who}${b.reference ? ` · Ref ${b.reference}` : ""}`,
     html: shell({
       preview: `${b.name || "Customer"} requested ${b.service || "a ride"}${b.date ? ` on ${b.date}` : ""}${b.time ? ` at ${b.time}` : ""}.`,
-      title: "New booking",
+      title: "New reservation request",
       body,
     }),
   };
