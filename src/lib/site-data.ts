@@ -191,6 +191,7 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "warren-vt": warrenAsset.url,
   "waitsfield-vt": waitsfieldAsset.url,
   "berlin-vt": berlinAsset.url,
+  "vergennes-vt": vergennesAsset.url,
 };
 
 
