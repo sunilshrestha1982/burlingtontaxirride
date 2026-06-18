@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { LOCATIONS } from "@/lib/locations";
 import { AIRPORTS, VT_DESTINATIONS } from "@/lib/site-data";
 
-const SITE = "https://www.burlingtonvttaxirride.com";
+const SITE = "https://www.burlingtonvttaxiride.com";
 
 export const Route = createFileRoute("/sitemap")({
   head: () => ({
