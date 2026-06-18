@@ -12,11 +12,11 @@ export type City = {
 
 export function destinationLandscapeImage(slug: string, name: string, tag = slug.replace(/-vt$/, "")): string {
   const place = name.replace(/,\s*VT\s*$/i, " Vermont");
-  const prompt = `clean daylight natural landscape photograph of ${place}, scenic ${tag.replace(/-/g, " ")}, Vermont Green Mountains, forest, meadow, lake or river, wide horizontal view, no people, no hands, no vehicles, no buildings, no text, no dark background`;
+  const prompt = `high-quality professional daylight natural landscape photograph specifically representing ${place}, scenic ${tag.replace(/-/g, " ")}, Vermont Green Mountains, forest, meadow, lake or river, wide horizontal travel photo, clean bright natural background, no people, no hands, no vehicles, no buildings, no city streets, no text, no dark background`;
   const params = new URLSearchParams({
     width: "1600",
     height: "1000",
-    seed: `vt-${slug}`,
+    seed: `burlington-vt-taxi-unique-${slug}`,
     nologo: "true",
     enhance: "true",
     model: "flux",

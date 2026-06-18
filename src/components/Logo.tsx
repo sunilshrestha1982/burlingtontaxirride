@@ -2,18 +2,18 @@ import { Link } from "@tanstack/react-router";
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
-    <Link to="/" className="flex items-center gap-3 group">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-gold/40 bg-surface">
-        <span className="text-gold text-xl">✦</span>
+    <Link to="/" className="group flex min-w-0 items-center gap-3">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-gold/40 bg-surface sm:h-14 sm:w-14">
+        <span className="text-xl text-gold sm:text-2xl">✦</span>
       </div>
-      <div className="flex flex-col leading-tight">
-        <span className={`font-display tracking-wider text-gold ${compact ? "text-base sm:text-lg" : "text-lg sm:text-xl md:text-2xl"}`}>
+      <div className="flex min-w-0 flex-col leading-none">
+        <span className={`font-display font-bold text-gold ${compact ? "text-lg sm:text-xl md:text-2xl" : "text-xl sm:text-2xl md:text-3xl"}`}>
           BURLINGTON VT
         </span>
-        <span className={`font-display font-bold tracking-wide text-foreground ${compact ? "text-xl sm:text-2xl" : "text-2xl sm:text-3xl md:text-4xl"}`}>
+        <span className={`font-display font-black text-foreground ${compact ? "text-2xl sm:text-3xl md:text-4xl" : "text-3xl sm:text-4xl md:text-5xl"}`}>
           TAXI RIDE
         </span>
-        <span className={`italic text-muted-foreground ${compact ? "text-xs sm:text-sm" : "text-sm sm:text-base"}`}>
+        <span className={`mt-1 font-semibold italic text-muted-foreground ${compact ? "text-sm sm:text-base" : "text-base sm:text-lg"}`}>
           Vermont's Premier Transportation
         </span>
       </div>
