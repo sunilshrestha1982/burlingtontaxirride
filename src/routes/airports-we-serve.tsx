@@ -41,7 +41,7 @@ function Page() {
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <p className="text-xs uppercase tracking-[0.3em] text-gold text-center">Regional & Major Hubs</p>
         <h2 className="mt-3 text-center font-display text-4xl sm:text-5xl">All Airports We <span className="text-gradient-gold">Transfer To</span></h2>
-        <p className="mx-auto mt-4 max-w-2xl text-center text-muted-foreground">We serve 13 airports across Vermont, New England, New York, and Québec. All transfers are fixed-rate, pre-booked, and confirmed before you travel.</p>
+        <p className="mx-auto mt-4 max-w-2xl text-center text-muted-foreground">We serve 14 airports across Vermont, New England, New York, and Québec. All transfers are fixed-rate, pre-booked, and confirmed before you travel.</p>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {AIRPORTS.map((a) => <AirportCard key={a.code} airport={a} />)}
