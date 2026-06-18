@@ -32,6 +32,16 @@ import thetfordAsset from "@/assets/places/thetford-vt.jpeg.asset.json";
 import fairleeAsset from "@/assets/places/fairlee-vt.jpg.asset.json";
 import peachamAsset from "@/assets/places/peacham-vt.avif.asset.json";
 import barnetAsset from "@/assets/places/barnet-vt.jpg.asset.json";
+import bromleyMountainAsset from "@/assets/places/bromley-mountain-vt.webp.asset.json";
+import strattonMountainAsset from "@/assets/places/stratton-mountain-vt.jpg.asset.json";
+import rochesterAsset from "@/assets/places/rochester-vt.jpg.asset.json";
+import randolphAsset from "@/assets/places/randolph-vt.jpeg.asset.json";
+import bethelAsset from "@/assets/places/bethel-vt.jpeg.asset.json";
+import southRoyaltonAsset from "@/assets/places/south-royalton-vt.jpg.asset.json";
+import mountAscutneyAsset from "@/assets/places/mount-ascutney-vt.jpg.asset.json";
+import windsorAsset from "@/assets/places/windsor-vt.jpg.asset.json";
+import hartfordAsset from "@/assets/places/hartford-vt.jpg.asset.json";
+import norwichAsset from "@/assets/places/norwich-vt.jpg.asset.json";
 
 const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "fairfax-vt": fairfaxAsset.url,
