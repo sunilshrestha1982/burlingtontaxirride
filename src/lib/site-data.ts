@@ -10,7 +10,22 @@ export type City = {
   image: string;
 };
 
-// Photos live in /public/places/ and are generated via AI to match each destination.
+export function destinationLandscapeImage(slug: string, name: string, tag = slug.replace(/-vt$/, "")): string {
+  const place = name.replace(/,\s*VT\s*$/i, " Vermont");
+  const prompt = `clean daylight natural landscape photograph of ${place}, scenic ${tag.replace(/-/g, " ")}, Vermont Green Mountains, forest, meadow, lake or river, wide horizontal view, no people, no hands, no vehicles, no buildings, no text, no dark background`;
+  const params = new URLSearchParams({
+    width: "1600",
+    height: "1000",
+    seed: `vt-${slug}`,
+    nologo: "true",
+    enhance: "true",
+    model: "flux",
+  });
+
+  return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?${params.toString()}`;
+}
+
+// Local assets stay untouched; extended destinations use unique, destination-named natural landscapes.
 export const VT_DESTINATIONS: City[] = [
   // Existing local-asset destinations (kept as-is)
   { slug: "stowe-vt", name: "Stowe, VT", image: "/places/stowe-vt.jpg" },
@@ -27,7 +42,7 @@ export const VT_DESTINATIONS: City[] = [
   { slug: "burlington-vt", name: "Burlington, VT", image: "/places/burlington-vt.jpg" },
   { slug: "alburgh-vt", name: "Alburgh, VT", image: "/places/alburgh-vt.jpg" },
   { slug: "northfield-vt", name: "Northfield, VT", image: "/places/northfield-vt.jpg" },
-  // Extended Vermont coverage — each uses a unique, town-tagged photo from LoremFlickr (stable per lock seed).
+  // Extended Vermont coverage — each card and hero use this same unique destination landscape URL.
   ...([
     ["south-burlington-vt", "South Burlington, VT", "south-burlington"],
     ["winooski-vt", "Winooski, VT", "winooski"],
@@ -138,50 +153,11 @@ export const VT_DESTINATIONS: City[] = [
     ["montgomery-vt", "Montgomery, VT", "montgomery"],
     ["fairfax-vt", "Fairfax, VT", "fairfax"],
     ["georgia-vt", "Georgia, VT", "georgia-vt"],
-  ] as const).map(([slug, name], i) => {
-    // Curated set of VERIFIED Unsplash nature landscape photos.
-    // Each ID is a well-known, long-lived mountain/lake/forest/autumn photo
-    // — no humans, no indoor/urban shots, no dark frames, no 404s.
-    // With 109 destinations and 28 photos some will repeat, but every image
-    // will load reliably and stay on-theme (Vermont-style natural landscape).
-    const pool = [
-      "photo-1506905925346-21bda4d32df4", // mountain lake
-      "photo-1441974231531-c6227db76b6e", // sunlit forest
-      "photo-1472214103451-9374bd1c798e", // misty mountains
-      "photo-1470071459604-3b5ec3a7fe05", // foggy mountain
-      "photo-1418065460487-3e41a6c84dc5", // forest road
-      "photo-1505765050516-f72dcac9c60e", // autumn road
-      "photo-1464822759023-fed622ff2c3b", // alpine peak
-      "photo-1500382017468-9049fed747ef", // golden field sunset
-      "photo-1500534314209-a25ddb2bd429", // mountain lake reflection
-      "photo-1501785888041-af3ef285b470", // lake & mountain
-      "photo-1508739773434-c26b3d09e071", // mountain lake panorama
-      "photo-1447752875215-b2761acb3c5d", // forest light beams
-      "photo-1426604966848-d7adac402bff", // mountain valley
-      "photo-1469474968028-56623f02e42e", // mountain road
-      "photo-1465146344425-f00d5f5c8f07", // tall forest
-      "photo-1431794062232-2a99a5431c6c", // mountain stream
-      "photo-1483728642387-6c3bdd6c93e5", // snow mountain
-      "photo-1444080748397-f442aa95c3e5", // lake reflection
-      "photo-1490604001847-b712b0c2f967", // green mountain
-      "photo-1493246507139-91e8fad9978e", // calm lake
-      "photo-1473773508845-188df298d2d1", // forest path
-      "photo-1485881006556-3aea11dfd5c4", // mountain lake
-      "photo-1502082553048-f009c37129b9", // forest fog
-      "photo-1519681393784-d120267933ba", // mountain lake winter
-      "photo-1470770841072-f978cf4d019e", // mountain lake autumn
-      "photo-1454496522488-7a8e488e8606", // mountain range
-      "photo-1416163255135-e0d2f2b6082b", // green hills
-      "photo-1438962136829-452260720431", // forest sunlight
-    ];
-    // Deterministic, slug-stable assignment.
-    let h = 0;
-    for (let k = 0; k < slug.length; k++) h = ((h * 31) + slug.charCodeAt(k)) >>> 0;
-    const id = pool[(h + i * 7) % pool.length];
+  ] as const).map(([slug, name, tag]) => {
     return {
       slug,
       name,
-      image: `https://images.unsplash.com/${id}?w=1600&h=1000&fit=crop&q=85&auto=format`,
+      image: destinationLandscapeImage(slug, name, tag),
     };
   }),
 
