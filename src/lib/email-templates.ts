@@ -67,7 +67,8 @@ function shell(opts: { preview: string; title: string; body: string }) {
     .py-pad { padding-top: 22px !important; padding-bottom: 22px !important; }
     .brand-name { font-size: 17px !important; letter-spacing: 0.3px !important; }
     .brand-tag { display: none !important; }
-    .brand-logo { width: 36px !important; height: 36px !important; margin-right: 10px !important; }
+    .brand-tagline { font-size: 10px !important; letter-spacing: 1.5px !important; }
+    .brand-logo { width: 40px !important; height: 40px !important; }
     .h1 { font-size: 22px !important; line-height: 1.25 !important; }
     .h1-sm { font-size: 20px !important; }
     .label-cell { width: 38% !important; font-size: 10px !important; }
@@ -75,6 +76,7 @@ function shell(opts: { preview: string; title: string; body: string }) {
     .btn { display: block !important; width: 100% !important; margin: 8px 0 !important; box-sizing: border-box; }
     .btn-spacer { display: none !important; }
     .summary-grid td { display: block !important; width: 100% !important; padding: 6px 0 !important; }
+    .header-left { width: 100% !important; }
   }
 </style>
 </head>
@@ -87,11 +89,26 @@ function shell(opts: { preview: string; title: string; body: string }) {
         <td class="px-pad" style="background:${BRAND.navy};padding:22px 28px;" align="left">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
-              <td align="left" valign="middle" class="brand-name" style="color:${BRAND.gold};font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:700;letter-spacing:0.5px;">
-                <img src="${BRAND.logo}" width="44" height="44" alt="${BRAND.name}" class="brand-logo" style="display:inline-block;vertical-align:middle;border-radius:50%;border:2px solid ${BRAND.gold};margin-right:12px;background:#ffffff;" />
-                <span style="vertical-align:middle;">${BRAND.name}</span>
+              <td align="left" valign="middle" class="header-left" style="width:100%;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="padding-bottom:10px;">
+                      <img src="${BRAND.logo}" width="48" height="48" alt="${BRAND.name}" class="brand-logo" style="display:block;width:48px;height:48px;border-radius:50%;border:2px solid ${BRAND.gold};background:#ffffff;" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="brand-name" style="color:${BRAND.gold};font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:700;letter-spacing:0.5px;line-height:1.2;">
+                      ${BRAND.name}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="brand-tagline" style="color:${BRAND.goldSoft};font-size:12px;letter-spacing:2.5px;text-transform:uppercase;padding-top:4px;">
+                      Vermont's Premier Transportation
+                    </td>
+                  </tr>
+                </table>
               </td>
-              <td align="right" valign="middle" class="brand-tag" style="color:${BRAND.goldSoft};font-size:11px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;">
+              <td align="right" valign="top" class="brand-tag" style="color:${BRAND.goldSoft};font-size:11px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;">
                 Premium &middot; 24/7
               </td>
             </tr>
@@ -208,9 +225,9 @@ export function bookingCustomerEmail(b: BookingPayload) {
       ${button(WHATSAPP, "WhatsApp Us")}
     </div>
   </td></tr>`;
-  const when = [b.date, b.time].filter(Boolean).join(" · ");
+  const when = [b.date, b.time].filter(Boolean).join(" | ");
   return {
-    subject: `Reservation Confirmed${when ? ` — ${when}` : ""}${b.reference ? ` (Ref ${b.reference})` : ""} | ${BRAND.name}`,
+    subject: `Reservation Received${when ? ` - ${when}` : ""}${b.reference ? ` (Ref ${b.reference})` : ""} | ${BRAND.name}`,
     html: shell({
       preview: `Your booking${b.reference ? ` (${b.reference})` : ""}${when ? ` for ${when}` : ""} is received — driver confirmation in minutes.`,
       title: "Booking received",
@@ -256,10 +273,10 @@ export function bookingAdminEmail(b: BookingPayload) {
     ${b.phone && b.email ? btnSpacer() : ""}
     ${b.email ? button(`mailto:${b.email}`, "Reply by Email") : ""}
   </td></tr>`;
-  const when = [b.date, b.time].filter(Boolean).join(" ");
-  const who = b.name ? ` — ${b.name}` : "";
+  const when = [b.date, b.time].filter(Boolean).join(" | ");
+  const who = b.name ? ` - ${b.name}` : "";
   return {
-    subject: `[New Reservation] ${b.service || "Ride"}${when ? ` · ${when}` : ""}${who}${b.reference ? ` · Ref ${b.reference}` : ""}`,
+    subject: `[New Reservation] ${b.service || "Ride"}${when ? ` - ${when}` : ""}${who}${b.reference ? ` - Ref ${b.reference}` : ""}`,
     html: shell({
       preview: `${b.name || "Customer"} requested ${b.service || "a ride"}${b.date ? ` on ${b.date}` : ""}${b.time ? ` at ${b.time}` : ""}.`,
       title: "New reservation request",

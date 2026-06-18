@@ -142,7 +142,7 @@ export function BookingForm() {
           setSubmitting(true);
           const booking = {
             ...values,
-            reference: "BVT-" + Math.random().toString(36).slice(2, 8).toUpperCase(),
+            reference: "BR-" + Math.random().toString(36).slice(2, 8).toUpperCase(),
             submittedAt: new Date().toISOString(),
           };
           try {
