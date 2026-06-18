@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SkiResortRouteImport } from './routes/ski-resort'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -33,6 +34,11 @@ const TermsRoute = TermsRouteImport.update({
 const SkiResortRoute = SkiResortRouteImport.update({
   id: '/ski-resort',
   path: '/ski-resort',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapRoute = SitemapRouteImport.update({
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
   '/api/public/send-booking': typeof ApiPublicSendBookingRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
   '/api/public/send-booking': typeof ApiPublicSendBookingRoute
@@ -149,6 +157,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
   '/api/public/send-booking': typeof ApiPublicSendBookingRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/services'
     | '/sitemap'
+    | '/sitemap.xml'
     | '/ski-resort'
     | '/terms'
     | '/api/public/send-booking'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/services'
     | '/sitemap'
+    | '/sitemap.xml'
     | '/ski-resort'
     | '/terms'
     | '/api/public/send-booking'
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/services'
     | '/sitemap'
+    | '/sitemap.xml'
     | '/ski-resort'
     | '/terms'
     | '/api/public/send-booking'
@@ -220,6 +232,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ServicesRoute: typeof ServicesRoute
   SitemapRoute: typeof SitemapRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SkiResortRoute: typeof SkiResortRoute
   TermsRoute: typeof TermsRoute
   ApiPublicSendBookingRoute: typeof ApiPublicSendBookingRoute
@@ -239,6 +252,13 @@ declare module '@tanstack/react-router' {
       path: '/ski-resort'
       fullPath: '/ski-resort'
       preLoaderRoute: typeof SkiResortRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap': {
@@ -348,6 +368,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ServicesRoute: ServicesRoute,
   SitemapRoute: SitemapRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SkiResortRoute: SkiResortRoute,
   TermsRoute: TermsRoute,
   ApiPublicSendBookingRoute: ApiPublicSendBookingRoute,
@@ -355,3 +376,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

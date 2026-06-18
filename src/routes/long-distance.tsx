@@ -1,17 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { BookingForm } from "@/components/BookingForm";
 import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/long-distance")({
-  head: () => ({
-    meta: [
-      { title: "Long Distance Rides From Burlington VT — Burlington VT Taxi Ride" },
-      { name: "description", content: "Fixed-rate long distance car service from Burlington to Montréal, Albany, Boston, Stowe, Montpelier, and beyond." },
-      { property: "og:title", content: "Long Distance Rides From Burlington VT" },
-      { property: "og:description", content: "Premium long-distance car service throughout Vermont, Québec, NY and New Hampshire." },
-      { property: "og:image", content: "/places/montreal-city.jpg" },
-    ],
+  head: () => pageHead({
+    title: "Long Distance Rides From Burlington VT — Burlington VT Taxi Ride",
+    description: "Fixed-rate long distance car service from Burlington to Montréal, Albany, Boston, Stowe, Montpelier, and beyond.",
+    image: "/places/montreal-city.jpg",
+    path: "/long-distance",
   }),
   component: Page,
 });

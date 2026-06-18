@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PHONE, PHONE_TEL, VT_DESTINATIONS } from "@/lib/site-data";
+import { pageHead } from "@/lib/seo";
 import { BookingForm } from "@/components/BookingForm";
 import { CityCard } from "@/components/PlaceCards";
 import { CTASection } from "@/components/CTASection";
@@ -8,14 +9,11 @@ import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { Phone, Plane, Car, Briefcase, Snowflake, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Burlington VT Taxi Ride — 24/7 Airport & Long Distance Car Service" },
-      { name: "description", content: "Professional Burlington Vermont taxi & airport transfer service. Fixed rates to BTV, Montreal YUL, Boston, Albany. 24/7 availability." },
-      { property: "og:title", content: "Burlington VT Taxi Ride" },
-      { property: "og:description", content: "Vermont's premier 24/7 airport, corporate, ski and long-distance transportation." },
-      { property: "og:image", content: "/places/burlington-vt.jpg" },
-    ],
+  head: () => pageHead({
+    title: "Burlington VT Taxi Ride — 24/7 Airport & Long Distance Car Service",
+    description: "Professional Burlington Vermont taxi & airport transfer service. Fixed rates to BTV, Montreal YUL, Boston, Albany. 24/7 availability.",
+    image: "/places/burlington-vt.jpg",
+    path: "/",
   }),
   component: Index,
 });

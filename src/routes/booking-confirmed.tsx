@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PHONE, PHONE_TEL, EMAIL } from "@/lib/site-data";
+import { SITE_URL } from "@/lib/seo";
 import { CheckCircle2, Phone, Mail, Calendar, MapPin, Users, ArrowLeft } from "lucide-react";
 
 export type BookingDetails = {
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/booking-confirmed")({
       { name: "description", content: "Your ride request has been received. We'll confirm shortly." },
       { name: "robots", content: "noindex" },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/booking-confirmed` }],
   }),
   component: Page,
 });

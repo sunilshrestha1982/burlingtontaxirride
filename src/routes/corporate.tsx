@@ -1,17 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { BookingForm } from "@/components/BookingForm";
 import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/corporate")({
-  head: () => ({
-    meta: [
-      { title: "Corporate & Executive Transportation — Burlington VT Taxi Ride" },
-      { name: "description", content: "Discreet, punctual corporate car service for Vermont businesses and visiting executives. Account billing and priority dispatch." },
-      { property: "og:title", content: "Corporate & Executive Transportation Vermont" },
-      { property: "og:description", content: "Vermont's premier corporate transport — discreet, on-time, account billing." },
-      { property: "og:image", content: "/places/burlington-vt.jpg" },
-    ],
+  head: () => pageHead({
+    title: "Corporate & Executive Transportation — Burlington VT Taxi Ride",
+    description: "Discreet, punctual corporate car service for Vermont businesses and visiting executives. Account billing and priority dispatch.",
+    image: "/places/burlington-vt.jpg",
+    path: "/corporate",
   }),
   component: Page,
 });

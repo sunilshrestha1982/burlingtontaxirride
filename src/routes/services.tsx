@@ -1,17 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
 import { Plane, Car, Briefcase, Snowflake, Heart, Building2 } from "lucide-react";
 
 export const Route = createFileRoute("/services")({
-  head: () => ({
-    meta: [
-      { title: "Our Services — Burlington VT Taxi Ride" },
-      { name: "description", content: "Airport, corporate, ski, long-distance, weddings and events transportation throughout Vermont." },
-      { property: "og:title", content: "Our Services — Burlington VT Taxi Ride" },
-      { property: "og:description", content: "Custom transportation services for every Vermont journey." },
-      { property: "og:image", content: "/places/burlington-vt.jpg" },
-    ],
+  head: () => pageHead({
+    title: "Our Services — Burlington VT Taxi Ride",
+    description: "Airport, corporate, ski, long-distance, weddings and events transportation throughout Vermont.",
+    image: "/places/burlington-vt.jpg",
+    path: "/services",
   }),
   component: Page,
 });

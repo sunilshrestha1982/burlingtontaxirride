@@ -1,16 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { BookingForm } from "@/components/BookingForm";
 import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/book-online")({
-  head: () => ({
-    meta: [
-      { title: "Book a Ride Online — Burlington VT Taxi Ride" },
-      { name: "description", content: "Reserve your Burlington VT taxi or airport transfer online. Confirmed within minutes — fixed rate, no surprises." },
-      { property: "og:title", content: "Book a Ride Online — Burlington VT Taxi Ride" },
-      { property: "og:description", content: "Reserve your ride 24/7." },
-    ],
+  head: () => pageHead({
+    title: "Book a Ride Online — Burlington VT Taxi Ride",
+    description: "Reserve your Burlington VT taxi or airport transfer online. Confirmed within minutes — fixed rate, no surprises.",
+    image: "/places/burlington-vt.jpg",
+    path: "/book-online",
   }),
   component: Page,
 });

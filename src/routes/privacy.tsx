@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { EMAIL, PHONE } from "@/lib/site-data";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacy")({
-  head: () => ({
-    meta: [
-      { title: "Privacy Policy — Burlington VT Taxi Ride" },
-      { name: "description", content: "How Burlington VT Taxi Ride collects, uses, and protects your personal information." },
-    ],
+  head: () => pageHead({
+    title: "Privacy Policy — Burlington VT Taxi Ride",
+    description: "How Burlington VT Taxi Ride collects, uses, and protects your personal information.",
+    image: "/og-image.jpg",
+    path: "/privacy",
   }),
   component: Page,
 });

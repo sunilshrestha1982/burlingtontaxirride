@@ -1,17 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { PageHero } from "@/components/PageHero";
 import { BookingForm } from "@/components/BookingForm";
 import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/ski-resort")({
-  head: () => ({
-    meta: [
-      { title: "Vermont Ski Resort Transfers — Burlington VT Taxi Ride" },
-      { name: "description", content: "Safe, comfortable ski shuttles from Burlington to Stowe, Sugarbush, Smugglers' Notch, Bolton Valley, Jay Peak and every Vermont mountain." },
-      { property: "og:title", content: "Vermont Ski Resort Transfers" },
-      { property: "og:description", content: "Ski Vermont. We'll Drive. Equipment always welcome." },
-      { property: "og:image", content: "/places/jay-peak-vt.jpg" },
-    ],
+  head: () => pageHead({
+    title: "Vermont Ski Resort Transfers — Burlington VT Taxi Ride",
+    description: "Safe, comfortable ski shuttles from Burlington to Stowe, Sugarbush, Smugglers' Notch, Bolton Valley, Jay Peak and every Vermont mountain.",
+    image: "/places/jay-peak-vt.jpg",
+    path: "/ski-resort",
   }),
   component: Page,
 });

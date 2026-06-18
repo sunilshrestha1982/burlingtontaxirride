@@ -1,18 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AIRPORTS } from "@/lib/site-data";
+import { pageHead } from "@/lib/seo";
 import { AirportCard } from "@/components/PlaceCards";
 import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/airports-we-serve")({
-  head: () => ({
-    meta: [
-      { title: "Airports We Serve — Burlington VT Taxi Ride" },
-      { name: "description", content: "Fixed-rate transfers from Burlington Vermont to 13 major airports across New England, New York, and Québec." },
-      { property: "og:title", content: "Airports We Serve — Burlington VT Taxi Ride" },
-      { property: "og:description", content: "Transfers to BTV, BOS, YUL, JFK, LGA, EWR and more." },
-      { property: "og:image", content: "/places/airport-bos.jpg" },
-    ],
+  head: () => pageHead({
+    title: "Airports We Serve — Burlington VT Taxi Ride",
+    description: "Fixed-rate transfers from Burlington Vermont to 13 major airports across New England, New York, and Québec.",
+    image: "/places/airport-bos.jpg",
+    path: "/airports-we-serve",
   }),
   component: Page,
 });

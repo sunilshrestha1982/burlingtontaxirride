@@ -1,6 +1,7 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { locationBySlug, LOCATIONS } from "@/lib/locations";
 import { VT_DESTINATIONS, PHONE, PHONE_TEL } from "@/lib/site-data";
+import { absoluteImage, SITE_URL } from "@/lib/seo";
 import { BookingForm } from "@/components/BookingForm";
 import { Phone, Check } from "lucide-react";
 
@@ -10,17 +11,27 @@ export const Route = createFileRoute("/$slug")({
     if (!loc) throw notFound();
     return loc;
   },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [
-          { title: `${loaderData.title} | Burlington VT Taxi Ride` },
-          { name: "description", content: loaderData.description },
-          { property: "og:title", content: loaderData.title },
-          { property: "og:description", content: loaderData.description },
-          { property: "og:image", content: loaderData.image },
-        ]
-      : [],
-  }),
+  head: ({ loaderData }) => {
+    if (!loaderData) return { meta: [] };
+    const url = `${SITE_URL}/${loaderData.slug}`;
+    const image = absoluteImage(loaderData.image);
+    return {
+      meta: [
+        { title: `${loaderData.title} | Burlington VT Taxi Ride` },
+        { name: "description", content: loaderData.description },
+        { property: "og:title", content: loaderData.title },
+        { property: "og:description", content: loaderData.description },
+        { property: "og:type", content: "article" },
+        { property: "og:image", content: image },
+        { property: "og:url", content: url },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: loaderData.title },
+        { name: "twitter:description", content: loaderData.description },
+        { name: "twitter:image", content: image },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   errorComponent: ({ error }) => <div className="p-10 text-center text-muted-foreground">{error.message}</div>,
   notFoundComponent: () => (
     <div className="mx-auto max-w-xl px-4 py-32 text-center">
