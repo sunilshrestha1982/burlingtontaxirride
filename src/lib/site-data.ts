@@ -105,6 +105,15 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "pownal-vt": pownalAsset.url,
   "wilmington-vt": wilmingtonAsset.url,
   "west-dover-vt": westDoverAsset.url,
+  "salisbury-vt": salisburyAsset.url,
+  "putney-vt": putneyAsset.url,
+  "bellows-falls-vt": bellowsFallsAsset.url,
+  "springfield-vt": springfieldAsset.url,
+  "chester-vt": chesterAsset.url,
+  "plymouth-vt": plymouthAsset.url,
+  "okemo-mountain-vt": okemoMountainAsset.url,
+  "ludlow-vt": ludlowAsset.url,
+  "mount-snow-vt": mountSnowAsset.url,
 };
 
 
