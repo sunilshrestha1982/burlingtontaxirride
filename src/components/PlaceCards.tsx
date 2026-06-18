@@ -13,7 +13,7 @@ export function CityCard({ city }: { city: City }) {
           src={city.image}
           alt={`Taxi from Burlington to ${city.name}`}
           loading="lazy"
-          className="hover-zoom-img h-full w-full object-cover"
+          className="hover-zoom-img destination-card-img h-full w-full object-cover"
         />
       </div>
       <div className="p-4">
