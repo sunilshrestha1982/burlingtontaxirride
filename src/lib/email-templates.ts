@@ -7,7 +7,7 @@ import { PHONE, PHONE_TEL, EMAIL, WHATSAPP } from "@/lib/site-data";
 const BRAND = {
   name: "Burlington VT Taxi Ride",
   url: "https://www.burlingtonvttaxirride.com",
-  logo: "https://www.burlingtonvttaxirride.com/favicon.png",
+  logo: "https://www.burlingtonvttaxirride.com/__l5e/assets-v1/0d43759a-156f-49f4-bd87-ce7fe3cdac15/br-logo.jpeg",
   navy: "#0f172a",
   surface: "#111a2e",
   gold: "#c9a25c",
@@ -182,14 +182,14 @@ function summaryCard(items: Array<{ label: string; value?: string }>) {
 export function bookingCustomerEmail(b: BookingPayload) {
   const body = `
   <tr><td class="px-pad" style="padding:32px 28px 8px 28px;">
-    <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">— Booking Received</div>
+    <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">- Booking Received</div>
     <h1 class="h1" style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:28px;line-height:1.2;color:${BRAND.text};">
-      Thank you${b.name ? `, ${esc(b.name.split(" ")[0])}` : ""} — your ride is reserved.
+      Thank you${b.name ? `, ${esc(b.name.split(" ")[0])}` : ""} - your ride is reserved.
     </h1>
     <p style="margin:10px 0 0 0;color:${BRAND.muted};font-size:14px;line-height:22px;">
       Your reservation has been received and our dispatcher will confirm shortly. Please keep this email for your records.
     </p>
-    ${b.reference ? `<div style="margin-top:16px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:8px 14px;border-radius:6px;font-size:13px;">REF · ${esc(b.reference)}</div>` : ""}
+    ${b.reference ? `<div style="margin-top:16px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:8px 14px;border-radius:6px;font-size:13px;">REF | ${esc(b.reference)}</div>` : ""}
     ${summaryCard([
       { label: "Date", value: b.date },
       { label: "Time", value: b.time },
@@ -229,7 +229,7 @@ export function bookingCustomerEmail(b: BookingPayload) {
   return {
     subject: `Reservation Received${when ? ` - ${when}` : ""}${b.reference ? ` (Ref ${b.reference})` : ""} | ${BRAND.name}`,
     html: shell({
-      preview: `Your booking${b.reference ? ` (${b.reference})` : ""}${when ? ` for ${when}` : ""} is received — driver confirmation in minutes.`,
+      preview: `Your booking${b.reference ? ` (${b.reference})` : ""}${when ? ` for ${when}` : ""} is received - driver confirmation in minutes.`,
       title: "Booking received",
       body,
     }),
@@ -241,12 +241,12 @@ export function bookingAdminEmail(b: BookingPayload) {
   <tr><td class="px-pad" style="padding:32px 28px 4px 28px;">
     <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">★ New Reservation Request</div>
     <h1 class="h1-sm" style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:24px;line-height:1.2;color:${BRAND.text};">
-      ${esc(b.service || "Ride Request")}${b.name ? ` — ${esc(b.name)}` : ""}
+      ${esc(b.service || "Ride Request")}${b.name ? ` - ${esc(b.name)}` : ""}
     </h1>
     <p style="margin:8px 0 0 0;color:${BRAND.muted};font-size:13px;">
       Submitted ${esc(b.submittedAt ? new Date(b.submittedAt).toLocaleString() : new Date().toLocaleString())}
     </p>
-    ${b.reference ? `<div style="margin-top:14px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:7px 12px;border-radius:6px;font-size:13px;">REF · ${esc(b.reference)}</div>` : ""}
+    ${b.reference ? `<div style="margin-top:14px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:7px 12px;border-radius:6px;font-size:13px;">REF | ${esc(b.reference)}</div>` : ""}
     ${summaryCard([
       { label: "Pickup Date", value: b.date },
       { label: "Pickup Time", value: b.time },
@@ -311,7 +311,7 @@ export function contactCustomerEmail(c: ContactPayload) {
     ${button(`tel:${PHONE_TEL}`, `Call ${PHONE}`)} &nbsp; ${button(WHATSAPP, "WhatsApp Us")}
   </td></tr>`;
   return {
-    subject: `We received your message — ${BRAND.name}`,
+    subject: `We received your message - ${BRAND.name}`,
     html: shell({
       preview: "Thanks for reaching out — we typically reply within the hour.",
       title: "Message received",
@@ -344,7 +344,7 @@ export function contactAdminEmail(c: ContactPayload) {
     ${c.phone ? `&nbsp;${button(`tel:${c.phone}`, "Call Back")}` : ""}
   </td></tr>`;
   return {
-    subject: `New contact · ${c.subject || c.name || "Website"}`,
+    subject: `New contact - ${c.subject || c.name || "Website"}`,
     html: shell({
       preview: `${c.name || "Visitor"} sent a message via the website.`,
       title: "New contact message",
