@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.burlingtonvttaxirride.com/sitemap.xml
+Sitemap: https://www.burlingtonvttaxiride.com/sitemap.xml
