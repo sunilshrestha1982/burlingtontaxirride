@@ -65,6 +65,15 @@ import brandonAsset from "@/assets/places/brandon-vt.png.asset.json";
 import salisbury2Asset from "@/assets/places/salisbury-vt-2.jpg.asset.json";
 import putney2Asset from "@/assets/places/putney-vt-2.jpg.asset.json";
 import bellowsFalls2Asset from "@/assets/places/bellows-falls-vt-2.jpg.asset.json";
+import shelburneAsset from "@/assets/places/shelburne-vt.jpeg.asset.json";
+import willistonAsset from "@/assets/places/williston-vt.jpg.asset.json";
+import colchesterAsset from "@/assets/places/colchester-vt.jpg.asset.json";
+import essexJunctionAsset from "@/assets/places/essex-junction-vt.jpg.asset.json";
+import essexAsset from "@/assets/places/essex-vt.jpg.asset.json";
+import newHavenAsset from "@/assets/places/new-haven-vt.jpg.asset.json";
+import bristolAsset from "@/assets/places/bristol-vt.jpg.asset.json";
+import starksboroAsset from "@/assets/places/starksboro-vt.jpg.asset.json";
+import camelsHumpAsset from "@/assets/places/camels-hump-vt.jpg.asset.json";
 import boltonValleyAsset from "@/assets/places/bolton-valley-vt.jpg.asset.json";
 import duxburyAsset from "@/assets/places/duxbury-vt.jpg.asset.json";
 import moretownAsset from "@/assets/places/moretown-vt.avif.asset.json";
@@ -138,6 +147,15 @@ const UPLOADED_DESTINATION_IMAGES: Record<string, string> = {
   "proctor-vt": proctorAsset.url,
   "pittsford-vt": pittsfordAsset.url,
   "brandon-vt": brandonAsset.url,
+  "shelburne-vt": shelburneAsset.url,
+  "williston-vt": willistonAsset.url,
+  "colchester-vt": colchesterAsset.url,
+  "essex-junction-vt": essexJunctionAsset.url,
+  "essex-vt": essexAsset.url,
+  "new-haven-vt": newHavenAsset.url,
+  "bristol-vt": bristolAsset.url,
+  "starksboro-vt": starksboroAsset.url,
+  "camels-hump-vt": camelsHumpAsset.url,
   "bolton-valley-vt": boltonValleyAsset.url,
   "duxbury-vt": duxburyAsset.url,
   "moretown-vt": moretownAsset.url,
