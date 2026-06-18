@@ -60,21 +60,38 @@ function shell(opts: { preview: string; title: string; body: string }) {
 <meta name="color-scheme" content="light only" />
 <meta name="supported-color-schemes" content="light" />
 <title>${esc(opts.title)}</title>
+<style>
+  @media only screen and (max-width: 620px) {
+    .email-container { width: 100% !important; border-radius: 0 !important; }
+    .px-pad { padding-left: 20px !important; padding-right: 20px !important; }
+    .py-pad { padding-top: 22px !important; padding-bottom: 22px !important; }
+    .brand-name { font-size: 17px !important; letter-spacing: 0.3px !important; }
+    .brand-tag { display: none !important; }
+    .brand-logo { width: 36px !important; height: 36px !important; margin-right: 10px !important; }
+    .h1 { font-size: 22px !important; line-height: 1.25 !important; }
+    .h1-sm { font-size: 20px !important; }
+    .label-cell { width: 38% !important; font-size: 10px !important; }
+    .value-cell { font-size: 13px !important; }
+    .btn { display: block !important; width: 100% !important; margin: 8px 0 !important; box-sizing: border-box; }
+    .btn-spacer { display: none !important; }
+    .summary-grid td { display: block !important; width: 100% !important; padding: 6px 0 !important; }
+  }
+</style>
 </head>
 <body style="margin:0;padding:0;background:#f4efe3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:${BRAND.text};">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${esc(opts.preview)}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4efe3;">
   <tr><td align="center" style="padding:24px 12px;">
-    <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(15,23,42,0.08);">
+    <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" class="email-container" style="max-width:600px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(15,23,42,0.08);">
       <tr>
-        <td style="background:${BRAND.navy};padding:22px 28px;" align="left">
+        <td class="px-pad" style="background:${BRAND.navy};padding:22px 28px;" align="left">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
-              <td align="left" valign="middle" style="color:${BRAND.gold};font-family:Georgia,'Times New Roman',serif;font-size:22px;font-weight:700;letter-spacing:0.5px;">
-                <img src="${BRAND.logo}" width="44" height="44" alt="${BRAND.name}" style="display:inline-block;vertical-align:middle;border-radius:50%;border:2px solid ${BRAND.gold};margin-right:12px;background:#ffffff;" />
+              <td align="left" valign="middle" class="brand-name" style="color:${BRAND.gold};font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:700;letter-spacing:0.5px;">
+                <img src="${BRAND.logo}" width="44" height="44" alt="${BRAND.name}" class="brand-logo" style="display:inline-block;vertical-align:middle;border-radius:50%;border:2px solid ${BRAND.gold};margin-right:12px;background:#ffffff;" />
                 <span style="vertical-align:middle;">${BRAND.name}</span>
               </td>
-              <td align="right" valign="middle" style="color:${BRAND.goldSoft};font-size:12px;letter-spacing:2px;text-transform:uppercase;">
+              <td align="right" valign="middle" class="brand-tag" style="color:${BRAND.goldSoft};font-size:11px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;">
                 Premium &middot; 24/7
               </td>
             </tr>
@@ -83,7 +100,7 @@ function shell(opts: { preview: string; title: string; body: string }) {
       </tr>
       ${opts.body}
       <tr>
-        <td style="padding:22px 28px;background:${BRAND.navy};color:#cbd5e1;font-size:12px;line-height:18px;" align="center">
+        <td class="px-pad" style="padding:22px 28px;background:${BRAND.navy};color:#cbd5e1;font-size:12px;line-height:18px;" align="center">
           <div style="color:${BRAND.gold};font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:11px;margin-bottom:6px;">${BRAND.name}</div>
           <a href="tel:${PHONE_TEL}" style="color:${BRAND.goldSoft};text-decoration:none;">${PHONE}</a>
           &nbsp;&middot;&nbsp;
