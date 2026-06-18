@@ -22,7 +22,7 @@ function Page() {
         eyebrow="Burlington VT Taxi Ride"
         title="Airports"
         highlight="We Serve"
-        description="Fixed-rate transfers from Burlington, Vermont to 13 major airports across New England, New York, and Québec. Professional drivers, 24/7 availability."
+        description="Fixed-rate transfers from Burlington, Vermont to 14 major airports across New England, New York, Vermont, and Québec — including Stowe (MVL) and Montréal (YUL). Professional drivers, 24/7 availability."
         backgroundImage="/places/airport-bos.jpg"
         ctaLabel="Book Airport Transfer"
       />
