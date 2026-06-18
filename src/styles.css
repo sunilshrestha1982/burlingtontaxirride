@@ -141,3 +141,17 @@ nav a {
     transform: scale(1.12);
   }
 }
+
+@layer utilities {
+  /* Ken-Burns zoom-out + diagonal pan: starts zoomed in to top-left,
+     slowly zooms out toward bottom-right when the page loads. */
+  @keyframes hero-kenburns {
+    0%   { transform: scale(1.25) translate(-3%, -3%); }
+    100% { transform: scale(1.0)  translate(0%, 0%); }
+  }
+  .hero-kenburns {
+    animation: hero-kenburns 14s ease-out both;
+    transform-origin: center center;
+    will-change: transform;
+  }
+}
