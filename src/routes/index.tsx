@@ -5,7 +5,7 @@ import { BookingForm } from "@/components/BookingForm";
 import { CityCard } from "@/components/PlaceCards";
 import { CTASection } from "@/components/CTASection";
 import { HeroSlideshow } from "@/components/HeroSlideshow";
-import { Phone, Plane, Car, Briefcase, Snowflake, ShieldCheck, Clock, BadgeCheck, MapPin } from "lucide-react";
+import { Phone, Plane, Car, Briefcase, Snowflake, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
