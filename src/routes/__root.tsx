@@ -70,7 +70,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@id": "https://www.burlingtonvttaxiride.com/#business",
           name: "Burlington VT Taxi Ride",
           url: "https://www.burlingtonvttaxiride.com",
-          logo: "https://www.burlingtonvttaxiride.com/favicon.png",
+          logo: `https://www.burlingtonvttaxirride.com${brLogo.url}`,
           image: "https://www.burlingtonvttaxiride.com/og-image.jpg",
           description: "Professional Burlington Vermont taxi & airport transfer service. Fixed rates to BTV, Montreal YUL, Boston, Albany, and across New England. 24/7 availability.",
           telephone: "+18024480707",
