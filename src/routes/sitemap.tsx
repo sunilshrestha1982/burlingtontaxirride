@@ -25,7 +25,7 @@ const main = [
   { to: "/ski-resort", label: "Ski Resort Transfers" },
   { to: "/services", label: "All Services" },
   { to: "/book-online", label: "Book Online" },
-  { to: "/blog", label: "Blog · Rates & Pricing Guide" },
+  { to: "/blog", label: "Blog · Service Guide" },
   { to: "/contact", label: "Contact Us" },
 ] as const;
 
