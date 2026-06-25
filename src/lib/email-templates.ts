@@ -139,7 +139,7 @@ function row(label: string, value?: string) {
   if (!value) return "";
   return `<tr>
     <td class="label-cell" style="padding:10px 0;border-bottom:1px solid #f0e9d6;width:42%;vertical-align:top;">
-      <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:${BRAND.muted};">${esc(label)}</div>
+      <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#1a2238;font-weight:700;">${esc(label)}</div>
     </td>
     <td class="value-cell" style="padding:10px 0;border-bottom:1px solid #f0e9d6;color:${BRAND.text};font-size:14px;font-weight:600;word-break:break-word;">
       ${esc(value)}
