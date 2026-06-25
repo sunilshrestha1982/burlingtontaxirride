@@ -124,7 +124,7 @@ function shell(opts: { preview: string; title: string; body: string }) {
           <a href="mailto:${EMAIL}" style="color:${BRAND.goldSoft};text-decoration:none;">${EMAIL}</a>
           &nbsp;&middot;&nbsp;
           <a href="${WHATSAPP}" style="color:${BRAND.goldSoft};text-decoration:none;">WhatsApp</a>
-          <div style="margin-top:8px;color:#94a3b8;">Burlington, Vermont &middot; Available every day, including holidays.</div>
+          <div style="margin-top:8px;color:#94a3b8;">Burlington, Vermont &middot; Available 24/7.</div>
           <div style="margin-top:10px;color:#64748b;font-size:11px;">© ${new Date().getFullYear()} ${BRAND.name}. All rights reserved.</div>
         </td>
       </tr>
