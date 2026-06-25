@@ -124,7 +124,7 @@ function shell(opts: { preview: string; title: string; body: string }) {
           <a href="mailto:${EMAIL}" style="color:${BRAND.goldSoft};text-decoration:none;">${EMAIL}</a>
           &nbsp;&middot;&nbsp;
           <a href="${WHATSAPP}" style="color:${BRAND.goldSoft};text-decoration:none;">WhatsApp</a>
-          <div style="margin-top:8px;color:#94a3b8;">Burlington, Vermont &middot; Available every day, including holidays.</div>
+          <div style="margin-top:8px;color:#94a3b8;">Burlington, Vermont &middot; Available 24/7.</div>
           <div style="margin-top:10px;color:#64748b;font-size:11px;">© ${new Date().getFullYear()} ${BRAND.name}. All rights reserved.</div>
         </td>
       </tr>
@@ -139,7 +139,7 @@ function row(label: string, value?: string) {
   if (!value) return "";
   return `<tr>
     <td class="label-cell" style="padding:10px 0;border-bottom:1px solid #f0e9d6;width:42%;vertical-align:top;">
-      <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:${BRAND.muted};">${esc(label)}</div>
+      <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#1a2238;font-weight:700;">${esc(label)}</div>
     </td>
     <td class="value-cell" style="padding:10px 0;border-bottom:1px solid #f0e9d6;color:${BRAND.text};font-size:14px;font-weight:600;word-break:break-word;">
       ${esc(value)}
@@ -247,11 +247,6 @@ export function bookingAdminEmail(b: BookingPayload) {
       Submitted ${esc(b.submittedAt ? new Date(b.submittedAt).toLocaleString() : new Date().toLocaleString())}
     </p>
     ${b.reference ? `<div style="margin-top:14px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:7px 12px;border-radius:6px;font-size:13px;">REF | ${esc(b.reference)}</div>` : ""}
-    ${summaryCard([
-      { label: "Pickup Date", value: b.date },
-      { label: "Pickup Time", value: b.time },
-      { label: "Passengers", value: b.passengers },
-    ])}
   </td></tr>
   <tr><td class="px-pad" style="padding:6px 28px;">
     ${detailsTable(
