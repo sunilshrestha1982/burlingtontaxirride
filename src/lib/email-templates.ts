@@ -247,11 +247,6 @@ export function bookingAdminEmail(b: BookingPayload) {
       Submitted ${esc(b.submittedAt ? new Date(b.submittedAt).toLocaleString() : new Date().toLocaleString())}
     </p>
     ${b.reference ? `<div style="margin-top:14px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:7px 12px;border-radius:6px;font-size:13px;">REF | ${esc(b.reference)}</div>` : ""}
-    ${summaryCard([
-      { label: "Pickup Date", value: b.date },
-      { label: "Pickup Time", value: b.time },
-      { label: "Passengers", value: b.passengers },
-    ])}
   </td></tr>
   <tr><td class="px-pad" style="padding:6px 28px;">
     ${detailsTable(
