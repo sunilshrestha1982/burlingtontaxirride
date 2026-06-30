@@ -13,6 +13,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import brLogo from "../assets/br-logo.jpeg.asset.json";
+import brLogoFavicon from "../assets/br-logo-favicon.jpeg.asset.json";
 
 function NotFoundComponent() {
   return (
@@ -54,8 +55,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/favicon.png" },
+      { rel: "icon", type: "image/jpeg", href: brLogoFavicon.url },
+      { rel: "apple-touch-icon", sizes: "180x180", href: brLogoFavicon.url },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -70,7 +71,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@id": "https://www.burlingtonvttaxiride.com/#business",
           name: "Burlington VT Taxi Ride",
           url: "https://www.burlingtonvttaxiride.com",
-          logo: `https://www.burlingtonvttaxirride.com${brLogo.url}`,
+          logo: `https://www.burlingtonvttaxiride.com${brLogoFavicon.url}`,
           image: "https://www.burlingtonvttaxiride.com/og-image.jpg",
           description: "Professional Burlington Vermont taxi & airport transfer service. Fixed rates to BTV, Montreal YUL, Boston, Albany, and across New England. 24/7 availability.",
           telephone: "+18024480707",
