@@ -13,6 +13,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import brLogo from "../assets/br-logo.jpeg.asset.json";
+import brLogoFavicon from "../assets/br-logo-favicon.jpeg.asset.json";
 
 function NotFoundComponent() {
   return (
