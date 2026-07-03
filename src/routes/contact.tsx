@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { PHONE, PHONE_TEL, EMAIL, WHATSAPP, ADDRESS } from "@/lib/site-data";
 import { pageHead } from "@/lib/seo";
 import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
+import { LocationMap } from "@/components/LocationMap";
 
 export const Route = createFileRoute("/contact")({
   head: () => pageHead({
