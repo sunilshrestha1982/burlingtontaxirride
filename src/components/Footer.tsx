@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 import { PHONE, PHONE_TEL, EMAIL, WHATSAPP, ADDRESS } from "@/lib/site-data";
+import { LocationMap } from "./LocationMap";
 import { Phone, Mail, MessageCircle, Globe, MapPin, Clock } from "lucide-react";
 
 export function Footer() {
@@ -51,6 +52,19 @@ export function Footer() {
       </div>
 
       <div className="border-t border-border/60">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-gold">Find Us</h4>
+              <p className="mt-1 text-sm text-muted-foreground">Serving Burlington, Vermont & surrounding communities.</p>
+            </div>
+          </div>
+          <LocationMap height={280} />
+        </div>
+      </div>
+
+      <div className="border-t border-border/60">
+
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:px-6 lg:px-8">
           <p>© {new Date().getFullYear()} Burlington VT Taxi Ride · All Rights Reserved · Serving Burlington, Vermont & surrounding communities.</p>
           <div className="flex gap-4">

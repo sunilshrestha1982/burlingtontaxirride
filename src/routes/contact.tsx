@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { PHONE, PHONE_TEL, EMAIL, WHATSAPP, ADDRESS } from "@/lib/site-data";
 import { pageHead } from "@/lib/seo";
 import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
+import { LocationMap } from "@/components/LocationMap";
 
 export const Route = createFileRoute("/contact")({
   head: () => pageHead({
@@ -168,7 +169,17 @@ function Page() {
             )}
           </div>
         </div>
+
+        <div className="mt-16">
+          <div className="mb-6 text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-gold">Find Us</p>
+            <h2 className="mt-2 font-display text-3xl sm:text-4xl">Our Service Area</h2>
+            <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">Based in Burlington, Vermont — serving the greater Burlington area, BTV Airport, and destinations throughout New England and Montréal.</p>
+          </div>
+          <LocationMap height={420} />
+        </div>
       </section>
+
     </>
   );
 }
