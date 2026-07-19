@@ -11,7 +11,7 @@ import { Phone, Plane, Car, Briefcase, Snowflake, MapPin } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => pageHead({
     title: "Burlington VT Taxi Ride | BTV Airport Taxi, Shuttle & Transportation 24/7",
-    description: "Professional Burlington Vermont taxi & airport transfer service. Fixed rates to BTV, Montreal YUL, Boston, Albany. 24/7 availability.",
+    description: "Burlington VT Taxi Ride. We provide professional airport transportation from Burlington International Airport (BTV) to anywhere in Vermont, New England, and Montreal, Canada.",
     image: "/places/burlington-vt.jpg",
     path: "/",
   }),
