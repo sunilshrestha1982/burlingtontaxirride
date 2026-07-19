@@ -29,6 +29,19 @@ const staticPaths = [
   "/sitemap",
 ];
 
+const servicePaths = new Set([
+  "/airport-transfers",
+  "/airports-we-serve",
+  "/long-distance",
+  "/corporate",
+  "/ski-resort",
+  "/services",
+  "/book-online",
+  "/contact",
+]);
+
+const legalPaths = new Set(["/privacy", "/terms", "/sitemap"]);
+
 const dynamicSlugs = [
   ...LOCATIONS.map((l) => l.slug),
   ...VT_DESTINATIONS.map((d) => d.slug),
@@ -42,12 +55,26 @@ export const Route = createFileRoute("/sitemap.xml")({
       GET: async () => {
         const today = new Date().toISOString().slice(0, 10);
         const entries: SitemapEntry[] = [
-          ...staticPaths.map((path): SitemapEntry => ({
-            path,
-            lastmod: today,
-            changefreq: path === "/" ? "weekly" : "monthly",
-            priority: path === "/" ? "1.0" : "0.7",
-          })),
+          ...staticPaths.map((path): SitemapEntry => {
+            let changefreq: SitemapEntry["changefreq"] = "monthly";
+            let priority = "0.7";
+            if (path === "/") {
+              changefreq = "weekly";
+              priority = "1.0";
+            } else if (servicePaths.has(path)) {
+              changefreq = "weekly";
+              priority = "0.8";
+            } else if (legalPaths.has(path)) {
+              changefreq = "yearly";
+              priority = "0.5";
+            }
+            return {
+              path,
+              lastmod: today,
+              changefreq,
+              priority,
+            };
+          }),
           ...uniqueSlugs.map((slug): SitemapEntry => ({
             path: `/${slug}`,
             lastmod: today,
@@ -55,6 +82,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             priority: "0.6",
           })),
         ];
+
 
         const urls = entries.map((e) =>
           [
