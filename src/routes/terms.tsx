@@ -6,7 +6,7 @@ export const Route = createFileRoute("/terms")({
   head: () => pageHead({
     title: "Terms of Service — Burlington VT Taxi Ride",
     description: "Terms and conditions for booking and using Burlington VT Taxi Ride transportation services.",
-    image: "/og-image.jpg",
+    image: "/__l5e/assets-v1/0d43759a-156f-49f4-bd87-ce7fe3cdac15/br-logo.jpeg",
     path: "/terms",
   }),
   component: Page,

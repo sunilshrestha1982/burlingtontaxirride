@@ -6,7 +6,7 @@ export const Route = createFileRoute("/privacy")({
   head: () => pageHead({
     title: "Privacy Policy — Burlington VT Taxi Ride",
     description: "How Burlington VT Taxi Ride collects, uses, and protects your personal information.",
-    image: "/og-image.jpg",
+    image: "/__l5e/assets-v1/0d43759a-156f-49f4-bd87-ce7fe3cdac15/br-logo.jpeg",
     path: "/privacy",
   }),
   component: Page,
