@@ -27,7 +27,10 @@ const staticPaths = [
   "/ski-resort",
   "/terms",
   "/sitemap",
+  "/best-burlington-taxi-service",
+  "/best-burlington-taxi-to-monteral-24-7",
 ];
+
 
 const servicePaths = new Set([
   "/airport-transfers",
