@@ -105,6 +105,47 @@ async function sendViaGmail(payload: {
   return res.json().catch(() => ({}));
 }
 
+async function sendViaRelay(payload: {
+  to: string;
+  subject: string;
+  html: string;
+  replyTo?: string;
+}) {
+  const url = process.env.SMTP_RELAY_URL;
+  const secret = process.env.SMTP_RELAY_SECRET;
+  if (!url) throw new Error("SMTP relay not configured");
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(secret ? { "X-Relay-Secret": secret } : {}),
+    },
+    body: JSON.stringify({
+      to: payload.to,
+      subject: payload.subject,
+      html: payload.html,
+      replyTo: payload.replyTo,
+      fromName: FROM_NAME,
+    }),
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`relay ${res.status}: ${text.slice(0, 300)}`);
+  }
+  return res.json().catch(() => ({}));
+}
+
+async function sendEmail(payload: {
+  to: string;
+  subject: string;
+  html: string;
+  replyTo?: string;
+}) {
+  // Prefer the SMTP relay (Gmail app password) when configured.
+  if (process.env.SMTP_RELAY_URL) return sendViaRelay(payload);
+  return sendViaGmail(payload);
+}
+
 export const Route = createFileRoute("/api/public/send-booking")({
   server: {
     handlers: {
