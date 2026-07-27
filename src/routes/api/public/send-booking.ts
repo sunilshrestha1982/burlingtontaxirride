@@ -172,7 +172,7 @@ export const Route = createFileRoute("/api/public/send-booking")({
         const results: Record<string, unknown> = {};
 
         try {
-          results.admin = await sendViaGmail({
+          results.admin = await sendEmail({
             to: ADMIN_EMAIL,
             subject: admin.subject,
             html: admin.html,
@@ -184,7 +184,7 @@ export const Route = createFileRoute("/api/public/send-booking")({
 
         if (booking.email) {
           try {
-            results.passenger = await sendViaGmail({
+            results.passenger = await sendEmail({
               to: booking.email,
               subject: customer.subject,
               html: customer.html,
