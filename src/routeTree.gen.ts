@@ -23,10 +23,13 @@ import { Route as BookOnlineRouteImport } from './routes/book-online'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BestBurlingtonTaxiToMonteral247RouteImport } from './routes/best-burlington-taxi-to-monteral-24-7'
 import { Route as BestBurlingtonTaxiServiceRouteImport } from './routes/best-burlington-taxi-service'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AirportsWeServeRouteImport } from './routes/airports-we-serve'
 import { Route as AirportTransfersRouteImport } from './routes/airport-transfers'
 import { Route as SlugRouteImport } from './routes/$slug'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiPublicSendBookingRouteImport } from './routes/api/public/send-booking'
 
 const TermsRoute = TermsRouteImport.update({
@@ -101,6 +104,11 @@ const BestBurlingtonTaxiServiceRoute =
     path: '/best-burlington-taxi-service',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AirportsWeServeRoute = AirportsWeServeRouteImport.update({
   id: '/airports-we-serve',
   path: '/airports-we-serve',
@@ -116,10 +124,19 @@ const SlugRoute = SlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiPublicSendBookingRoute = ApiPublicSendBookingRouteImport.update({
   id: '/api/public/send-booking',
@@ -132,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/$slug': typeof SlugRoute
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
+  '/auth': typeof AuthRoute
   '/best-burlington-taxi-service': typeof BestBurlingtonTaxiServiceRoute
   '/best-burlington-taxi-to-monteral-24-7': typeof BestBurlingtonTaxiToMonteral247Route
   '/blog': typeof BlogRoute
@@ -146,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/api/public/send-booking': typeof ApiPublicSendBookingRoute
 }
 export interface FileRoutesByTo {
@@ -153,6 +172,7 @@ export interface FileRoutesByTo {
   '/$slug': typeof SlugRoute
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
+  '/auth': typeof AuthRoute
   '/best-burlington-taxi-service': typeof BestBurlingtonTaxiServiceRoute
   '/best-burlington-taxi-to-monteral-24-7': typeof BestBurlingtonTaxiToMonteral247Route
   '/blog': typeof BlogRoute
@@ -167,14 +187,17 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/api/public/send-booking': typeof ApiPublicSendBookingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/$slug': typeof SlugRoute
   '/airport-transfers': typeof AirportTransfersRoute
   '/airports-we-serve': typeof AirportsWeServeRoute
+  '/auth': typeof AuthRoute
   '/best-burlington-taxi-service': typeof BestBurlingtonTaxiServiceRoute
   '/best-burlington-taxi-to-monteral-24-7': typeof BestBurlingtonTaxiToMonteral247Route
   '/blog': typeof BlogRoute
@@ -189,6 +212,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/api/public/send-booking': typeof ApiPublicSendBookingRoute
 }
 export interface FileRouteTypes {
@@ -198,6 +222,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/airport-transfers'
     | '/airports-we-serve'
+    | '/auth'
     | '/best-burlington-taxi-service'
     | '/best-burlington-taxi-to-monteral-24-7'
     | '/blog'
@@ -212,6 +237,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/ski-resort'
     | '/terms'
+    | '/admin'
     | '/api/public/send-booking'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -219,6 +245,7 @@ export interface FileRouteTypes {
     | '/$slug'
     | '/airport-transfers'
     | '/airports-we-serve'
+    | '/auth'
     | '/best-burlington-taxi-service'
     | '/best-burlington-taxi-to-monteral-24-7'
     | '/blog'
@@ -233,13 +260,16 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/ski-resort'
     | '/terms'
+    | '/admin'
     | '/api/public/send-booking'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/$slug'
     | '/airport-transfers'
     | '/airports-we-serve'
+    | '/auth'
     | '/best-burlington-taxi-service'
     | '/best-burlington-taxi-to-monteral-24-7'
     | '/blog'
@@ -254,14 +284,17 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/ski-resort'
     | '/terms'
+    | '/_authenticated/admin'
     | '/api/public/send-booking'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   SlugRoute: typeof SlugRoute
   AirportTransfersRoute: typeof AirportTransfersRoute
   AirportsWeServeRoute: typeof AirportsWeServeRoute
+  AuthRoute: typeof AuthRoute
   BestBurlingtonTaxiServiceRoute: typeof BestBurlingtonTaxiServiceRoute
   BestBurlingtonTaxiToMonteral247Route: typeof BestBurlingtonTaxiToMonteral247Route
   BlogRoute: typeof BlogRoute
@@ -379,6 +412,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BestBurlingtonTaxiServiceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/airports-we-serve': {
       id: '/airports-we-serve'
       path: '/airports-we-serve'
@@ -400,12 +440,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/public/send-booking': {
       id: '/api/public/send-booking'
@@ -417,11 +471,24 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   SlugRoute: SlugRoute,
   AirportTransfersRoute: AirportTransfersRoute,
   AirportsWeServeRoute: AirportsWeServeRoute,
+  AuthRoute: AuthRoute,
   BestBurlingtonTaxiServiceRoute: BestBurlingtonTaxiServiceRoute,
   BestBurlingtonTaxiToMonteral247Route: BestBurlingtonTaxiToMonteral247Route,
   BlogRoute: BlogRoute,
@@ -441,3 +508,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
