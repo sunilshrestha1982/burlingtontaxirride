@@ -72,7 +72,9 @@ function AuthPage() {
   return (
     <div className="mx-auto flex max-w-md flex-col px-4 py-24 sm:px-6">
       <p className="text-xs uppercase tracking-[0.3em] text-gold">Staff Only</p>
-      <h1 className="mt-2 font-display text-4xl">Sign In</h1>
+      <h1 className="mt-2 font-display text-4xl">
+        {mode === "signin" ? "Sign In" : "Create Admin Account"}
+      </h1>
       <p className="mt-2 text-sm text-muted-foreground">
         Dispatcher access to incoming reservations.
       </p>
@@ -94,20 +96,30 @@ function AuthPage() {
             id="password"
             type="password"
             required
+            minLength={8}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:border-gold"
           />
         </div>
         {error && <p className="text-sm text-destructive">{error}</p>}
+        {notice && <p className="text-sm text-gold">{notice}</p>}
         <button
           type="submit"
           disabled={busy}
           className="gradient-gold w-full rounded-md px-5 py-3 text-sm font-semibold text-primary-foreground shadow-gold disabled:opacity-60"
         >
-          {busy ? "Signing in…" : "Sign in"}
+          {busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
+        </button>
+        <button
+          type="button"
+          onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setError(null); setNotice(null); }}
+          className="w-full text-center text-sm text-muted-foreground hover:text-gold"
+        >
+          {mode === "signin" ? "Need an account? Create one" : "Already have an account? Sign in"}
         </button>
       </form>
+
     </div>
   );
 }
