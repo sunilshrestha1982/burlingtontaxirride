@@ -196,6 +196,36 @@ export const Route = createFileRoute("/api/public/send-booking")({
         }
 
         const ok = !results.adminError && !results.passengerError;
+
+        // Persist the reservation so it shows up on the /admin bookings page.
+        try {
+          const { supabaseAdmin } = await import(
+            "@/integrations/supabase/client.server"
+          );
+          await supabaseAdmin.from("bookings").insert({
+            reference: booking.reference ?? null,
+            service: booking.service ?? null,
+            name: booking.name ?? null,
+            phone: booking.phone ?? null,
+            email: booking.email ?? null,
+            pickup: booking.pickup ?? null,
+            dropoff: booking.dropoff ?? null,
+            ride_date: booking.date ?? null,
+            ride_time: booking.time ?? null,
+            passengers: booking.passengers ?? null,
+            luggage: booking.luggage ?? null,
+            flight: booking.flight ?? null,
+            admin_email_sent: !results.adminError,
+            admin_email_error: (results.adminError as string) ?? null,
+            passenger_email_sent: booking.email
+              ? !results.passengerError
+              : false,
+            passenger_email_error: (results.passengerError as string) ?? null,
+          });
+        } catch (e) {
+          console.error("booking persist failed", e);
+        }
+
         return Response.json({ ok, results }, { status: ok ? 200 : 502 });
       },
     },
