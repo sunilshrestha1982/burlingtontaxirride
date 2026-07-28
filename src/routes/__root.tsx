@@ -12,8 +12,9 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
-import brLogo from "../assets/br-logo.jpeg.asset.json";
-import brLogoFavicon from "../assets/br-logo-favicon.jpeg.asset.json";
+import brLogo from "../assets/br-logo-square.jpeg.asset.json";
+import brLogoFavicon from "../assets/br-logo-square.jpeg.asset.json";
+
 
 function NotFoundComponent() {
   return (
