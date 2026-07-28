@@ -26,9 +26,11 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -41,6 +43,21 @@ function AuthPage() {
     e.preventDefault();
     setBusy(true);
     setError(null);
+    setNotice(null);
+    if (mode === "signup") {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: `${window.location.origin}/auth` },
+      });
+      setBusy(false);
+      if (error) return setError(error.message);
+      if (!data.session) {
+        return setNotice("Account created. Check your email to confirm, then sign in.");
+      }
+      navigate({ to: "/admin", replace: true });
+      return;
+    }
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
     if (error) {
@@ -49,6 +66,8 @@ function AuthPage() {
     }
     navigate({ to: "/admin", replace: true });
   }
+
+
 
   return (
     <div className="mx-auto flex max-w-md flex-col px-4 py-24 sm:px-6">
