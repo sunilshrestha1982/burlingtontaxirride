@@ -3,30 +3,38 @@ import { locationBySlug, LOCATIONS } from "@/lib/locations";
 import { VT_DESTINATIONS, PHONE, PHONE_TEL } from "@/lib/site-data";
 import { absoluteImage, SITE_URL } from "@/lib/seo";
 import { BookingForm } from "@/components/BookingForm";
+import { loadPageContent, type PageContent } from "@/lib/page-content";
 import { Phone, Check } from "lucide-react";
 
+const pick = (v: string | null | undefined, fallback: string) =>
+  typeof v === "string" && v.trim().length > 0 ? v.trim() : fallback;
+
 export const Route = createFileRoute("/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const loc = locationBySlug(params.slug);
     if (!loc) throw notFound();
-    return loc;
+    const cms = await loadPageContent(`/${params.slug}`);
+    return { ...loc, cms };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [] };
+    const cms = loaderData.cms as PageContent | null;
     const url = `${SITE_URL}/${loaderData.slug}`;
-    const image = absoluteImage(loaderData.image);
+    const title = pick(cms?.meta_title, `${loaderData.title} | Burlington VT Taxi Ride`);
+    const description = pick(cms?.meta_description, loaderData.description);
+    const image = absoluteImage(pick(cms?.hero_image, loaderData.image));
     return {
       meta: [
-        { title: `${loaderData.title} | Burlington VT Taxi Ride` },
-        { name: "description", content: loaderData.description },
-        { property: "og:title", content: loaderData.title },
-        { property: "og:description", content: loaderData.description },
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
         { property: "og:type", content: "article" },
         { property: "og:image", content: image },
         { property: "og:url", content: url },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: loaderData.title },
-        { name: "twitter:description", content: loaderData.description },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
         { name: "twitter:image", content: image },
       ],
       links: [{ rel: "canonical", href: url }],
@@ -53,8 +61,18 @@ function shortName(name: string): string {
 
 function LocationPage() {
   const loc = Route.useLoaderData();
+  const cms = loc.cms as PageContent | null;
   const short = shortName(loc.destination);
   const upper = short.toUpperCase();
+
+  const heroImage = pick(cms?.hero_image, loc.image);
+  const eyebrow = pick(cms?.eyebrow, "Burlington VT Taxi Ride");
+  const heroTitle = cms?.hero_title?.trim();
+  const heroHighlight = pick(cms?.hero_highlight, short);
+  const heroDescription = pick(
+    cms?.hero_description,
+    `Professional taxi & car service from Burlington, Vermont to ${short}. Fixed rates, licensed drivers, 24/7.`,
+  );
 
   const features = [
     { title: "Fixed Rates", desc: "Confirmed before booking" },
@@ -68,7 +86,7 @@ function LocationPage() {
       {/* HERO */}
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 overflow-hidden">
-          <img src={loc.image} alt={loc.destination} className="hero-kenburns h-full w-full object-cover" />
+          <img src={heroImage} alt={loc.destination} className="hero-kenburns h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-background/75 via-background/30 to-transparent" />
         </div>
         <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-28 lg:px-8 lg:py-36 text-center">
@@ -80,14 +98,23 @@ function LocationPage() {
             <span>{short}</span>
           </div>
           <span className="mt-6 inline-block rounded-full border border-gold/40 px-4 py-1.5 text-[10px] uppercase tracking-[0.3em] text-gold sm:text-xs">
-            Burlington VT Taxi Ride
+            {eyebrow}
           </span>
           <h1 className="mt-8 font-display text-5xl leading-tight sm:text-6xl md:text-7xl">
-            BTV <span className="text-gold">→</span>{" "}
-            <span className="text-gradient-gold">{short}</span>
+            {heroTitle ? (
+              <>
+                {heroTitle}{" "}
+                <span className="text-gradient-gold">{heroHighlight}</span>
+              </>
+            ) : (
+              <>
+                BTV <span className="text-gold">→</span>{" "}
+                <span className="text-gradient-gold">{heroHighlight}</span>
+              </>
+            )}
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-muted-foreground">
-            Professional taxi & car service from Burlington, Vermont to {short}. Fixed rates, licensed drivers, 24/7.
+            {heroDescription}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link to="/book-online" className="gradient-gold inline-flex items-center gap-2 rounded-md px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-gold">
