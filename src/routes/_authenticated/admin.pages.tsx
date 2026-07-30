@@ -259,21 +259,41 @@ function CmsPage() {
                 onChange={(v) => setDraft({ ...draft, body: v })}
               />
 
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   type="submit"
                   disabled={mutation.isPending}
-                  className="gradient-gold inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-60"
+                  className="inline-flex items-center gap-2 rounded-md border border-gold/40 px-5 py-2.5 text-sm font-semibold text-gold hover:bg-gold/10 disabled:opacity-60"
                 >
-                  <Save className="h-4 w-4" /> {mutation.isPending ? "Saving…" : "Save changes"}
+                  <Save className="h-4 w-4" /> {mutation.isPending ? "Saving…" : "Save draft"}
+                </button>
+                <button
+                  type="button"
+                  disabled={!current.has_draft || publishMutation.isPending}
+                  onClick={() => publishMutation.mutate(current.slug)}
+                  className="gradient-gold inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-40"
+                >
+                  <Rocket className="h-4 w-4" />
+                  {publishMutation.isPending ? "Publishing…" : "Publish to website"}
+                </button>
+                <button
+                  type="button"
+                  disabled={!current.has_draft || discardMutation.isPending}
+                  onClick={() => discardMutation.mutate(current.slug)}
+                  className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground disabled:opacity-40"
+                >
+                  <Undo2 className="h-4 w-4" /> Discard draft
                 </button>
                 {saved && <span className="text-sm text-emerald-500">{saved}</span>}
-                {mutation.error && (
-                  <span className="text-sm text-destructive">
-                    {(mutation.error as Error).message}
-                  </span>
-                )}
+                {[mutation.error, publishMutation.error, discardMutation.error]
+                  .filter(Boolean)
+                  .map((e, i) => (
+                    <span key={i} className="text-sm text-destructive">
+                      {(e as Error).message}
+                    </span>
+                  ))}
               </div>
+
             </form>
 
             {preview && (
