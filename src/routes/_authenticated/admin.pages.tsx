@@ -51,7 +51,9 @@ const toDraft = (p: PageDraft): Draft =>
 
 function CmsPage() {
   const fetchPages = useServerFn(listPages);
-  const persist = useServerFn(savePage);
+  const persist = useServerFn(saveDraft);
+  const publish = useServerFn(publishDraft);
+  const discard = useServerFn(discardDraft);
   const queryClient = useQueryClient();
 
   const { data, isLoading, error, refetch, isFetching } = useQuery({
@@ -74,7 +76,13 @@ function CmsPage() {
 
   useEffect(() => {
     if (current) setDraft(toDraft(current));
-  }, [current?.slug, current?.updated_at]);
+  }, [current?.slug, current?.updated_at, current?.draft_updated_at, current?.has_draft]);
+
+  const flash = (msg: string) => {
+    setSaved(msg);
+    queryClient.invalidateQueries({ queryKey: ["cms-pages"] });
+    setTimeout(() => setSaved(null), 4000);
+  };
 
   const mutation = useMutation({
     mutationFn: (payload: Draft & { slug: string }) =>
@@ -91,12 +99,19 @@ function CmsPage() {
           body: payload.body || null,
         },
       }),
-    onSuccess: () => {
-      setSaved("Saved — live on the website.");
-      queryClient.invalidateQueries({ queryKey: ["cms-pages"] });
-      setTimeout(() => setSaved(null), 4000);
-    },
+    onSuccess: () => flash("Draft saved — not live yet. Review, then publish."),
   });
+
+  const publishMutation = useMutation({
+    mutationFn: (slug: string) => publish({ data: { slug } }),
+    onSuccess: () => flash("Published — now live on the website."),
+  });
+
+  const discardMutation = useMutation({
+    mutationFn: (slug: string) => discard({ data: { slug } }),
+    onSuccess: () => flash("Draft discarded — the live version is unchanged."),
+  });
+
 
   return (
     <div>
