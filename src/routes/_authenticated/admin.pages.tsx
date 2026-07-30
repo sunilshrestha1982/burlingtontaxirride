@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { listPages, savePage } from "@/lib/page-content.functions";
-import type { PageContent } from "@/lib/page-content";
+import { listPages, saveDraft, publishDraft, discardDraft } from "@/lib/page-content.functions";
+import type { PageDraft } from "@/lib/page-content";
 import { ImageField } from "@/components/admin/MediaPicker";
 import { PageHero } from "@/components/PageHero";
-import { Save, RefreshCw, Eye, EyeOff } from "lucide-react";
+import { Save, RefreshCw, Eye, EyeOff, Rocket, Undo2, CircleDot } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/pages")({
   component: CmsPage,
@@ -24,16 +24,30 @@ type Draft = {
   body: string;
 };
 
-const toDraft = (p: PageContent): Draft => ({
-  meta_title: p.meta_title ?? "",
-  meta_description: p.meta_description ?? "",
-  eyebrow: p.eyebrow ?? "",
-  hero_title: p.hero_title ?? "",
-  hero_highlight: p.hero_highlight ?? "",
-  hero_description: p.hero_description ?? "",
-  hero_image: p.hero_image ?? "",
-  body: p.body ?? "",
-});
+/** Editor always works on the pending draft when one exists, otherwise on the live copy. */
+const toDraft = (p: PageDraft): Draft =>
+  p.has_draft
+    ? {
+        meta_title: p.draft_meta_title ?? "",
+        meta_description: p.draft_meta_description ?? "",
+        eyebrow: p.draft_eyebrow ?? "",
+        hero_title: p.draft_hero_title ?? "",
+        hero_highlight: p.draft_hero_highlight ?? "",
+        hero_description: p.draft_hero_description ?? "",
+        hero_image: p.draft_hero_image ?? "",
+        body: p.draft_body ?? "",
+      }
+    : {
+        meta_title: p.meta_title ?? "",
+        meta_description: p.meta_description ?? "",
+        eyebrow: p.eyebrow ?? "",
+        hero_title: p.hero_title ?? "",
+        hero_highlight: p.hero_highlight ?? "",
+        hero_description: p.hero_description ?? "",
+        hero_image: p.hero_image ?? "",
+        body: p.body ?? "",
+      };
+
 
 function CmsPage() {
   const fetchPages = useServerFn(listPages);
