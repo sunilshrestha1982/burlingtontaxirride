@@ -3,30 +3,38 @@ import { locationBySlug, LOCATIONS } from "@/lib/locations";
 import { VT_DESTINATIONS, PHONE, PHONE_TEL } from "@/lib/site-data";
 import { absoluteImage, SITE_URL } from "@/lib/seo";
 import { BookingForm } from "@/components/BookingForm";
+import { loadPageContent, type PageContent } from "@/lib/page-content";
 import { Phone, Check } from "lucide-react";
 
+const pick = (v: string | null | undefined, fallback: string) =>
+  typeof v === "string" && v.trim().length > 0 ? v.trim() : fallback;
+
 export const Route = createFileRoute("/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const loc = locationBySlug(params.slug);
     if (!loc) throw notFound();
-    return loc;
+    const cms = await loadPageContent(`/${params.slug}`);
+    return { ...loc, cms };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [] };
+    const cms = loaderData.cms as PageContent | null;
     const url = `${SITE_URL}/${loaderData.slug}`;
-    const image = absoluteImage(loaderData.image);
+    const title = pick(cms?.meta_title, `${loaderData.title} | Burlington VT Taxi Ride`);
+    const description = pick(cms?.meta_description, loaderData.description);
+    const image = absoluteImage(pick(cms?.hero_image, loaderData.image));
     return {
       meta: [
-        { title: `${loaderData.title} | Burlington VT Taxi Ride` },
-        { name: "description", content: loaderData.description },
-        { property: "og:title", content: loaderData.title },
-        { property: "og:description", content: loaderData.description },
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
         { property: "og:type", content: "article" },
         { property: "og:image", content: image },
         { property: "og:url", content: url },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: loaderData.title },
-        { name: "twitter:description", content: loaderData.description },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
         { name: "twitter:image", content: image },
       ],
       links: [{ rel: "canonical", href: url }],
