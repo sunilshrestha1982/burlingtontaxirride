@@ -26,6 +26,7 @@ export const CMS_PAGES: { slug: string; label: string }[] = [
   { slug: "/book-online", label: "Reservation" },
   { slug: "/blog", label: "Blog" },
   { slug: "/contact", label: "Contact Us" },
+  ...LOCATIONS.map((l) => ({ slug: `/${l.slug}`, label: l.label })),
 ];
 
 const nonEmpty = (v: string | null | undefined) =>
