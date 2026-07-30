@@ -130,8 +130,13 @@ function CmsPage() {
       {pages.length > 0 && (
         <div className="mt-8 grid gap-6 lg:grid-cols-[240px_1fr]">
           <ul className="space-y-1">
-            {pages.map((p) => (
+            {pages.map((p, i) => (
               <li key={p.slug}>
+                {(i === 0 || (pages[i - 1].sort_order < 200 && p.sort_order >= 200)) && (
+                  <p className="px-3 pb-1 pt-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
+                    {p.sort_order >= 200 ? "Location Pages" : "Main Pages"}
+                  </p>
+                )}
                 <button
                   onClick={() => setSelected(p.slug)}
                   className={`w-full rounded-md px-3 py-2 text-left text-sm ${
@@ -146,6 +151,7 @@ function CmsPage() {
               </li>
             ))}
           </ul>
+
 
           {current && draft && (
             <div className="space-y-6">
