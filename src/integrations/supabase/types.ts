@@ -77,6 +77,51 @@ export type Database = {
         }
         Relationships: []
       }
+      page_content: {
+        Row: {
+          body: string | null
+          eyebrow: string | null
+          hero_description: string | null
+          hero_highlight: string | null
+          hero_image: string | null
+          hero_title: string | null
+          meta_description: string | null
+          meta_title: string | null
+          nav_label: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          body?: string | null
+          eyebrow?: string | null
+          hero_description?: string | null
+          hero_highlight?: string | null
+          hero_image?: string | null
+          hero_title?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          nav_label: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          body?: string | null
+          eyebrow?: string | null
+          hero_description?: string | null
+          hero_highlight?: string | null
+          hero_image?: string | null
+          hero_title?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          nav_label?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
