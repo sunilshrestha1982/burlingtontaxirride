@@ -78,3 +78,15 @@ export function mergeHero(defaults: HeroProps, cms: PageContent | null): HeroPro
     backgroundImage: nonEmpty(cms.hero_image) ?? defaults.backgroundImage,
   };
 }
+
+/** Only the CMS fields that were filled in, ready to spread over <PageHero /> props. */
+export function heroOverrides(cms: PageContent | null | undefined): Partial<HeroProps> {
+  if (!cms) return {};
+  const out: Partial<HeroProps> = {};
+  if (nonEmpty(cms.eyebrow)) out.eyebrow = cms.eyebrow!.trim();
+  if (nonEmpty(cms.hero_title)) out.title = cms.hero_title!.trim();
+  if (nonEmpty(cms.hero_highlight)) out.highlight = cms.hero_highlight!.trim();
+  if (nonEmpty(cms.hero_description)) out.description = cms.hero_description!.trim();
+  if (nonEmpty(cms.hero_image)) out.backgroundImage = cms.hero_image!.trim();
+  return out;
+}

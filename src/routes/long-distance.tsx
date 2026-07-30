@@ -1,20 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { pageHead } from "@/lib/seo";
+import { loadPageContent, mergeMeta, heroOverrides } from "@/lib/page-content";
 import { PageHero } from "@/components/PageHero";
 import { BookingForm } from "@/components/BookingForm";
 import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/long-distance")({
-  head: () => pageHead({
+  loader: () => loadPageContent("/long-distance"),
+  head: ({ loaderData }) => pageHead(mergeMeta({
     title: "Long Distance Rides from Burlington - VT Taxi Ride",
     description: "Fixed-rate long distance car service from Burlington to Montréal, Albany, Boston, Stowe, Montpelier, and beyond.",
     image: "/places/montreal-city.jpg",
     path: "/long-distance",
-  }),
+  }, loaderData ?? null)),
   component: Page,
 });
 
 function Page() {
+  const cms = Route.useLoaderData();
   return (
     <>
       <PageHero
@@ -23,6 +26,7 @@ function Page() {
         highlight="From Burlington VT"
         description="Fixed-rate long distance car service from Burlington to Montréal, Albany, Boston, Stowe, Montpelier, and across Vermont and New England."
         backgroundImage="/places/montreal-city.jpg"
+        {...heroOverrides(cms)}
       />
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">

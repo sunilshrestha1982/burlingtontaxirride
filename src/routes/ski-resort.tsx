@@ -1,20 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { pageHead } from "@/lib/seo";
+import { loadPageContent, mergeMeta, heroOverrides } from "@/lib/page-content";
 import { PageHero } from "@/components/PageHero";
 import { BookingForm } from "@/components/BookingForm";
 import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/ski-resort")({
-  head: () => pageHead({
+  loader: () => loadPageContent("/ski-resort"),
+  head: ({ loaderData }) => pageHead(mergeMeta({
     title: "Vermont Ski Resort Transfers — Burlington VT Taxi Ride",
     description: "Safe, comfortable ski shuttles from Burlington to Stowe, Sugarbush, Smugglers' Notch, Bolton Valley, Jay Peak and every Vermont mountain.",
     image: "/places/jay-peak-vt.jpg",
     path: "/ski-resort",
-  }),
+  }, loaderData ?? null)),
   component: Page,
 });
 
 function Page() {
+  const cms = Route.useLoaderData();
   return (
     <>
       <PageHero
@@ -23,6 +26,7 @@ function Page() {
         highlight="Resort Transfers"
         description="Safe, comfortable ski shuttles from Burlington to Stowe, Sugarbush, Smugglers' Notch, Bolton Valley, Jay Peak, and every Vermont mountain. Equipment always welcome."
         backgroundImage="/places/jay-peak-vt.jpg"
+        {...heroOverrides(cms)}
       />
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">

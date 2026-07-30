@@ -3,20 +3,23 @@ import { useId, useState } from "react";
 import { PageHero } from "@/components/PageHero";
 import { PHONE, PHONE_TEL, EMAIL, WHATSAPP, ADDRESS } from "@/lib/site-data";
 import { pageHead } from "@/lib/seo";
+import { loadPageContent, mergeMeta, heroOverrides } from "@/lib/page-content";
 import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
 import { LocationMap } from "@/components/LocationMap";
 
 export const Route = createFileRoute("/contact")({
-  head: () => pageHead({
+  loader: () => loadPageContent("/contact"),
+  head: ({ loaderData }) => pageHead(mergeMeta({
     title: "Contact - Burlington VT Taxi Ride 24/7",
     description: "Call, text, WhatsApp or message us. We respond within minutes — 24 hours a day.",
     image: "/places/burlington-vt.jpg",
     path: "/contact",
-  }),
+  }, loaderData ?? null)),
   component: Page,
 });
 
 function Page() {
+  const cms = Route.useLoaderData();
   const [a, setA] = useState("");
   const [sent, setSent] = useState(false);
   const correct = 12;
@@ -31,6 +34,7 @@ function Page() {
         highlight="Burlington VT Taxi Ride"
         description="Call, text, WhatsApp, or fill out the form below. We respond within minutes — 24 hours a day."
         backgroundImage="/places/burlington-vt.jpg"
+        {...heroOverrides(cms)}
       />
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PHONE, PHONE_TEL, VT_DESTINATIONS } from "@/lib/site-data";
 import { pageHead } from "@/lib/seo";
+import { loadPageContent, mergeMeta, heroOverrides } from "@/lib/page-content";
 import { BookingForm } from "@/components/BookingForm";
 import { CityCard } from "@/components/PlaceCards";
 import { CTASection } from "@/components/CTASection";
@@ -9,16 +10,18 @@ import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { Phone, Plane, Car, Briefcase, Snowflake, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/")({
-  head: () => pageHead({
+  loader: () => loadPageContent("/"),
+  head: ({ loaderData }) => pageHead(mergeMeta({
     title: "Burlington VT Taxi Ride | BTV Airport Taxi, Shuttle & Transportation 24/7",
     description: "Burlington VT Taxi Ride. We provide professional airport transportation from Burlington International Airport (BTV) to anywhere in Vermont, New England, and Montreal, Canada.",
     image: "/places/burlington-vt.jpg",
     path: "/",
-  }),
+  }, loaderData ?? null)),
   component: Index,
 });
 
 function Index() {
+  const cms = Route.useLoaderData();
   const [showAllDest, setShowAllDest] = useState(false);
   const visibleDestinations = showAllDest ? VT_DESTINATIONS : VT_DESTINATIONS.slice(0, 8);
   return (
