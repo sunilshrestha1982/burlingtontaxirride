@@ -57,7 +57,7 @@ export async function loadPageContent(slug: string): Promise<PageContent | null>
   try {
     const { data } = await (supabase as any)
       .from("page_content")
-      .select("*")
+      .select(PUBLIC_PAGE_COLUMNS)
       .eq("slug", slug)
       .maybeSingle();
     return (data as PageContent) ?? null;
