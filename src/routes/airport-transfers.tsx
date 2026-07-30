@@ -1,21 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { pageHead } from "@/lib/seo";
+import { loadPageContent, mergeMeta, heroOverrides } from "@/lib/page-content";
 import { PageHero } from "@/components/PageHero";
 import { BookingForm } from "@/components/BookingForm";
 import { CTASection } from "@/components/CTASection";
 import { Plane, BadgeCheck, ShieldCheck, Clock, Users } from "lucide-react";
 
 export const Route = createFileRoute("/airport-transfers")({
-  head: () => pageHead({
+  loader: () => loadPageContent("/airport-transfers"),
+  head: ({ loaderData }) => pageHead(mergeMeta({
     title: "Burlington Airport (BTV) Transfers - VT Taxi Ride",
     description: "Fixed-rate airport rides to and from Burlington International Airport (BTV). Flight tracking, meet & greet, 24/7.",
     image: "/places/btv-airport.jpg",
     path: "/airport-transfers",
-  }),
+  }, loaderData ?? null)),
   component: Page,
 });
 
 function Page() {
+  const cms = Route.useLoaderData();
   return (
     <>
       <PageHero
@@ -24,6 +27,7 @@ function Page() {
         highlight="Transfer Service"
         description="Fixed-rate airport rides to and from Burlington International Airport (BTV). Flight tracking, meet & greet, and 24/7 availability — every time."
         backgroundImage="/places/btv-airport.jpg"
+        {...heroOverrides(cms)}
       />
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">

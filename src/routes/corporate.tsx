@@ -1,20 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { pageHead } from "@/lib/seo";
+import { loadPageContent, mergeMeta, heroOverrides } from "@/lib/page-content";
 import { PageHero } from "@/components/PageHero";
 import { BookingForm } from "@/components/BookingForm";
 import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/corporate")({
-  head: () => pageHead({
+  loader: () => loadPageContent("/corporate"),
+  head: ({ loaderData }) => pageHead(mergeMeta({
     title: "Corporate & Executive Car Service - Burlington VT",
     description: "Discreet, punctual corporate car service for Vermont businesses and visiting executives. Account billing and priority dispatch.",
     image: "/places/burlington-vt.jpg",
     path: "/corporate",
-  }),
+  }, loaderData ?? null)),
   component: Page,
 });
 
 function Page() {
+  const cms = Route.useLoaderData();
   return (
     <>
       <PageHero
@@ -23,6 +26,7 @@ function Page() {
         highlight="Transportation"
         description="Discreet, punctual, and professional corporate car service for Vermont businesses and visiting executives. Account billing and priority dispatch available."
         backgroundImage="/places/burlington-vt.jpg"
+        {...heroOverrides(cms)}
       />
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">

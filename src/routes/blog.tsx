@@ -1,18 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { pageHead } from "@/lib/seo";
+import { loadPageContent, mergeMeta, heroOverrides } from "@/lib/page-content";
 import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
 import { PHONE, PHONE_TEL } from "@/lib/site-data";
 import { ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/blog")({
-  head: () => pageHead({
+  loader: () => loadPageContent("/blog"),
+  head: ({ loaderData }) => pageHead(mergeMeta({
     title: "Burlington VT Taxi Ride Service Guide",
     description: "Book a Burlington taxi for BTV airport transfers, long-distance trips, ski resort shuttles, and hourly car service. Get a custom quote and reserve your ride online.",
     image: "/places/burlington-vt.jpg",
     path: "/blog",
     ogType: "article",
-  }),
+  }, loaderData ?? null)),
   component: Page,
 });
 
@@ -50,6 +52,7 @@ function BookNowButton({ fullWidth = false }: { fullWidth?: boolean }) {
 }
 
 function Page() {
+  const cms = Route.useLoaderData();
   return (
     <>
       <PageHero
@@ -58,6 +61,7 @@ function Page() {
         highlight="Service Guide"
         description="Book your Burlington taxi ride for BTV airport transfers, long-distance trips, ski resort shuttles, and hourly car service. Request a custom quote and reserve your ride in seconds."
         backgroundImage="/places/burlington-vt.jpg"
+        {...heroOverrides(cms)}
       />
 
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">

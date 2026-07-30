@@ -1,21 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AIRPORTS } from "@/lib/site-data";
 import { pageHead } from "@/lib/seo";
+import { loadPageContent, mergeMeta, heroOverrides } from "@/lib/page-content";
 import { AirportCard } from "@/components/PlaceCards";
 import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
 
 export const Route = createFileRoute("/airports-we-serve")({
-  head: () => pageHead({
+  loader: () => loadPageContent("/airports-we-serve"),
+  head: ({ loaderData }) => pageHead(mergeMeta({
     title: "Airports We Serve — Burlington VT Taxi Ride",
     description: "Fixed-rate transfers from Burlington Vermont to 14 major airports across New England, New York, Vermont, and Québec — including Stowe (MVL) and Montréal (YUL).",
     image: "/places/airport-bos.jpg",
     path: "/airports-we-serve",
-  }),
+  }, loaderData ?? null)),
   component: Page,
 });
 
 function Page() {
+  const cms = Route.useLoaderData();
   return (
     <>
       <PageHero
@@ -25,6 +28,7 @@ function Page() {
         description="Fixed-rate transfers from Burlington, Vermont to 14 major airports across New England, New York, Vermont, and Québec — including Stowe (MVL) and Montréal (YUL). Professional drivers, 24/7 availability."
         backgroundImage="/places/airport-bos.jpg"
         ctaLabel="Book Airport Transfer"
+        {...heroOverrides(cms)}
       />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
