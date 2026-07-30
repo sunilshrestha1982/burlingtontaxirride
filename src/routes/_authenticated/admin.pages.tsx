@@ -175,8 +175,14 @@ function CmsPage() {
                   }`}
                 >
                   {p.nav_label}
+                  {p.has_draft && (
+                    <span className="ml-2 inline-flex items-center gap-1 rounded-full border border-amber-500/50 px-1.5 py-0.5 text-[9px] uppercase tracking-wider text-amber-500">
+                      <CircleDot className="h-2.5 w-2.5" /> Draft
+                    </span>
+                  )}
                   <span className="ml-2 font-mono text-[11px] opacity-60">{p.slug}</span>
                 </button>
+
               </li>
             ))}
           </ul>
