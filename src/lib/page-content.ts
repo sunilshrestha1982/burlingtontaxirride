@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { LOCATIONS } from "@/lib/locations";
 
 export type PageContent = {
   slug: string;
