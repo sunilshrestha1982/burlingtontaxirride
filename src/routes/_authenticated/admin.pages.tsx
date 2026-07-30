@@ -197,7 +197,24 @@ function CmsPage() {
                 mutation.mutate({ ...draft, slug: current.slug });
               }}
             >
-              <h2 className="font-display text-2xl">{current.nav_label}</h2>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h2 className="font-display text-2xl">{current.nav_label}</h2>
+                {current.has_draft ? (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/50 bg-amber-500/10 px-3 py-1 text-[11px] uppercase tracking-widest text-amber-500">
+                    <CircleDot className="h-3 w-3" /> Pending changes — not live
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-[11px] uppercase tracking-widest text-emerald-500">
+                    Published
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Saving stores a draft only. Nothing changes on the website until you press Publish.
+                {current.published_at &&
+                  ` Last published ${new Date(current.published_at).toLocaleString()}.`}
+              </p>
+
 
               <Text
                 label="Hero eyebrow"
