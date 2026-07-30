@@ -173,7 +173,17 @@ export type Database = {
       page_content: {
         Row: {
           body: string | null
+          draft_body: string | null
+          draft_eyebrow: string | null
+          draft_hero_description: string | null
+          draft_hero_highlight: string | null
+          draft_hero_image: string | null
+          draft_hero_title: string | null
+          draft_meta_description: string | null
+          draft_meta_title: string | null
+          draft_updated_at: string | null
           eyebrow: string | null
+          has_draft: boolean
           hero_description: string | null
           hero_highlight: string | null
           hero_image: string | null
@@ -181,13 +191,24 @@ export type Database = {
           meta_description: string | null
           meta_title: string | null
           nav_label: string
+          published_at: string | null
           slug: string
           sort_order: number
           updated_at: string
         }
         Insert: {
           body?: string | null
+          draft_body?: string | null
+          draft_eyebrow?: string | null
+          draft_hero_description?: string | null
+          draft_hero_highlight?: string | null
+          draft_hero_image?: string | null
+          draft_hero_title?: string | null
+          draft_meta_description?: string | null
+          draft_meta_title?: string | null
+          draft_updated_at?: string | null
           eyebrow?: string | null
+          has_draft?: boolean
           hero_description?: string | null
           hero_highlight?: string | null
           hero_image?: string | null
@@ -195,13 +216,24 @@ export type Database = {
           meta_description?: string | null
           meta_title?: string | null
           nav_label: string
+          published_at?: string | null
           slug: string
           sort_order?: number
           updated_at?: string
         }
         Update: {
           body?: string | null
+          draft_body?: string | null
+          draft_eyebrow?: string | null
+          draft_hero_description?: string | null
+          draft_hero_highlight?: string | null
+          draft_hero_image?: string | null
+          draft_hero_title?: string | null
+          draft_meta_description?: string | null
+          draft_meta_title?: string | null
+          draft_updated_at?: string | null
           eyebrow?: string | null
+          has_draft?: boolean
           hero_description?: string | null
           hero_highlight?: string | null
           hero_image?: string | null
@@ -209,6 +241,7 @@ export type Database = {
           meta_description?: string | null
           meta_title?: string | null
           nav_label?: string
+          published_at?: string | null
           slug?: string
           sort_order?: number
           updated_at?: string

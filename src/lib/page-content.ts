@@ -14,7 +14,26 @@ export type PageContent = {
   hero_image: string | null;
   body: string | null;
   updated_at: string;
+  published_at?: string | null;
 };
+
+/** Unpublished edits — admin-only, never exposed to public readers. */
+export type PageDraft = PageContent & {
+  draft_meta_title: string | null;
+  draft_meta_description: string | null;
+  draft_eyebrow: string | null;
+  draft_hero_title: string | null;
+  draft_hero_highlight: string | null;
+  draft_hero_description: string | null;
+  draft_hero_image: string | null;
+  draft_body: string | null;
+  has_draft: boolean;
+  draft_updated_at: string | null;
+};
+
+/** Columns visitors are allowed to read (published version only). */
+export const PUBLIC_PAGE_COLUMNS =
+  "slug, nav_label, sort_order, meta_title, meta_description, eyebrow, hero_title, hero_highlight, hero_description, hero_image, body, updated_at, published_at";
 
 /** Pages exposed in the back-office CMS (matches the site navigation). */
 export const CMS_PAGES: { slug: string; label: string }[] = [
@@ -38,7 +57,7 @@ export async function loadPageContent(slug: string): Promise<PageContent | null>
   try {
     const { data } = await (supabase as any)
       .from("page_content")
-      .select("*")
+      .select(PUBLIC_PAGE_COLUMNS)
       .eq("slug", slug)
       .maybeSingle();
     return (data as PageContent) ?? null;

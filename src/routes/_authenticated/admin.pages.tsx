@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { listPages, savePage } from "@/lib/page-content.functions";
-import type { PageContent } from "@/lib/page-content";
+import { listPages, saveDraft, publishDraft, discardDraft } from "@/lib/page-content.functions";
+import type { PageDraft } from "@/lib/page-content";
 import { ImageField } from "@/components/admin/MediaPicker";
 import { PageHero } from "@/components/PageHero";
-import { Save, RefreshCw, Eye, EyeOff } from "lucide-react";
+import { Save, RefreshCw, Eye, EyeOff, Rocket, Undo2, CircleDot } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/pages")({
   component: CmsPage,
@@ -24,20 +24,36 @@ type Draft = {
   body: string;
 };
 
-const toDraft = (p: PageContent): Draft => ({
-  meta_title: p.meta_title ?? "",
-  meta_description: p.meta_description ?? "",
-  eyebrow: p.eyebrow ?? "",
-  hero_title: p.hero_title ?? "",
-  hero_highlight: p.hero_highlight ?? "",
-  hero_description: p.hero_description ?? "",
-  hero_image: p.hero_image ?? "",
-  body: p.body ?? "",
-});
+/** Editor always works on the pending draft when one exists, otherwise on the live copy. */
+const toDraft = (p: PageDraft): Draft =>
+  p.has_draft
+    ? {
+        meta_title: p.draft_meta_title ?? "",
+        meta_description: p.draft_meta_description ?? "",
+        eyebrow: p.draft_eyebrow ?? "",
+        hero_title: p.draft_hero_title ?? "",
+        hero_highlight: p.draft_hero_highlight ?? "",
+        hero_description: p.draft_hero_description ?? "",
+        hero_image: p.draft_hero_image ?? "",
+        body: p.draft_body ?? "",
+      }
+    : {
+        meta_title: p.meta_title ?? "",
+        meta_description: p.meta_description ?? "",
+        eyebrow: p.eyebrow ?? "",
+        hero_title: p.hero_title ?? "",
+        hero_highlight: p.hero_highlight ?? "",
+        hero_description: p.hero_description ?? "",
+        hero_image: p.hero_image ?? "",
+        body: p.body ?? "",
+      };
+
 
 function CmsPage() {
   const fetchPages = useServerFn(listPages);
-  const persist = useServerFn(savePage);
+  const persist = useServerFn(saveDraft);
+  const publish = useServerFn(publishDraft);
+  const discard = useServerFn(discardDraft);
   const queryClient = useQueryClient();
 
   const { data, isLoading, error, refetch, isFetching } = useQuery({
@@ -60,7 +76,13 @@ function CmsPage() {
 
   useEffect(() => {
     if (current) setDraft(toDraft(current));
-  }, [current?.slug, current?.updated_at]);
+  }, [current?.slug, current?.updated_at, current?.draft_updated_at, current?.has_draft]);
+
+  const flash = (msg: string) => {
+    setSaved(msg);
+    queryClient.invalidateQueries({ queryKey: ["cms-pages"] });
+    setTimeout(() => setSaved(null), 4000);
+  };
 
   const mutation = useMutation({
     mutationFn: (payload: Draft & { slug: string }) =>
@@ -77,12 +99,19 @@ function CmsPage() {
           body: payload.body || null,
         },
       }),
-    onSuccess: () => {
-      setSaved("Saved — live on the website.");
-      queryClient.invalidateQueries({ queryKey: ["cms-pages"] });
-      setTimeout(() => setSaved(null), 4000);
-    },
+    onSuccess: () => flash("Draft saved — not live yet. Review, then publish."),
   });
+
+  const publishMutation = useMutation({
+    mutationFn: (slug: string) => publish({ data: { slug } }),
+    onSuccess: () => flash("Published — now live on the website."),
+  });
+
+  const discardMutation = useMutation({
+    mutationFn: (slug: string) => discard({ data: { slug } }),
+    onSuccess: () => flash("Draft discarded — the live version is unchanged."),
+  });
+
 
   return (
     <div>
@@ -146,8 +175,14 @@ function CmsPage() {
                   }`}
                 >
                   {p.nav_label}
+                  {p.has_draft && (
+                    <span className="ml-2 inline-flex items-center gap-1 rounded-full border border-amber-500/50 px-1.5 py-0.5 text-[9px] uppercase tracking-wider text-amber-500">
+                      <CircleDot className="h-2.5 w-2.5" /> Draft
+                    </span>
+                  )}
                   <span className="ml-2 font-mono text-[11px] opacity-60">{p.slug}</span>
                 </button>
+
               </li>
             ))}
           </ul>
@@ -162,7 +197,24 @@ function CmsPage() {
                 mutation.mutate({ ...draft, slug: current.slug });
               }}
             >
-              <h2 className="font-display text-2xl">{current.nav_label}</h2>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h2 className="font-display text-2xl">{current.nav_label}</h2>
+                {current.has_draft ? (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/50 bg-amber-500/10 px-3 py-1 text-[11px] uppercase tracking-widest text-amber-500">
+                    <CircleDot className="h-3 w-3" /> Pending changes — not live
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-[11px] uppercase tracking-widest text-emerald-500">
+                    Published
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Saving stores a draft only. Nothing changes on the website until you press Publish.
+                {current.published_at &&
+                  ` Last published ${new Date(current.published_at).toLocaleString()}.`}
+              </p>
+
 
               <Text
                 label="Hero eyebrow"
@@ -207,27 +259,47 @@ function CmsPage() {
                 onChange={(v) => setDraft({ ...draft, body: v })}
               />
 
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   type="submit"
                   disabled={mutation.isPending}
-                  className="gradient-gold inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-60"
+                  className="inline-flex items-center gap-2 rounded-md border border-gold/40 px-5 py-2.5 text-sm font-semibold text-gold hover:bg-gold/10 disabled:opacity-60"
                 >
-                  <Save className="h-4 w-4" /> {mutation.isPending ? "Saving…" : "Save changes"}
+                  <Save className="h-4 w-4" /> {mutation.isPending ? "Saving…" : "Save draft"}
+                </button>
+                <button
+                  type="button"
+                  disabled={!current.has_draft || publishMutation.isPending}
+                  onClick={() => publishMutation.mutate(current.slug)}
+                  className="gradient-gold inline-flex items-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-40"
+                >
+                  <Rocket className="h-4 w-4" />
+                  {publishMutation.isPending ? "Publishing…" : "Publish to website"}
+                </button>
+                <button
+                  type="button"
+                  disabled={!current.has_draft || discardMutation.isPending}
+                  onClick={() => discardMutation.mutate(current.slug)}
+                  className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground disabled:opacity-40"
+                >
+                  <Undo2 className="h-4 w-4" /> Discard draft
                 </button>
                 {saved && <span className="text-sm text-emerald-500">{saved}</span>}
-                {mutation.error && (
-                  <span className="text-sm text-destructive">
-                    {(mutation.error as Error).message}
-                  </span>
-                )}
+                {[mutation.error, publishMutation.error, discardMutation.error]
+                  .filter(Boolean)
+                  .map((e, i) => (
+                    <span key={i} className="text-sm text-destructive">
+                      {(e as Error).message}
+                    </span>
+                  ))}
               </div>
+
             </form>
 
             {preview && (
               <div className="overflow-hidden rounded-2xl border border-gold/30">
                 <div className="flex items-center gap-2 border-b border-border bg-surface/60 px-4 py-2 text-[11px] uppercase tracking-widest text-gold">
-                  <Eye className="h-3.5 w-3.5" /> Live preview — unsaved draft
+                  <Eye className="h-3.5 w-3.5" /> Preview — draft version (not yet published)
                 </div>
                 <div className="pointer-events-none origin-top scale-[0.85]">
                   <PageHero
