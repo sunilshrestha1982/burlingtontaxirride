@@ -6,6 +6,7 @@ import { pageHead } from "@/lib/seo";
 import { loadPageContent, mergeMeta, heroOverrides } from "@/lib/page-content";
 import { Phone, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
 import { LocationMap } from "@/components/LocationMap";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/contact")({
   loader: () => loadPageContent("/contact"),
@@ -22,6 +23,8 @@ function Page() {
   const cms = Route.useLoaderData();
   const [a, setA] = useState("");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
   const correct = 12;
   const fid = useId();
   const id = (k: string) => `${fid}-${k}`;
@@ -101,10 +104,35 @@ function Page() {
             ) : (
               <form
                 className="mt-6 grid gap-4"
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
                   if (parseInt(a, 10) !== correct) {
                     alert("Please answer the math question correctly.");
+                    return;
+                  }
+                  const fd = new FormData(e.currentTarget);
+                  const get = (k: string) => (fd.get(k) as string | null)?.trim() || null;
+                  const extras = [
+                    get("date") ? `Date: ${get("date")}` : null,
+                    get("pax") ? `Passengers: ${get("pax")}` : null,
+                    get("msg"),
+                  ]
+                    .filter(Boolean)
+                    .join("\n");
+                  setSending(true);
+                  setSendError(null);
+                  const { error } = await (supabase as any).from("contact_messages").insert({
+                    name: get("name"),
+                    phone: get("phone"),
+                    email: get("email"),
+                    service: get("service"),
+                    pickup: get("pickup"),
+                    dropoff: get("dropoff"),
+                    message: extras || null,
+                  });
+                  setSending(false);
+                  if (error) {
+                    setSendError("We could not send your message. Please call or text us instead.");
                     return;
                   }
                   setSent(true);
@@ -112,19 +140,19 @@ function Page() {
               >
                 <div>
                   <label htmlFor={id("name")} className="sr-only">Your Name</label>
-                  <input id={id("name")} required placeholder="Your Name *" autoComplete="name" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                  <input id={id("name")} name="name" required placeholder="Your Name *" autoComplete="name" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
                 </div>
                 <div>
                   <label htmlFor={id("phone")} className="sr-only">Phone Number</label>
-                  <input id={id("phone")} required type="tel" placeholder="Phone Number *" autoComplete="tel" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                  <input id={id("phone")} name="phone" required type="tel" placeholder="Phone Number *" autoComplete="tel" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
                 </div>
                 <div>
                   <label htmlFor={id("email")} className="sr-only">Email Address</label>
-                  <input id={id("email")} type="email" placeholder="Email Address" autoComplete="email" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                  <input id={id("email")} name="email" type="email" placeholder="Email Address" autoComplete="email" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
                 </div>
                 <div>
                   <label htmlFor={id("service")} className="sr-only">Service type</label>
-                  <select id={id("service")} defaultValue="" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none">
+                  <select id={id("service")} name="service" defaultValue="" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none">
                     <option value="" disabled>Select a service…</option>
                     <option>Airport Transfer — To Airport</option>
                     <option>Airport Transfer — From Airport</option>
@@ -136,21 +164,21 @@ function Page() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label htmlFor={id("pickup")} className="sr-only">Pickup Location</label>
-                    <input id={id("pickup")} placeholder="Pickup Location" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                    <input id={id("pickup")} name="pickup" placeholder="Pickup Location" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
                   </div>
                   <div>
                     <label htmlFor={id("dropoff")} className="sr-only">Drop-off Location</label>
-                    <input id={id("dropoff")} placeholder="Drop-off Location" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                    <input id={id("dropoff")} name="dropoff" placeholder="Drop-off Location" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
                   </div>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label htmlFor={id("date")} className="sr-only">Pickup date</label>
-                    <input id={id("date")} type="date" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                    <input id={id("date")} name="date" type="date" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
                   </div>
                   <div>
                     <label htmlFor={id("pax")} className="sr-only">Passengers</label>
-                    <select id={id("pax")} defaultValue="" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none">
+                    <select id={id("pax")} name="pax" defaultValue="" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none">
                       <option value="" disabled>Passengers</option>
                       {[1,2,3,4,5,6].map((n)=> <option key={n}>{n} Passenger{n>1?"s":""}</option>)}
                     </select>
@@ -158,7 +186,7 @@ function Page() {
                 </div>
                 <div>
                   <label htmlFor={id("msg")} className="sr-only">Message or special requests</label>
-                  <textarea id={id("msg")} rows={4} placeholder="Message or Special Requests" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
+                  <textarea id={id("msg")} name="msg" rows={4} placeholder="Message or Special Requests" className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
                 </div>
                 <div className="rounded-md border border-border bg-background/60 p-3">
                   <label htmlFor={id("captcha")} className="block text-xs uppercase tracking-widest text-muted-foreground">Security Check *</label>
@@ -167,7 +195,8 @@ function Page() {
                     <input id={id("captcha")} aria-label="What is 3 plus 9" required value={a} onChange={(e)=>setA(e.target.value)} className="w-20 rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-gold focus:outline-none" />
                   </div>
                 </div>
-                <button type="submit" className="gradient-gold rounded-md px-5 py-3 text-sm font-semibold text-primary-foreground shadow-gold">Send Message</button>
+                <button type="submit" disabled={sending} className="gradient-gold rounded-md px-5 py-3 text-sm font-semibold text-primary-foreground shadow-gold disabled:opacity-60">{sending ? "Sending…" : "Send Message"}</button>
+                {sendError && <p className="text-center text-xs text-destructive">{sendError}</p>}
                 <p className="text-center text-xs text-muted-foreground">Or call us directly: <a className="text-gold" href={`tel:${PHONE_TEL}`}>{PHONE}</a></p>
               </form>
             )}

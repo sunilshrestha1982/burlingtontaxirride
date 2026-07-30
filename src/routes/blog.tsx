@@ -5,16 +5,20 @@ import { PageHero } from "@/components/PageHero";
 import { CTASection } from "@/components/CTASection";
 import { PHONE, PHONE_TEL } from "@/lib/site-data";
 import { ArrowRight } from "lucide-react";
+import { loadPublishedPosts, formatPostDate, type BlogPost } from "@/lib/blog";
 
 export const Route = createFileRoute("/blog")({
-  loader: () => loadPageContent("/blog"),
+  loader: async () => ({
+    cms: await loadPageContent("/blog"),
+    posts: await loadPublishedPosts(),
+  }),
   head: ({ loaderData }) => pageHead(mergeMeta({
     title: "Burlington VT Taxi Ride Service Guide",
     description: "Book a Burlington taxi for BTV airport transfers, long-distance trips, ski resort shuttles, and hourly car service. Get a custom quote and reserve your ride online.",
     image: "/places/burlington-vt.jpg",
     path: "/blog",
     ogType: "article",
-  }, loaderData ?? null)),
+  }, loaderData?.cms ?? null)),
   component: Page,
 });
 
@@ -52,7 +56,7 @@ function BookNowButton({ fullWidth = false }: { fullWidth?: boolean }) {
 }
 
 function Page() {
-  const cms = Route.useLoaderData();
+  const { cms, posts } = Route.useLoaderData();
   return (
     <>
       <PageHero
@@ -64,9 +68,47 @@ function Page() {
         {...heroOverrides(cms)}
       />
 
+      {posts.length > 0 && (
+        <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+          <p className="text-xs uppercase tracking-[0.3em] text-gold">Latest Articles</p>
+          <h2 className="mt-2 font-display text-3xl sm:text-4xl">From the Burlington Taxi Blog</h2>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {(posts as BlogPost[]).map((p) => (
+              <Link
+                key={p.id}
+                to="/blog/$slug"
+                params={{ slug: p.slug }}
+                className="group overflow-hidden rounded-2xl border border-border bg-surface/50 transition hover:border-gold/50"
+              >
+                {p.cover_image && (
+                  <img
+                    src={p.cover_image}
+                    alt={p.title}
+                    loading="lazy"
+                    className="h-40 w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                )}
+                <div className="p-5">
+                  <p className="text-[11px] uppercase tracking-widest text-gold">
+                    {formatPostDate(p.published_at)}
+                  </p>
+                  <h3 className="mt-2 font-display text-xl">{p.title}</h3>
+                  {p.excerpt && (
+                    <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{p.excerpt}</p>
+                  )}
+                  <span className="mt-3 inline-flex items-center gap-1.5 text-sm text-gold">
+                    Read article <ArrowRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <header className="mb-10">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold">Published · June 2026 · 6 min read</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-gold">Service Guide · 6 min read</p>
           <h2 className="mt-3 font-display text-3xl sm:text-4xl">How to book a taxi in Burlington, Vermont</h2>
           <p className="mt-4 text-muted-foreground">
             One of the questions we hear most often is: <em>"How do I book a reliable ride?"</em> Burlington VT Taxi Ride offers flat, custom-quoted fares — no surge pricing, no mystery multipliers, and no last-minute price hikes during snowstorms, UVM move-in week, or Friday-night airport rushes. Below is a quick guide to our service areas and how to get a guaranteed quote.
