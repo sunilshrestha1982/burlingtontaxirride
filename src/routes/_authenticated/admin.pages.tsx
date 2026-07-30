@@ -4,11 +4,14 @@ import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { listPages, savePage } from "@/lib/page-content.functions";
 import type { PageContent } from "@/lib/page-content";
-import { Save, RefreshCw } from "lucide-react";
+import { ImageField } from "@/components/admin/MediaPicker";
+import { PageHero } from "@/components/PageHero";
+import { Save, RefreshCw, Eye, EyeOff } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/pages")({
   component: CmsPage,
 });
+
 
 type Draft = {
   meta_title: string;
@@ -45,6 +48,8 @@ function CmsPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [saved, setSaved] = useState<string | null>(null);
+  const [preview, setPreview] = useState(false);
+
 
   const pages = data?.isAdmin ? data.pages : [];
   const current = pages.find((p) => p.slug === selected) ?? null;
@@ -90,12 +95,25 @@ function CmsPage() {
             field empty to keep the built-in default.
           </p>
         </div>
-        <button
-          onClick={() => refetch()}
-          className="inline-flex items-center gap-2 rounded-md border border-gold/40 px-4 py-2 text-sm font-semibold text-gold hover:bg-gold/10"
-        >
-          <RefreshCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} /> Refresh
-        </button>
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={() => setPreview((p) => !p)}
+            className={`inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-semibold ${
+              preview
+                ? "border-gold bg-gold/10 text-gold"
+                : "border-border text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {preview ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+            {preview ? "Live preview on" : "Live preview off"}
+          </button>
+          <button
+            onClick={() => refetch()}
+            className="inline-flex items-center gap-2 rounded-md border border-gold/40 px-4 py-2 text-sm font-semibold text-gold hover:bg-gold/10"
+          >
+            <RefreshCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} /> Refresh
+          </button>
+        </div>
       </div>
 
       {isLoading && <p className="mt-10 text-sm text-muted-foreground">Loading pages…</p>}
@@ -130,6 +148,7 @@ function CmsPage() {
           </ul>
 
           {current && draft && (
+            <div className="space-y-6">
             <form
               className="space-y-4 rounded-2xl border border-border bg-surface/40 p-6"
               onSubmit={(e) => {
@@ -161,8 +180,8 @@ function CmsPage() {
                 value={draft.hero_description}
                 onChange={(v) => setDraft({ ...draft, hero_description: v })}
               />
-              <Text
-                label="Hero / share image path (e.g. /places/burlington-vt.jpg)"
+              <ImageField
+                label="Hero / share image"
                 value={draft.hero_image}
                 onChange={(v) => setDraft({ ...draft, hero_image: v })}
               />
@@ -198,6 +217,38 @@ function CmsPage() {
                 )}
               </div>
             </form>
+
+            {preview && (
+              <div className="overflow-hidden rounded-2xl border border-gold/30">
+                <div className="flex items-center gap-2 border-b border-border bg-surface/60 px-4 py-2 text-[11px] uppercase tracking-widest text-gold">
+                  <Eye className="h-3.5 w-3.5" /> Live preview — unsaved draft
+                </div>
+                <div className="pointer-events-none origin-top scale-[0.85]">
+                  <PageHero
+                    eyebrow={draft.eyebrow || current.eyebrow || undefined}
+                    title={draft.hero_title || current.hero_title || current.nav_label}
+                    highlight={draft.hero_highlight || undefined}
+                    description={draft.hero_description || ""}
+                    backgroundImage={draft.hero_image || undefined}
+                  />
+                </div>
+                <div className="border-t border-border bg-background/60 p-4">
+                  <p className="text-[11px] uppercase tracking-widest text-muted-foreground">
+                    Google result preview
+                  </p>
+                  <p className="mt-2 text-base text-gold">
+                    {draft.meta_title || current.meta_title || current.nav_label}
+                  </p>
+                  <p className="text-xs text-emerald-500">
+                    burlingtonvttaxiride.com{current.slug === "/" ? "" : current.slug}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {draft.meta_description || current.meta_description || "—"}
+                  </p>
+                </div>
+              </div>
+            )}
+            </div>
           )}
         </div>
       )}

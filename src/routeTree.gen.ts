@@ -29,10 +29,14 @@ import { Route as AirportTransfersRouteImport } from './routes/airport-transfers
 import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as ApiPublicSendBookingRouteImport } from './routes/api/public/send-booking'
 import { Route as AuthenticatedAdminPagesRouteImport } from './routes/_authenticated/admin.pages'
+import { Route as AuthenticatedAdminMessagesRouteImport } from './routes/_authenticated/admin.messages'
+import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
+import { Route as ApiPublicMediaSplatRouteImport } from './routes/api/public/media/$'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -135,6 +139,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -155,6 +164,22 @@ const AuthenticatedAdminPagesRoute = AuthenticatedAdminPagesRouteImport.update({
   path: '/pages',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminMessagesRoute =
+  AuthenticatedAdminMessagesRouteImport.update({
+    id: '/messages',
+    path: '/messages',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBlogRoute = AuthenticatedAdminBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
+  id: '/api/public/media/$',
+  path: '/api/public/media/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -164,7 +189,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/best-burlington-taxi-service': typeof BestBurlingtonTaxiServiceRoute
   '/best-burlington-taxi-to-monteral-24-7': typeof BestBurlingtonTaxiToMonteral247Route
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/book-online': typeof BookOnlineRoute
   '/booking-confirmed': typeof BookingConfirmedRoute
   '/contact': typeof ContactRoute
@@ -177,9 +202,13 @@ export interface FileRoutesByFullPath {
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/admin/blog': typeof AuthenticatedAdminBlogRoute
+  '/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
   '/api/public/send-booking': typeof ApiPublicSendBookingRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -189,7 +218,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/best-burlington-taxi-service': typeof BestBurlingtonTaxiServiceRoute
   '/best-burlington-taxi-to-monteral-24-7': typeof BestBurlingtonTaxiToMonteral247Route
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/book-online': typeof BookOnlineRoute
   '/booking-confirmed': typeof BookingConfirmedRoute
   '/contact': typeof ContactRoute
@@ -201,9 +230,13 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/admin/blog': typeof AuthenticatedAdminBlogRoute
+  '/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/admin/pages': typeof AuthenticatedAdminPagesRoute
   '/api/public/send-booking': typeof ApiPublicSendBookingRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -215,7 +248,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/best-burlington-taxi-service': typeof BestBurlingtonTaxiServiceRoute
   '/best-burlington-taxi-to-monteral-24-7': typeof BestBurlingtonTaxiToMonteral247Route
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/book-online': typeof BookOnlineRoute
   '/booking-confirmed': typeof BookingConfirmedRoute
   '/contact': typeof ContactRoute
@@ -228,9 +261,13 @@ export interface FileRoutesById {
   '/ski-resort': typeof SkiResortRoute
   '/terms': typeof TermsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/blog/$slug': typeof BlogSlugRoute
+  '/_authenticated/admin/blog': typeof AuthenticatedAdminBlogRoute
+  '/_authenticated/admin/messages': typeof AuthenticatedAdminMessagesRoute
   '/_authenticated/admin/pages': typeof AuthenticatedAdminPagesRoute
   '/api/public/send-booking': typeof ApiPublicSendBookingRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -255,9 +292,13 @@ export interface FileRouteTypes {
     | '/ski-resort'
     | '/terms'
     | '/admin'
+    | '/blog/$slug'
+    | '/admin/blog'
+    | '/admin/messages'
     | '/admin/pages'
     | '/api/public/send-booking'
     | '/admin/'
+    | '/api/public/media/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -279,9 +320,13 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/ski-resort'
     | '/terms'
+    | '/blog/$slug'
+    | '/admin/blog'
+    | '/admin/messages'
     | '/admin/pages'
     | '/api/public/send-booking'
     | '/admin'
+    | '/api/public/media/$'
   id:
     | '__root__'
     | '/'
@@ -305,9 +350,13 @@ export interface FileRouteTypes {
     | '/ski-resort'
     | '/terms'
     | '/_authenticated/admin'
+    | '/blog/$slug'
+    | '/_authenticated/admin/blog'
+    | '/_authenticated/admin/messages'
     | '/_authenticated/admin/pages'
     | '/api/public/send-booking'
     | '/_authenticated/admin/'
+    | '/api/public/media/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -319,7 +368,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BestBurlingtonTaxiServiceRoute: typeof BestBurlingtonTaxiServiceRoute
   BestBurlingtonTaxiToMonteral247Route: typeof BestBurlingtonTaxiToMonteral247Route
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   BookOnlineRoute: typeof BookOnlineRoute
   BookingConfirmedRoute: typeof BookingConfirmedRoute
   ContactRoute: typeof ContactRoute
@@ -332,6 +381,7 @@ export interface RootRouteChildren {
   SkiResortRoute: typeof SkiResortRoute
   TermsRoute: typeof TermsRoute
   ApiPublicSendBookingRoute: typeof ApiPublicSendBookingRoute
+  ApiPublicMediaSplatRoute: typeof ApiPublicMediaSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -476,6 +526,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -504,15 +561,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminPagesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/messages': {
+      id: '/_authenticated/admin/messages'
+      path: '/messages'
+      fullPath: '/admin/messages'
+      preLoaderRoute: typeof AuthenticatedAdminMessagesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/blog': {
+      id: '/_authenticated/admin/blog'
+      path: '/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AuthenticatedAdminBlogRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/api/public/media/$': {
+      id: '/api/public/media/$'
+      path: '/api/public/media/$'
+      fullPath: '/api/public/media/$'
+      preLoaderRoute: typeof ApiPublicMediaSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminBlogRoute: typeof AuthenticatedAdminBlogRoute
+  AuthenticatedAdminMessagesRoute: typeof AuthenticatedAdminMessagesRoute
   AuthenticatedAdminPagesRoute: typeof AuthenticatedAdminPagesRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminBlogRoute: AuthenticatedAdminBlogRoute,
+  AuthenticatedAdminMessagesRoute: AuthenticatedAdminMessagesRoute,
   AuthenticatedAdminPagesRoute: AuthenticatedAdminPagesRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
@@ -531,6 +613,16 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -540,7 +632,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BestBurlingtonTaxiServiceRoute: BestBurlingtonTaxiServiceRoute,
   BestBurlingtonTaxiToMonteral247Route: BestBurlingtonTaxiToMonteral247Route,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   BookOnlineRoute: BookOnlineRoute,
   BookingConfirmedRoute: BookingConfirmedRoute,
   ContactRoute: ContactRoute,
@@ -553,6 +645,7 @@ const rootRouteChildren: RootRouteChildren = {
   SkiResortRoute: SkiResortRoute,
   TermsRoute: TermsRoute,
   ApiPublicSendBookingRoute: ApiPublicSendBookingRoute,
+  ApiPublicMediaSplatRoute: ApiPublicMediaSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

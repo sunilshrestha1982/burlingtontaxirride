@@ -14,6 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_posts: {
+        Row: {
+          author: string | null
+          body: string | null
+          cover_image: string | null
+          created_at: string
+          excerpt: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          published: boolean
+          published_at: string | null
+          slug: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string | null
+          body?: string | null
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published?: boolean
+          published_at?: string | null
+          slug: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string | null
+          body?: string | null
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published?: boolean
+          published_at?: string | null
+          slug?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           admin_email_error: string | null
@@ -73,6 +124,48 @@ export type Database = {
           reference?: string | null
           ride_date?: string | null
           ride_time?: string | null
+          service?: string | null
+        }
+        Relationships: []
+      }
+      contact_messages: {
+        Row: {
+          created_at: string
+          dropoff: string | null
+          email: string | null
+          handled: boolean
+          id: string
+          message: string | null
+          name: string | null
+          notes: string | null
+          phone: string | null
+          pickup: string | null
+          service: string | null
+        }
+        Insert: {
+          created_at?: string
+          dropoff?: string | null
+          email?: string | null
+          handled?: boolean
+          id?: string
+          message?: string | null
+          name?: string | null
+          notes?: string | null
+          phone?: string | null
+          pickup?: string | null
+          service?: string | null
+        }
+        Update: {
+          created_at?: string
+          dropoff?: string | null
+          email?: string | null
+          handled?: boolean
+          id?: string
+          message?: string | null
+          name?: string | null
+          notes?: string | null
+          phone?: string | null
+          pickup?: string | null
           service?: string | null
         }
         Relationships: []

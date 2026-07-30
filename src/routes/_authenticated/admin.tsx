@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { LogOut, LayoutList, FileText } from "lucide-react";
+import { LogOut, LayoutList, FileText, Newspaper, Inbox } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -47,6 +47,16 @@ function AdminLayout() {
           <Link to="/admin/pages" className={linkClass}>
             <span className="inline-flex items-center gap-2">
               <FileText className="h-4 w-4" /> Website Pages
+            </span>
+          </Link>
+          <Link to="/admin/blog" className={linkClass}>
+            <span className="inline-flex items-center gap-2">
+              <Newspaper className="h-4 w-4" /> Blog Articles
+            </span>
+          </Link>
+          <Link to="/admin/messages" className={linkClass}>
+            <span className="inline-flex items-center gap-2">
+              <Inbox className="h-4 w-4" /> Contact Messages
             </span>
           </Link>
         </nav>
