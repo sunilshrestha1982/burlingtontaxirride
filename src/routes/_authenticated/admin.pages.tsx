@@ -299,7 +299,7 @@ function CmsPage() {
             {preview && (
               <div className="overflow-hidden rounded-2xl border border-gold/30">
                 <div className="flex items-center gap-2 border-b border-border bg-surface/60 px-4 py-2 text-[11px] uppercase tracking-widest text-gold">
-                  <Eye className="h-3.5 w-3.5" /> Live preview — unsaved draft
+                  <Eye className="h-3.5 w-3.5" /> Preview — draft version (not yet published)
                 </div>
                 <div className="pointer-events-none origin-top scale-[0.85]">
                   <PageHero
