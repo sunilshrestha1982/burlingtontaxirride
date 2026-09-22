@@ -9,7 +9,11 @@ export const Route = createFileRoute("/sitemap")({
     meta: [
       { title: "Sitemap — Burlington VT Taxi Ride" },
       { name: "description", content: "Browse every page on Burlington VT Taxi Ride — services, locations, airports, and contact." },
+      { property: "og:title", content: "Sitemap — Burlington VT Taxi Ride" },
+      { property: "og:description", content: "Browse Burlington taxi services, airport transfers, and every Vermont destination page." },
+      { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE}/sitemap` },
+      { name: "twitter:card", content: "summary" },
     ],
     links: [{ rel: "canonical", href: `${SITE}/sitemap` }],
   }),

@@ -117,8 +117,10 @@ function LocationPage() {
           <h1 className="mt-8 font-display text-5xl leading-tight sm:text-6xl md:text-7xl">
             {heroTitle ? (
               <>
-                {heroTitle}{" "}
-                <span className="text-gradient-gold">{heroHighlight}</span>
+                {heroTitle}
+                {!heroTitle.toLowerCase().includes(heroHighlight.toLowerCase()) && (
+                  <> {" "}<span className="text-gradient-gold">{heroHighlight}</span></>
+                )}
               </>
             ) : (
               <>
