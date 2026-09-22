@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { LOCATIONS } from "@/lib/locations";
-import { AIRPORTS, VT_DESTINATIONS } from "@/lib/site-data";
+import { AIRPORTS, destinationTaxiSlug, VT_DESTINATIONS } from "@/lib/site-data";
 
 const SITE = "https://www.burlingtonvttaxiride.com";
 
@@ -71,7 +71,7 @@ function Page() {
 
         <Group title="Locations">
           {LOCATIONS.map((l) => (
-            <Row key={l.slug} to={`/${l.slug}`} label={l.label} />
+             <Row key={l.slug} to={`/${destinationTaxiSlug(l.slug)}`} label={l.label} />
           ))}
         </Group>
 
@@ -86,7 +86,7 @@ function Page() {
 
         <Group title="Vermont Destinations">
           {VT_DESTINATIONS.map((d) => (
-            <li key={d.slug} className="border-b border-border/40 py-2 text-sm text-muted-foreground last:border-0">{d.name}</li>
+             <Row key={d.slug} to={`/${destinationTaxiSlug(d.slug)}`} label={`Burlington to ${d.name} Taxi`} />
           ))}
         </Group>
       </div>
