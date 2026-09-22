@@ -2,9 +2,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { LOCATIONS } from "@/lib/locations";
 
 export type PageContent = {
+  id: string;
   slug: string;
   nav_label: string;
   sort_order: number;
+  page_type: string;
+  destination_name: string | null;
   meta_title: string | null;
   meta_description: string | null;
   eyebrow: string | null;
@@ -13,12 +16,16 @@ export type PageContent = {
   hero_description: string | null;
   hero_image: string | null;
   body: string | null;
+  content: LocationPageContent;
   updated_at: string;
   published_at?: string | null;
 };
 
 /** Unpublished edits — admin-only, never exposed to public readers. */
 export type PageDraft = PageContent & {
+  draft_slug: string | null;
+  draft_nav_label: string | null;
+  draft_destination_name: string | null;
   draft_meta_title: string | null;
   draft_meta_description: string | null;
   draft_eyebrow: string | null;
@@ -27,13 +34,31 @@ export type PageDraft = PageContent & {
   draft_hero_description: string | null;
   draft_hero_image: string | null;
   draft_body: string | null;
+  draft_content: LocationPageContent | null;
   has_draft: boolean;
   draft_updated_at: string | null;
 };
 
 /** Columns visitors are allowed to read (published version only). */
 export const PUBLIC_PAGE_COLUMNS =
-  "slug, nav_label, sort_order, meta_title, meta_description, eyebrow, hero_title, hero_highlight, hero_description, hero_image, body, updated_at, published_at";
+  "id, slug, nav_label, sort_order, page_type, destination_name, meta_title, meta_description, eyebrow, hero_title, hero_highlight, hero_description, hero_image, body, content, updated_at, published_at";
+
+export type LocationPageContent = {
+  intro_eyebrow?: string;
+  intro_title?: string;
+  intro_paragraph_1?: string;
+  intro_paragraph_2?: string;
+  benefit_1_title?: string;
+  benefit_1_description?: string;
+  benefit_2_title?: string;
+  benefit_2_description?: string;
+  benefit_3_title?: string;
+  benefit_3_description?: string;
+  benefit_4_title?: string;
+  benefit_4_description?: string;
+  cta_title?: string;
+  cta_description?: string;
+};
 
 /** Pages exposed in the back-office CMS (matches the site navigation). */
 export const CMS_PAGES: { slug: string; label: string }[] = [
@@ -61,6 +86,19 @@ export async function loadPageContent(slug: string): Promise<PageContent | null>
       .eq("slug", slug)
       .maybeSingle();
     return (data as PageContent) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function loadPageRedirect(slug: string): Promise<string | null> {
+  try {
+    const { data } = await (supabase as any)
+      .from("page_redirects")
+      .select("new_slug")
+      .eq("old_slug", slug)
+      .maybeSingle();
+    return typeof data?.new_slug === "string" ? data.new_slug : null;
   } catch {
     return null;
   }

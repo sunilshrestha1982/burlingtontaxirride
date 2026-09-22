@@ -207,6 +207,10 @@ export type City = {
   image: string;
 };
 
+export function destinationTaxiSlug(slug: string): string {
+  return `burlington-to-${slug.replace(/-vt$/, "")}-taxi`;
+}
+
 export function destinationLandscapeImage(slug: string, name: string, tag = slug.replace(/-vt$/, "")): string {
   const place = name.replace(/,\s*VT\s*$/i, " Vermont");
   const prompt = `high-quality professional daylight natural landscape photograph specifically representing ${place}, scenic ${tag.replace(/-/g, " ")}, Vermont Green Mountains, forest, meadow, lake or river, wide horizontal travel photo, clean bright natural background, no people, no hands, no vehicles, no buildings, no city streets, no text, no dark background`;

@@ -1,4 +1,4 @@
-import { destinationLandscapeImage, VT_DESTINATIONS } from "./site-data";
+import { destinationLandscapeImage, destinationTaxiSlug, VT_DESTINATIONS } from "./site-data";
 
 export type Location = {
   slug: string;
@@ -54,4 +54,10 @@ function fromDestination(slug: string): Location | undefined {
 }
 
 export const locationBySlug = (slug: string): Location | undefined =>
-  LOCATIONS.find((l) => l.slug === slug) ?? fromDestination(slug);
+  LOCATIONS.find((l) => l.slug === slug || destinationTaxiSlug(l.slug) === slug) ??
+  fromDestination(slug) ??
+  VT_DESTINATIONS.map((destination) => fromDestination(destination.slug))
+    .find((location) => location && destinationTaxiSlug(location.slug) === slug);
+
+export const canonicalLocationSlug = (location: Location): string =>
+  destinationTaxiSlug(location.slug);
