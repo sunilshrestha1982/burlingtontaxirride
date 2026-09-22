@@ -75,7 +75,7 @@ function Page() {
 
         <Group title="Locations">
           {LOCATIONS.map((l) => (
-             <Row key={l.slug} to={`/${destinationTaxiSlug(l.slug)}`} label={l.label} />
+             <Row key={l.slug} to={`/${l.slug}`} label={l.label} />
           ))}
         </Group>
 

@@ -46,7 +46,7 @@ const servicePaths = new Set([
 const legalPaths = new Set(["/privacy", "/terms", "/sitemap"]);
 
 const dynamicSlugs = [
-  ...LOCATIONS.map((l) => destinationTaxiSlug(l.slug)),
+  ...LOCATIONS.map((l) => l.slug),
   ...VT_DESTINATIONS.map((d) => destinationTaxiSlug(d.slug)),
 ];
 

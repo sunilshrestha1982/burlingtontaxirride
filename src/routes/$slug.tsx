@@ -198,12 +198,12 @@ function LocationPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h3 className="font-display text-2xl">Other Popular Destinations</h3>
           <div className="mt-6 flex flex-wrap gap-2">
-            {[...LOCATIONS.map((l) => ({ slug: l.slug, label: l.label })),
-              ...VT_DESTINATIONS.map((d) => ({ slug: d.slug, label: d.name }))]
+             {[...LOCATIONS.map((l) => ({ slug: l.slug, label: l.label, canonical: l.slug })),
+               ...VT_DESTINATIONS.map((d) => ({ slug: d.slug, label: d.name, canonical: destinationTaxiSlug(d.slug) }))]
               .filter((l, i, arr) => l.slug !== loc.slug && arr.findIndex((x) => x.slug === l.slug) === i)
               .slice(0, 24)
                .map((l) => (
-                 <Link key={l.slug} to="/$slug" params={{ slug: destinationTaxiSlug(l.slug) }} className="rounded-full border border-border bg-background px-4 py-2 text-xs text-muted-foreground hover:border-gold/60 hover:text-gold">
+                 <Link key={l.slug} to="/$slug" params={{ slug: l.canonical }} className="rounded-full border border-border bg-background px-4 py-2 text-xs text-muted-foreground hover:border-gold/60 hover:text-gold">
                   {l.label}
                 </Link>
               ))}

@@ -5,7 +5,7 @@ import type { PageDraft } from "./page-content";
 
 const draftInput = z.object({
   id: z.string().uuid(),
-  slug: z.string().min(2).max(160),
+  slug: z.string().min(1).max(160),
   nav_label: z.string().min(2).max(160),
   destination_name: z.string().max(160).nullable(),
   meta_title: z.string().max(200).nullable(),
