@@ -323,6 +323,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      publish_page_content: { Args: { _page_id: string }; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"
