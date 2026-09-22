@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { LOCATIONS } from "@/lib/locations";
-import { AIRPORTS, VT_DESTINATIONS } from "@/lib/site-data";
+import { AIRPORTS, destinationTaxiSlug, VT_DESTINATIONS } from "@/lib/site-data";
 
 const SITE = "https://www.burlingtonvttaxiride.com";
 
@@ -9,7 +9,11 @@ export const Route = createFileRoute("/sitemap")({
     meta: [
       { title: "Sitemap — Burlington VT Taxi Ride" },
       { name: "description", content: "Browse every page on Burlington VT Taxi Ride — services, locations, airports, and contact." },
+      { property: "og:title", content: "Sitemap — Burlington VT Taxi Ride" },
+      { property: "og:description", content: "Browse Burlington taxi services, airport transfers, and every Vermont destination page." },
+      { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE}/sitemap` },
+      { name: "twitter:card", content: "summary" },
     ],
     links: [{ rel: "canonical", href: `${SITE}/sitemap` }],
   }),
@@ -71,7 +75,7 @@ function Page() {
 
         <Group title="Locations">
           {LOCATIONS.map((l) => (
-            <Row key={l.slug} to={`/${l.slug}`} label={l.label} />
+             <Row key={l.slug} to={`/${l.slug}`} label={l.label} />
           ))}
         </Group>
 
@@ -86,7 +90,7 @@ function Page() {
 
         <Group title="Vermont Destinations">
           {VT_DESTINATIONS.map((d) => (
-            <li key={d.slug} className="border-b border-border/40 py-2 text-sm text-muted-foreground last:border-0">{d.name}</li>
+             <Row key={d.slug} to={`/${destinationTaxiSlug(d.slug)}`} label={`Burlington to ${d.name} Taxi`} />
           ))}
         </Group>
       </div>

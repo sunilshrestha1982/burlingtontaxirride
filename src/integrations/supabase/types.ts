@@ -173,7 +173,11 @@ export type Database = {
       page_content: {
         Row: {
           body: string | null
+          content: Json
+          destination_name: string | null
           draft_body: string | null
+          draft_content: Json | null
+          draft_destination_name: string | null
           draft_eyebrow: string | null
           draft_hero_description: string | null
           draft_hero_highlight: string | null
@@ -181,6 +185,8 @@ export type Database = {
           draft_hero_title: string | null
           draft_meta_description: string | null
           draft_meta_title: string | null
+          draft_nav_label: string | null
+          draft_slug: string | null
           draft_updated_at: string | null
           eyebrow: string | null
           has_draft: boolean
@@ -188,9 +194,11 @@ export type Database = {
           hero_highlight: string | null
           hero_image: string | null
           hero_title: string | null
+          id: string
           meta_description: string | null
           meta_title: string | null
           nav_label: string
+          page_type: string
           published_at: string | null
           slug: string
           sort_order: number
@@ -198,7 +206,11 @@ export type Database = {
         }
         Insert: {
           body?: string | null
+          content?: Json
+          destination_name?: string | null
           draft_body?: string | null
+          draft_content?: Json | null
+          draft_destination_name?: string | null
           draft_eyebrow?: string | null
           draft_hero_description?: string | null
           draft_hero_highlight?: string | null
@@ -206,6 +218,8 @@ export type Database = {
           draft_hero_title?: string | null
           draft_meta_description?: string | null
           draft_meta_title?: string | null
+          draft_nav_label?: string | null
+          draft_slug?: string | null
           draft_updated_at?: string | null
           eyebrow?: string | null
           has_draft?: boolean
@@ -213,9 +227,11 @@ export type Database = {
           hero_highlight?: string | null
           hero_image?: string | null
           hero_title?: string | null
+          id?: string
           meta_description?: string | null
           meta_title?: string | null
           nav_label: string
+          page_type?: string
           published_at?: string | null
           slug: string
           sort_order?: number
@@ -223,7 +239,11 @@ export type Database = {
         }
         Update: {
           body?: string | null
+          content?: Json
+          destination_name?: string | null
           draft_body?: string | null
+          draft_content?: Json | null
+          draft_destination_name?: string | null
           draft_eyebrow?: string | null
           draft_hero_description?: string | null
           draft_hero_highlight?: string | null
@@ -231,6 +251,8 @@ export type Database = {
           draft_hero_title?: string | null
           draft_meta_description?: string | null
           draft_meta_title?: string | null
+          draft_nav_label?: string | null
+          draft_slug?: string | null
           draft_updated_at?: string | null
           eyebrow?: string | null
           has_draft?: boolean
@@ -238,13 +260,33 @@ export type Database = {
           hero_highlight?: string | null
           hero_image?: string | null
           hero_title?: string | null
+          id?: string
           meta_description?: string | null
           meta_title?: string | null
           nav_label?: string
+          page_type?: string
           published_at?: string | null
           slug?: string
           sort_order?: number
           updated_at?: string
+        }
+        Relationships: []
+      }
+      page_redirects: {
+        Row: {
+          created_at: string
+          new_slug: string
+          old_slug: string
+        }
+        Insert: {
+          created_at?: string
+          new_slug: string
+          old_slug: string
+        }
+        Update: {
+          created_at?: string
+          new_slug?: string
+          old_slug?: string
         }
         Relationships: []
       }
@@ -281,6 +323,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      publish_page_content: { Args: { _page_id: string }; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"

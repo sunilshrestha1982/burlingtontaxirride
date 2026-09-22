@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LOCATIONS } from "@/lib/locations";
-import { VT_DESTINATIONS } from "@/lib/site-data";
+import { destinationTaxiSlug, VT_DESTINATIONS } from "@/lib/site-data";
 import type {} from "@tanstack/react-start";
 
 const BASE_URL = "https://www.burlingtonvttaxiride.com";
@@ -47,7 +47,7 @@ const legalPaths = new Set(["/privacy", "/terms", "/sitemap"]);
 
 const dynamicSlugs = [
   ...LOCATIONS.map((l) => l.slug),
-  ...VT_DESTINATIONS.map((d) => d.slug),
+  ...VT_DESTINATIONS.map((d) => destinationTaxiSlug(d.slug)),
 ];
 
 const uniqueSlugs = Array.from(new Set(dynamicSlugs));

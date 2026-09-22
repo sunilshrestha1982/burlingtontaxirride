@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import type { Airport, City } from "@/lib/site-data";
+import { destinationTaxiSlug, type Airport, type City } from "@/lib/site-data";
 
 export function CityCard({ city }: { city: City }) {
   return (
     <Link
       to="/$slug"
-      params={{ slug: city.slug }}
+      params={{ slug: destinationTaxiSlug(city.slug) }}
       className="hover-zoom-card group block overflow-hidden rounded-xl border border-border bg-surface transition-all hover:border-gold/60 hover:shadow-gold"
     >
       <div className="aspect-[4/3] overflow-hidden">
