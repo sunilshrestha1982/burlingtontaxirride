@@ -177,6 +177,7 @@ export type Database = {
           destination_name: string | null
           draft_body: string | null
           draft_content: Json | null
+          draft_destination_name: string | null
           draft_eyebrow: string | null
           draft_hero_description: string | null
           draft_hero_highlight: string | null
@@ -184,6 +185,7 @@ export type Database = {
           draft_hero_title: string | null
           draft_meta_description: string | null
           draft_meta_title: string | null
+          draft_nav_label: string | null
           draft_slug: string | null
           draft_updated_at: string | null
           eyebrow: string | null
@@ -208,6 +210,7 @@ export type Database = {
           destination_name?: string | null
           draft_body?: string | null
           draft_content?: Json | null
+          draft_destination_name?: string | null
           draft_eyebrow?: string | null
           draft_hero_description?: string | null
           draft_hero_highlight?: string | null
@@ -215,6 +218,7 @@ export type Database = {
           draft_hero_title?: string | null
           draft_meta_description?: string | null
           draft_meta_title?: string | null
+          draft_nav_label?: string | null
           draft_slug?: string | null
           draft_updated_at?: string | null
           eyebrow?: string | null
@@ -239,6 +243,7 @@ export type Database = {
           destination_name?: string | null
           draft_body?: string | null
           draft_content?: Json | null
+          draft_destination_name?: string | null
           draft_eyebrow?: string | null
           draft_hero_description?: string | null
           draft_hero_highlight?: string | null
@@ -246,6 +251,7 @@ export type Database = {
           draft_hero_title?: string | null
           draft_meta_description?: string | null
           draft_meta_title?: string | null
+          draft_nav_label?: string | null
           draft_slug?: string | null
           draft_updated_at?: string | null
           eyebrow?: string | null
