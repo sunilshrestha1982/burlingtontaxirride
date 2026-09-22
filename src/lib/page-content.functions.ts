@@ -28,6 +28,7 @@ const reservedSlugs = new Set([
 ]);
 
 function normalizeSlug(value: string) {
+  if (value.trim() === "/") return "/";
   const clean = value.trim().toLowerCase().replace(/^\/+|\/+$/g, "");
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(clean)) {
     throw new Error("Use lowercase letters, numbers, and single hyphens in the URL");
@@ -69,8 +70,14 @@ export const saveDraft = createServerFn({ method: "POST" })
   .handler(async ({ context, data }) => {
     await assertAdmin(context as any);
     const slug = normalizeSlug(data.slug);
-    const isMainPage = reservedSlugs.has(data.slug);
-    if (reservedSlugs.has(slug) && !isMainPage) throw new Error("That URL is reserved for a main website page");
+    const { data: currentPage } = await (context.supabase as any)
+      .from("page_content")
+      .select("slug")
+      .eq("id", data.id)
+      .single();
+    if (reservedSlugs.has(slug) && currentPage?.slug !== slug) {
+      throw new Error("That URL is reserved for a main website page");
+    }
     const { data: duplicate } = await (context.supabase as any)
       .from("page_content")
       .select("id")

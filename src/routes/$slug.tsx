@@ -11,22 +11,20 @@ const pick = (v: string | null | undefined, fallback: string) =>
 
 export const Route = createFileRoute("/$slug")({
   loader: async ({ params }) => {
+    const destination = await loadPageRedirect(`/${params.slug}`);
+    if (destination) throw redirect({ href: destination, statusCode: 301 });
     const cms = await loadPageContent(`/${params.slug}`);
-    if (!cms) {
-      const destination = await loadPageRedirect(`/${params.slug}`);
-      if (destination) throw redirect({ href: destination, statusCode: 301 });
-    }
     const known = locationBySlug(params.slug);
     if (!known && !cms) throw notFound();
-    const destination = cms?.destination_name ?? known?.destination ?? cms?.nav_label ?? "Vermont";
+    const destinationName = cms?.destination_name ?? known?.destination ?? cms?.nav_label ?? "Vermont";
     return {
       slug: params.slug,
-      label: cms?.nav_label ?? known?.label ?? destination,
-      title: cms?.hero_title ?? known?.title ?? `Burlington to ${destination} Taxi`,
-      destination,
+      label: cms?.nav_label ?? known?.label ?? destinationName,
+      title: cms?.hero_title ?? known?.title ?? `Burlington to ${destinationName} Taxi`,
+      destination: destinationName,
       drive: known?.drive ?? "Fixed-rate quote",
       image: known?.image ?? cms?.hero_image ?? "/places/burlington-vt.jpg",
-      description: cms?.meta_description ?? known?.description ?? `Professional Burlington taxi service to ${destination}.`,
+      description: cms?.meta_description ?? known?.description ?? `Professional Burlington taxi service to ${destinationName}.`,
       cms,
     };
   },
