@@ -3,7 +3,8 @@ import { locationBySlug, LOCATIONS } from "@/lib/locations";
 import { destinationTaxiSlug, VT_DESTINATIONS, PHONE, PHONE_TEL } from "@/lib/site-data";
 import { absoluteImage, SITE_URL } from "@/lib/seo";
 import { BookingForm } from "@/components/BookingForm";
-import { loadPageContent, loadPageRedirect, type PageContent } from "@/lib/page-content";
+import { TaxiPageBlocks } from "@/components/TaxiPageBlocks";
+import { legacyContentBlocks, loadPageContent, loadPageRedirect, type PageContent } from "@/lib/page-content";
 import { Phone, Check } from "lucide-react";
 
 const pick = (v: string | null | undefined, fallback: string) =>
@@ -87,6 +88,17 @@ function LocationPage() {
   );
 
   const content = cms?.content ?? {};
+  const blocks = legacyContentBlocks(content, short);
+
+  if (Array.isArray(content.blocks) && content.blocks.length > 0) {
+    return (
+      <>
+        <LocationHero loc={loc} eyebrow={eyebrow} heroTitle={heroTitle} heroHighlight={heroHighlight} heroDescription={heroDescription} heroImage={heroImage} short={short} />
+        <TaxiPageBlocks blocks={blocks} />
+        <OtherDestinations currentSlug={loc.slug} />
+      </>
+    );
+  }
 
   const features = [
     { title: pick(content.benefit_1_title, "Fixed Rates"), desc: pick(content.benefit_1_description, "Confirmed before booking") },
@@ -212,4 +224,12 @@ function LocationPage() {
       </section>
     </>
   );
+}
+
+function LocationHero({ loc, eyebrow, heroTitle, heroHighlight, heroDescription, heroImage, short }: { loc: ReturnType<typeof Route.useLoaderData>; eyebrow: string; heroTitle?: string; heroHighlight: string; heroDescription: string; heroImage: string; short: string }) {
+  return <section className="relative isolate overflow-hidden"><div className="absolute inset-0 -z-10 overflow-hidden"><img src={heroImage} alt={loc.destination} className="hero-kenburns h-full w-full object-cover"/><div className="absolute inset-0 bg-gradient-to-r from-background/75 via-background/30 to-transparent"/></div><div className="mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 sm:py-28 lg:px-8 lg:py-36"><div className="text-xs text-muted-foreground"><Link to="/" className="hover:text-gold">Home</Link><span className="mx-2">›</span><span>Destinations</span><span className="mx-2">›</span><span>{short}</span></div><span className="mt-6 inline-block rounded-full border border-gold/40 px-4 py-1.5 text-[10px] uppercase tracking-[0.3em] text-gold sm:text-xs">{eyebrow}</span><h1 className="mt-8 font-display text-5xl leading-tight sm:text-6xl md:text-7xl">{heroTitle ? <>{heroTitle}{!heroTitle.toLowerCase().includes(heroHighlight.toLowerCase()) && <> <span className="text-gradient-gold">{heroHighlight}</span></>}</> : <>BTV <span className="text-gold">→</span> <span className="text-gradient-gold">{heroHighlight}</span></>}</h1><p className="mx-auto mt-5 max-w-xl text-muted-foreground">{heroDescription}</p><div className="mt-8 flex flex-wrap justify-center gap-3"><Link to="/book-online" className="gradient-gold inline-flex items-center gap-2 rounded-md px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-gold">Reserve Your Ride</Link><a href={`tel:${PHONE_TEL}`} className="inline-flex items-center gap-2 rounded-md border border-gold/40 px-6 py-3.5 text-sm font-semibold text-gold hover:bg-gold/10"><Phone className="h-4 w-4"/> {PHONE}</a></div></div></section>;
+}
+
+function OtherDestinations({ currentSlug }: { currentSlug: string }) {
+  return <section className="border-y border-border/60 bg-surface/30 py-16"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><h3 className="font-display text-2xl">Other Popular Destinations</h3><div className="mt-6 flex flex-wrap gap-2">{[...LOCATIONS.map((location) => ({ slug: location.slug, label: location.label, canonical: location.slug })), ...VT_DESTINATIONS.map((destination) => ({ slug: destination.slug, label: destination.name, canonical: destinationTaxiSlug(destination.slug) }))].filter((location, index, all) => location.slug !== currentSlug && all.findIndex((item) => item.slug === location.slug) === index).slice(0, 24).map((location) => <Link key={location.slug} to="/$slug" params={{ slug: location.canonical }} className="rounded-full border border-border bg-background px-4 py-2 text-xs text-muted-foreground hover:border-gold/60 hover:text-gold">{location.label}</Link>)}</div></div></section>;
 }

@@ -44,6 +44,7 @@ export const PUBLIC_PAGE_COLUMNS =
   "id, slug, nav_label, sort_order, page_type, destination_name, meta_title, meta_description, eyebrow, hero_title, hero_highlight, hero_description, hero_image, body, content, updated_at, published_at";
 
 export type LocationPageContent = {
+  blocks?: TaxiPageBlock[];
   intro_eyebrow?: string;
   intro_title?: string;
   intro_paragraph_1?: string;
@@ -59,6 +60,65 @@ export type LocationPageContent = {
   cta_title?: string;
   cta_description?: string;
 };
+
+export type TaxiPageBlockType =
+  | "text"
+  | "benefits"
+  | "service"
+  | "route"
+  | "imageText"
+  | "faq"
+  | "cta"
+  | "booking";
+
+export type TaxiPageBlock = {
+  id: string;
+  type: TaxiPageBlockType;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  body?: string;
+  image?: string;
+  imagePosition?: "left" | "right";
+  buttonLabel?: string;
+  buttonUrl?: string;
+  items?: Array<{ title: string; description: string }>;
+  origin?: string;
+  destination?: string;
+  duration?: string;
+  distance?: string;
+};
+
+export function legacyContentBlocks(content: LocationPageContent, destination: string): TaxiPageBlock[] {
+  if (Array.isArray(content.blocks) && content.blocks.length > 0) return content.blocks;
+  return [
+    {
+      id: "introduction",
+      type: "text",
+      eyebrow: content.intro_eyebrow ?? `Burlington VT to ${destination}`,
+      title: content.intro_title ?? `Burlington VT to ${destination} Taxi & Shuttle Service`,
+      body: [content.intro_paragraph_1, content.intro_paragraph_2].filter(Boolean).join("\n\n"),
+    },
+    {
+      id: "benefits",
+      type: "benefits",
+      title: "Why ride with us",
+      items: [1, 2, 3, 4].map((number) => ({
+        title: content[`benefit_${number}_title` as keyof LocationPageContent] as string ?? ["Fixed Rates", "Flight Tracking", "Comfortable Vehicles", "24/7 Available"][number - 1],
+        description: content[`benefit_${number}_description` as keyof LocationPageContent] as string ?? ["Your fare is confirmed before booking.", "Real-time Burlington airport monitoring.", "Clean vehicles with room for luggage and groups.", "Professional service every day and every holiday."][number - 1],
+      })),
+    },
+    {
+      id: "closing",
+      type: "cta",
+      title: content.cta_title ?? `Ready to travel to ${destination}?`,
+      description: content.cta_description ?? "Book online or call us for a confirmed ride.",
+      buttonLabel: "Book online",
+      buttonUrl: "/book-online",
+    },
+    { id: "reservation", type: "booking", title: "Reserve your ride" },
+  ];
+}
 
 /** Pages exposed in the back-office CMS (matches the site navigation). */
 export const CMS_PAGES: { slug: string; label: string }[] = [

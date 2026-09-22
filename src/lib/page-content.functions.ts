@@ -16,7 +16,7 @@ const draftInput = z.object({
   hero_description: z.string().max(2000).nullable(),
   hero_image: z.string().max(500).nullable(),
   body: z.string().max(20000).nullable(),
-  content: z.record(z.string(), z.string()).default({}),
+  content: z.record(z.string(), z.unknown()).default({}),
 });
 
 const idInput = z.object({ id: z.string().uuid() });
