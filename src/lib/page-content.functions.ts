@@ -69,7 +69,8 @@ export const saveDraft = createServerFn({ method: "POST" })
   .handler(async ({ context, data }) => {
     await assertAdmin(context as any);
     const slug = normalizeSlug(data.slug);
-    if (reservedSlugs.has(slug)) throw new Error("That URL is reserved for a main website page");
+    const isMainPage = reservedSlugs.has(data.slug);
+    if (reservedSlugs.has(slug) && !isMainPage) throw new Error("That URL is reserved for a main website page");
     const { data: duplicate } = await (context.supabase as any)
       .from("page_content")
       .select("id")

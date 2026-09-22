@@ -1,9 +1,9 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { createFileRoute, notFound, Link, redirect } from "@tanstack/react-router";
 import { locationBySlug, LOCATIONS } from "@/lib/locations";
-import { VT_DESTINATIONS, PHONE, PHONE_TEL } from "@/lib/site-data";
+import { destinationTaxiSlug, VT_DESTINATIONS, PHONE, PHONE_TEL } from "@/lib/site-data";
 import { absoluteImage, SITE_URL } from "@/lib/seo";
 import { BookingForm } from "@/components/BookingForm";
-import { loadPageContent, type PageContent } from "@/lib/page-content";
+import { loadPageContent, loadPageRedirect, type PageContent } from "@/lib/page-content";
 import { Phone, Check } from "lucide-react";
 
 const pick = (v: string | null | undefined, fallback: string) =>
@@ -11,10 +11,24 @@ const pick = (v: string | null | undefined, fallback: string) =>
 
 export const Route = createFileRoute("/$slug")({
   loader: async ({ params }) => {
-    const loc = locationBySlug(params.slug);
-    if (!loc) throw notFound();
     const cms = await loadPageContent(`/${params.slug}`);
-    return { ...loc, cms };
+    if (!cms) {
+      const destination = await loadPageRedirect(`/${params.slug}`);
+      if (destination) throw redirect({ href: destination, statusCode: 301 });
+    }
+    const known = locationBySlug(params.slug);
+    if (!known && !cms) throw notFound();
+    const destination = cms?.destination_name ?? known?.destination ?? cms?.nav_label ?? "Vermont";
+    return {
+      slug: params.slug,
+      label: cms?.nav_label ?? known?.label ?? destination,
+      title: cms?.hero_title ?? known?.title ?? `Burlington to ${destination} Taxi`,
+      destination,
+      drive: known?.drive ?? "Fixed-rate quote",
+      image: known?.image ?? cms?.hero_image ?? "/places/burlington-vt.jpg",
+      description: cms?.meta_description ?? known?.description ?? `Professional Burlington taxi service to ${destination}.`,
+      cms,
+    };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [] };
@@ -74,11 +88,13 @@ function LocationPage() {
     `Professional taxi & car service from Burlington, Vermont to ${short}. Fixed rates, licensed drivers, 24/7.`,
   );
 
+  const content = cms?.content ?? {};
+
   const features = [
-    { title: "Fixed Rates", desc: "Confirmed before booking" },
-    { title: "Flight Tracking", desc: "Real-time BTV monitoring" },
-    { title: "Toyota Sienna 2026", desc: "Up to 7 passengers" },
-    { title: "24/7 Available", desc: "Every day, every holiday" },
+    { title: pick(content.benefit_1_title, "Fixed Rates"), desc: pick(content.benefit_1_description, "Confirmed before booking") },
+    { title: pick(content.benefit_2_title, "Flight Tracking"), desc: pick(content.benefit_2_description, "Real-time BTV monitoring") },
+    { title: pick(content.benefit_3_title, "Comfortable Vehicles"), desc: pick(content.benefit_3_description, "Room for luggage and groups") },
+    { title: pick(content.benefit_4_title, "24/7 Available"), desc: pick(content.benefit_4_description, "Every day, every holiday") },
   ];
 
   return (
@@ -131,16 +147,16 @@ function LocationPage() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">Burlington VT to {short}, Vermont</p>
+             <p className="text-xs uppercase tracking-[0.3em] text-gold">{pick(content.intro_eyebrow, `Burlington VT to ${short}, Vermont`)}</p>
             <h2 className="mt-4 font-display text-3xl leading-tight sm:text-4xl md:text-5xl">
-              Burlington VT to <span className="text-gradient-gold">{upper}</span> Taxi & Shuttle Service
+               {content.intro_title ? content.intro_title : <>Burlington VT to <span className="text-gradient-gold">{upper}</span> Taxi & Shuttle Service</>}
             </h2>
             <div className="mt-3 h-1 w-16 rounded bg-gold/70" />
             <p className="mt-6 text-muted-foreground">
-              Burlington VT Taxi Ride provides professional, fixed-rate transportation to and from {short}, Vermont. Our licensed drivers offer reliable service 24/7 — whether you need an airport transfer to Burlington International (BTV), a long-distance ride, or a point-to-point trip across Vermont. Every fare is confirmed before you book with no surge pricing and no hidden fees.
+               {pick(content.intro_paragraph_1, `Burlington VT Taxi Ride provides professional, fixed-rate transportation to and from ${short}, Vermont. Our licensed drivers offer reliable service 24/7 for airport transfers, long-distance rides, and point-to-point travel.`)}
             </p>
             <p className="mt-4 text-muted-foreground">
-              Whether you're heading to {short} for business, a getaway, or a connection home, our drivers know the routes, plan around weather and traffic, and make sure every pickup is on time. Clean, modern vehicles with plenty of room for luggage, gear, and groups up to 7.
+               {pick(content.intro_paragraph_2, `Whether you're heading to ${short} for business, a getaway, or a connection home, our drivers plan around weather and traffic and provide clean vehicles with room for luggage, gear, and groups.`)}
             </p>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -158,8 +174,8 @@ function LocationPage() {
             </div>
 
             <div className="mt-10 rounded-2xl border border-gold/30 bg-gradient-to-br from-surface/60 to-background p-8 text-center shadow-gold">
-              <h3 className="font-display text-2xl sm:text-3xl">Ready to Travel to {short}?</h3>
-              <p className="mt-2 text-sm text-muted-foreground">Book online or call us — confirmed in minutes.</p>
+               <h3 className="font-display text-2xl sm:text-3xl">{pick(content.cta_title, `Ready to Travel to ${short}?`)}</h3>
+               <p className="mt-2 text-sm text-muted-foreground">{pick(content.cta_description, "Book online or call us — confirmed in minutes.")}</p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Link to="/book-online" className="gradient-gold inline-flex items-center gap-2 rounded-md px-6 py-3 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-gold">
                   Book Online
@@ -186,8 +202,8 @@ function LocationPage() {
               ...VT_DESTINATIONS.map((d) => ({ slug: d.slug, label: d.name }))]
               .filter((l, i, arr) => l.slug !== loc.slug && arr.findIndex((x) => x.slug === l.slug) === i)
               .slice(0, 24)
-              .map((l) => (
-                <Link key={l.slug} to="/$slug" params={{ slug: l.slug }} className="rounded-full border border-border bg-background px-4 py-2 text-xs text-muted-foreground hover:border-gold/60 hover:text-gold">
+               .map((l) => (
+                 <Link key={l.slug} to="/$slug" params={{ slug: destinationTaxiSlug(l.slug) }} className="rounded-full border border-border bg-background px-4 py-2 text-xs text-muted-foreground hover:border-gold/60 hover:text-gold">
                   {l.label}
                 </Link>
               ))}
