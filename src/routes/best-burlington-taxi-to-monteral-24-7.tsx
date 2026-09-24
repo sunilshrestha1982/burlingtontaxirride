@@ -9,9 +9,9 @@ import { PHONE, PHONE_TEL } from "@/lib/site-data";
 export const Route = createFileRoute("/best-burlington-taxi-to-monteral-24-7")({
   head: () =>
     pageHead({
-      title: "Best Burlington to Montreal Taxi — 24/7 Car Service | Burlington VT Taxi Ride",
+      title: "Burlington VT to Montreal Taxi Shuttle. YUL Airport. 24-7.",
       description:
-        "Reliable 24/7 taxi and car service from Burlington, Vermont to Montreal, Canada (and YUL Trudeau Airport). Fixed cross-border rates, professional drivers, and door-to-door service.",
+        "Book a 24-7 taxi shuttle from Burlington, VT to Montreal (YUL). Reliable door-to-door airport transfers, comfortable rides, upfront fixed rates, and easy booking.",
       image: "/places/montreal-city.jpg",
       path: "/best-burlington-taxi-to-monteral-24-7",
     }),
