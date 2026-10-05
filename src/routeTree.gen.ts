@@ -9,120 +9,38 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as SkiResortRouteImport } from './routes/ski-resort'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as SitemapRouteImport } from './routes/sitemap'
-import { Route as ServicesRouteImport } from './routes/services'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as LongDistanceRouteImport } from './routes/long-distance'
-import { Route as CorporateRouteImport } from './routes/corporate'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as BookingConfirmedRouteImport } from './routes/booking-confirmed'
-import { Route as BookOnlineRouteImport } from './routes/book-online'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as BestBurlingtonTaxiToMonteral247RouteImport } from './routes/best-burlington-taxi-to-monteral-24-7'
-import { Route as BestBurlingtonTaxiServiceRouteImport } from './routes/best-burlington-taxi-service'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AirportsWeServeRouteImport } from './routes/airports-we-serve'
-import { Route as AirportTransfersRouteImport } from './routes/airport-transfers'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AirportTransfersRouteImport } from './routes/airport-transfers'
+import { Route as AirportsWeServeRouteImport } from './routes/airports-we-serve'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BestBurlingtonTaxiServiceRouteImport } from './routes/best-burlington-taxi-service'
+import { Route as BestBurlingtonTaxiToMonteral247RouteImport } from './routes/best-burlington-taxi-to-monteral-24-7'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as BookOnlineRouteImport } from './routes/book-online'
+import { Route as BookingConfirmedRouteImport } from './routes/booking-confirmed'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CorporateRouteImport } from './routes/corporate'
+import { Route as LongDistanceRouteImport } from './routes/long-distance'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SitemapRouteImport } from './routes/sitemap'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SkiResortRouteImport } from './routes/ski-resort'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
-import { Route as ApiPublicSendBookingRouteImport } from './routes/api/public/send-booking'
-import { Route as AuthenticatedAdminPagesRouteImport } from './routes/_authenticated/admin.pages'
-import { Route as AuthenticatedAdminMessagesRouteImport } from './routes/_authenticated/admin.messages'
 import { Route as AuthenticatedAdminBlogRouteImport } from './routes/_authenticated/admin.blog'
+import { Route as AuthenticatedAdminMessagesRouteImport } from './routes/_authenticated/admin.messages'
+import { Route as AuthenticatedAdminPagesRouteImport } from './routes/_authenticated/admin.pages'
+import { Route as ApiPublicSendBookingRouteImport } from './routes/api/public/send-booking'
 import { Route as ApiPublicMediaSplatRouteImport } from './routes/api/public/media/$'
 
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SkiResortRoute = SkiResortRouteImport.update({
-  id: '/ski-resort',
-  path: '/ski-resort',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapRoute = SitemapRouteImport.update({
-  id: '/sitemap',
-  path: '/sitemap',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LongDistanceRoute = LongDistanceRouteImport.update({
-  id: '/long-distance',
-  path: '/long-distance',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CorporateRoute = CorporateRouteImport.update({
-  id: '/corporate',
-  path: '/corporate',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookingConfirmedRoute = BookingConfirmedRouteImport.update({
-  id: '/booking-confirmed',
-  path: '/booking-confirmed',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookOnlineRoute = BookOnlineRouteImport.update({
-  id: '/book-online',
-  path: '/book-online',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BestBurlingtonTaxiToMonteral247Route =
-  BestBurlingtonTaxiToMonteral247RouteImport.update({
-    id: '/best-burlington-taxi-to-monteral-24-7',
-    path: '/best-burlington-taxi-to-monteral-24-7',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const BestBurlingtonTaxiServiceRoute =
-  BestBurlingtonTaxiServiceRouteImport.update({
-    id: '/best-burlington-taxi-service',
-    path: '/best-burlington-taxi-service',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AirportsWeServeRoute = AirportsWeServeRouteImport.update({
-  id: '/airports-we-serve',
-  path: '/airports-we-serve',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AirportTransfersRoute = AirportTransfersRouteImport.update({
-  id: '/airport-transfers',
-  path: '/airport-transfers',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SlugRoute = SlugRouteImport.update({
@@ -134,34 +52,111 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AirportTransfersRoute = AirportTransfersRouteImport.update({
+  id: '/airport-transfers',
+  path: '/airport-transfers',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BlogRoute,
+const AirportsWeServeRoute = AirportsWeServeRouteImport.update({
+  id: '/airports-we-serve',
+  path: '/airports-we-serve',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BestBurlingtonTaxiServiceRoute =
+  BestBurlingtonTaxiServiceRouteImport.update({
+    id: '/best-burlington-taxi-service',
+    path: '/best-burlington-taxi-service',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BestBurlingtonTaxiToMonteral247Route =
+  BestBurlingtonTaxiToMonteral247RouteImport.update({
+    id: '/best-burlington-taxi-to-monteral-24-7',
+    path: '/best-burlington-taxi-to-monteral-24-7',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookOnlineRoute = BookOnlineRouteImport.update({
+  id: '/book-online',
+  path: '/book-online',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingConfirmedRoute = BookingConfirmedRouteImport.update({
+  id: '/booking-confirmed',
+  path: '/booking-confirmed',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CorporateRoute = CorporateRouteImport.update({
+  id: '/corporate',
+  path: '/corporate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LongDistanceRoute = LongDistanceRouteImport.update({
+  id: '/long-distance',
+  path: '/long-distance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapRoute = SitemapRouteImport.update({
+  id: '/sitemap',
+  path: '/sitemap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SkiResortRoute = SkiResortRouteImport.update({
+  id: '/ski-resort',
+  path: '/ski-resort',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
-const ApiPublicSendBookingRoute = ApiPublicSendBookingRouteImport.update({
-  id: '/api/public/send-booking',
-  path: '/api/public/send-booking',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedAdminPagesRoute = AuthenticatedAdminPagesRouteImport.update({
-  id: '/pages',
-  path: '/pages',
+const AuthenticatedAdminBlogRoute = AuthenticatedAdminBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
 const AuthenticatedAdminMessagesRoute =
@@ -170,10 +165,15 @@ const AuthenticatedAdminMessagesRoute =
     path: '/messages',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
-const AuthenticatedAdminBlogRoute = AuthenticatedAdminBlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
+const AuthenticatedAdminPagesRoute = AuthenticatedAdminPagesRouteImport.update({
+  id: '/pages',
+  path: '/pages',
   getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const ApiPublicSendBookingRoute = ApiPublicSendBookingRouteImport.update({
+  id: '/api/public/send-booking',
+  path: '/api/public/send-booking',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
   id: '/api/public/media/$',
@@ -386,123 +386,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ski-resort': {
-      id: '/ski-resort'
-      path: '/ski-resort'
-      fullPath: '/ski-resort'
-      preLoaderRoute: typeof SkiResortRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap': {
-      id: '/sitemap'
-      path: '/sitemap'
-      fullPath: '/sitemap'
-      preLoaderRoute: typeof SitemapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/long-distance': {
-      id: '/long-distance'
-      path: '/long-distance'
-      fullPath: '/long-distance'
-      preLoaderRoute: typeof LongDistanceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/corporate': {
-      id: '/corporate'
-      path: '/corporate'
-      fullPath: '/corporate'
-      preLoaderRoute: typeof CorporateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/booking-confirmed': {
-      id: '/booking-confirmed'
-      path: '/booking-confirmed'
-      fullPath: '/booking-confirmed'
-      preLoaderRoute: typeof BookingConfirmedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/book-online': {
-      id: '/book-online'
-      path: '/book-online'
-      fullPath: '/book-online'
-      preLoaderRoute: typeof BookOnlineRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/best-burlington-taxi-to-monteral-24-7': {
-      id: '/best-burlington-taxi-to-monteral-24-7'
-      path: '/best-burlington-taxi-to-monteral-24-7'
-      fullPath: '/best-burlington-taxi-to-monteral-24-7'
-      preLoaderRoute: typeof BestBurlingtonTaxiToMonteral247RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/best-burlington-taxi-service': {
-      id: '/best-burlington-taxi-service'
-      path: '/best-burlington-taxi-service'
-      fullPath: '/best-burlington-taxi-service'
-      preLoaderRoute: typeof BestBurlingtonTaxiServiceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/airports-we-serve': {
-      id: '/airports-we-serve'
-      path: '/airports-we-serve'
-      fullPath: '/airports-we-serve'
-      preLoaderRoute: typeof AirportsWeServeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/airport-transfers': {
-      id: '/airport-transfers'
-      path: '/airport-transfers'
-      fullPath: '/airport-transfers'
-      preLoaderRoute: typeof AirportTransfersRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$slug': {
@@ -519,19 +407,124 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/airport-transfers': {
+      id: '/airport-transfers'
+      path: '/airport-transfers'
+      fullPath: '/airport-transfers'
+      preLoaderRoute: typeof AirportTransfersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRoute
+    '/airports-we-serve': {
+      id: '/airports-we-serve'
+      path: '/airports-we-serve'
+      fullPath: '/airports-we-serve'
+      preLoaderRoute: typeof AirportsWeServeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/best-burlington-taxi-service': {
+      id: '/best-burlington-taxi-service'
+      path: '/best-burlington-taxi-service'
+      fullPath: '/best-burlington-taxi-service'
+      preLoaderRoute: typeof BestBurlingtonTaxiServiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/best-burlington-taxi-to-monteral-24-7': {
+      id: '/best-burlington-taxi-to-monteral-24-7'
+      path: '/best-burlington-taxi-to-monteral-24-7'
+      fullPath: '/best-burlington-taxi-to-monteral-24-7'
+      preLoaderRoute: typeof BestBurlingtonTaxiToMonteral247RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-online': {
+      id: '/book-online'
+      path: '/book-online'
+      fullPath: '/book-online'
+      preLoaderRoute: typeof BookOnlineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking-confirmed': {
+      id: '/booking-confirmed'
+      path: '/booking-confirmed'
+      fullPath: '/booking-confirmed'
+      preLoaderRoute: typeof BookingConfirmedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/corporate': {
+      id: '/corporate'
+      path: '/corporate'
+      fullPath: '/corporate'
+      preLoaderRoute: typeof CorporateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/long-distance': {
+      id: '/long-distance'
+      path: '/long-distance'
+      fullPath: '/long-distance'
+      preLoaderRoute: typeof LongDistanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap': {
+      id: '/sitemap'
+      path: '/sitemap'
+      fullPath: '/sitemap'
+      preLoaderRoute: typeof SitemapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ski-resort': {
+      id: '/ski-resort'
+      path: '/ski-resort'
+      fullPath: '/ski-resort'
+      preLoaderRoute: typeof SkiResortRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
@@ -540,6 +533,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/'
@@ -547,18 +547,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/api/public/send-booking': {
-      id: '/api/public/send-booking'
-      path: '/api/public/send-booking'
-      fullPath: '/api/public/send-booking'
-      preLoaderRoute: typeof ApiPublicSendBookingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/admin/pages': {
-      id: '/_authenticated/admin/pages'
-      path: '/pages'
-      fullPath: '/admin/pages'
-      preLoaderRoute: typeof AuthenticatedAdminPagesRouteImport
+    '/_authenticated/admin/blog': {
+      id: '/_authenticated/admin/blog'
+      path: '/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AuthenticatedAdminBlogRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/messages': {
@@ -568,12 +561,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminMessagesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/_authenticated/admin/blog': {
-      id: '/_authenticated/admin/blog'
-      path: '/blog'
-      fullPath: '/admin/blog'
-      preLoaderRoute: typeof AuthenticatedAdminBlogRouteImport
+    '/_authenticated/admin/pages': {
+      id: '/_authenticated/admin/pages'
+      path: '/pages'
+      fullPath: '/admin/pages'
+      preLoaderRoute: typeof AuthenticatedAdminPagesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/api/public/send-booking': {
+      id: '/api/public/send-booking'
+      path: '/api/public/send-booking'
+      fullPath: '/api/public/send-booking'
+      preLoaderRoute: typeof ApiPublicSendBookingRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/media/$': {
       id: '/api/public/media/$'
