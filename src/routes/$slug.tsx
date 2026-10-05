@@ -37,7 +37,7 @@ export const Route = createFileRoute("/$slug")({
     const town = loaderData.destination.replace(/,?\s*VT\s*$/i, "").trim();
     const defaultTitle = isMontreal
       ? "Burlington VT to Montreal Taxi Shuttle. YUL Airport. 24-7."
-      : `${town}, VT Airport Taxi Shuttle, BTV Airport Transfers, 24-7`;
+      : `${town} VT Airport Taxi Shuttle | BTV Airport Transfer 24/7`;
     const defaultDescription = isMontreal
       ? "Book a 24-7 taxi shuttle from Burlington, VT to Montreal (YUL). Reliable door-to-door airport transfers, comfortable rides, upfront fixed rates, and easy booking."
       : `Book a 24-7 taxi shuttle from Burlington Airport (BTV) to ${town}, VT with Burlington VT Taxi Ride. Enjoy reliable airport transfers, comfortable rides, and upfront fixed rates. Call 802-448-0707.`;
