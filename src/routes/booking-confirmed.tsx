@@ -48,7 +48,7 @@ function Page() {
       <div className="rounded-2xl border border-gold/40 bg-surface/60 p-8 text-center shadow-gold">
         <CheckCircle2 className="mx-auto h-16 w-16 text-gold" />
         <p className="mt-4 text-xs uppercase tracking-[0.3em] text-gold">Request Received</p>
-        <h1 className="mt-2 font-display text-4xl sm:text-5xl">You're All Set</h1>
+        <h1 className="mt-2 font-display text-4xl sm:text-5xl">Booking Request Received</h1>
         <p className="mt-3 text-muted-foreground">
           Thank you — your booking request has been received. We'll confirm by phone or text within minutes.
         </p>
