@@ -61,7 +61,7 @@ export const Route = createFileRoute("/$slug")({
       links: [{ rel: "canonical", href: url }],
     };
   },
-  errorComponent: ({ error }) => <div className="p-10 text-center text-muted-foreground">{error.message}</div>,
+  errorComponent: ({ error }) => <div className="p-10 text-center text-muted-foreground">{error instanceof Error ? error.message : "Something went wrong"}</div>,
   notFoundComponent: () => (
     <div className="mx-auto max-w-xl px-4 py-32 text-center">
       <h1 className="font-display text-5xl text-gold">404</h1>
