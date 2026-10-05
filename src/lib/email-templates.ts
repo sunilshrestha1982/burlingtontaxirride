@@ -182,12 +182,12 @@ function summaryCard(items: Array<{ label: string; value?: string }>) {
 export function bookingCustomerEmail(b: BookingPayload) {
   const body = `
   <tr><td class="px-pad" style="padding:32px 28px 8px 28px;">
-    <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">- Booking Received</div>
-    <h1 class="h1" style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:28px;line-height:1.2;color:${BRAND.text};">
-      Thank you${b.name ? `, ${esc(b.name.split(" ")[0])}` : ""} - your ride is reserved.
+    <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${BRAND.gold};">- Booking Request Received</div>
+    <h1 class="h1" style="margin:8px 0 0 0;font-family:Georgia,serif;font-size:26px;line-height:1.25;color:${BRAND.text};">
+      Hi${b.name ? ` ${esc(b.name.split(" ")[0])}` : ""}, we've received your booking request.
     </h1>
     <p style="margin:10px 0 0 0;color:${BRAND.muted};font-size:14px;line-height:22px;">
-      Your reservation has been received and our dispatcher will confirm shortly. Please keep this email for your records.
+      Thank you for choosing <strong>${BRAND.name}</strong>! Your ride is <strong>not confirmed yet</strong> — our team will review your request and contact you shortly to confirm your ride. Please keep this email for your records.
     </p>
     ${b.reference ? `<div style="margin-top:16px;display:inline-block;background:${BRAND.navy};color:${BRAND.gold};font-family:Georgia,serif;letter-spacing:2px;padding:8px 14px;border-radius:6px;font-size:13px;">REF | ${esc(b.reference)}</div>` : ""}
     ${summaryCard([
@@ -214,8 +214,8 @@ export function bookingCustomerEmail(b: BookingPayload) {
     <div style="background:#fbf6e7;border:1px solid ${BRAND.border};border-radius:10px;padding:16px 18px;">
       <div style="color:${BRAND.text};font-weight:700;font-size:14px;margin-bottom:4px;">What happens next</div>
       <ul style="margin:6px 0 0 18px;padding:0;color:${BRAND.muted};font-size:13px;line-height:20px;">
-        <li>Our dispatcher confirms your driver within minutes.</li>
-        <li>You'll receive driver name & vehicle details before pickup.</li>
+        <li>Our team reviews your request and will contact you shortly to confirm your ride.</li>
+        <li>Once confirmed, you'll receive driver name & vehicle details before pickup.</li>
         <li>Need to change anything? Call or text us 24/7.</li>
       </ul>
     </div>
@@ -227,9 +227,9 @@ export function bookingCustomerEmail(b: BookingPayload) {
   </td></tr>`;
   const when = [b.date, b.time].filter(Boolean).join(" | ");
   return {
-    subject: `Reservation Received${when ? ` - ${when}` : ""}${b.reference ? ` (Ref ${b.reference})` : ""} | ${BRAND.name}`,
+    subject: `Booking Request Received${when ? ` - ${when}` : ""}${b.reference ? ` (Ref ${b.reference})` : ""} | ${BRAND.name}`,
     html: shell({
-      preview: `Your booking${b.reference ? ` (${b.reference})` : ""}${when ? ` for ${when}` : ""} is received - driver confirmation in minutes.`,
+      preview: `We've received your booking request${b.reference ? ` (${b.reference})` : ""} - our team will confirm your ride shortly.`,
       title: "Booking received",
       body,
     }),
